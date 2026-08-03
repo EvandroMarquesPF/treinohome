@@ -120,8 +120,8 @@ function createFreshState(): AppState {
   const todayDay = daysOrder[todayIndex] || 'segunda';
 
   return {
-    user: DEFAULT_USER,
-    isLoggedIn: true, // Default logged in for immediate dashboard preview, can switch or log out
+    user: null,
+    isLoggedIn: false, // Default unauthenticated - Landing page renders on start
     workouts: getInitialWorkouts(),
     progress: DEFAULT_PROGRESS,
     achievements: INITIAL_ACHIEVEMENTS,
@@ -383,8 +383,12 @@ export const storeActions = {
   logout: () => {
     state = {
       ...state,
+      user: null,
       isLoggedIn: false
     };
+    if (isSupabaseConfigured) {
+      supabase.auth.signOut().catch(() => null);
+    }
     notify();
   },
 
