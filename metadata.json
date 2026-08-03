@@ -1,0 +1,6 @@
+{
+  "name": "Treino Home",
+  "description": "Seu treinador pessoal para treinos em casa com controle de progresso e gamificação.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
