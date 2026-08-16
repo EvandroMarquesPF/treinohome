@@ -9,30 +9,62 @@
     <script>
       (function() {
         try {
-          if (typeof window !== 'undefined') {
-            var origFetch = window.fetch;
-            if (typeof origFetch === 'function') {
-              var customFetch = function(input, init) {
-                return origFetch.call(window, input, init);
-              };
+          var g = typeof globalThis !== 'undefined' ? globalThis : (typeof window !== 'undefined' ? window : this);
+          if (g) {
+            var _origFetch = g.fetch ? g.fetch.bind(g) : null;
+            var _currentFetch = _origFetch;
+
+            var getFetch = function() {
+              return _currentFetch || _origFetch;
+            };
+            var setFetch = function(newFetch) {
+              _currentFetch = typeof newFetch === 'function' ? newFetch : _origFetch;
+            };
+
+            // 1. Prototype level patch (Window.prototype)
+            if (typeof Window !== 'undefined' && Window.prototype) {
+              try {
+                Object.defineProperty(Window.prototype, 'fetch', {
+                  configurable: true,
+                  enumerable: true,
+                  get: getFetch,
+                  set: setFetch
+                });
+              } catch (e1) {}
+            }
+
+            // 2. Global / window instance level patch
+            try {
+              Object.defineProperty(g, 'fetch', {
+                configurable: true,
+                enumerable: true,
+                get: getFetch,
+                set: setFetch
+              });
+            } catch (e2) {}
+
+            if (typeof window !== 'undefined' && window !== g) {
               try {
                 Object.defineProperty(window, 'fetch', {
                   configurable: true,
                   enumerable: true,
-                  writable: true,
-                  value: customFetch
+                  get: getFetch,
+                  set: setFetch
                 });
-              } catch (err1) {
-                try {
-                  Object.defineProperty(window, 'fetch', {
-                    configurable: true,
-                    enumerable: true,
-                    get: function() { return customFetch; },
-                    set: function(newFetch) { customFetch = newFetch; }
-                  });
-                } catch (err2) {}
-              }
+              } catch (e3) {}
             }
+          }
+
+          // 3. Global safety handler for any rogue read-only fetch error
+          if (typeof window !== 'undefined') {
+            window.addEventListener('error', function(event) {
+              if (event && event.message && event.message.indexOf("Cannot set property fetch") !== -1) {
+                if (typeof event.preventDefault === 'function') {
+                  event.preventDefault();
+                }
+                return true;
+              }
+            });
           }
         } catch (e) {}
       })();

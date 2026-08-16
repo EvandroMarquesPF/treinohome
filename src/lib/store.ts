@@ -229,6 +229,80 @@ function syncToSupabaseAsync() {
   syncAll();
 }
 
+// Initialize Supabase Auth Listener once in browser
+let authListenerInitialized = false;
+
+function initSupabaseAuthListener() {
+  if (authListenerInitialized || typeof window === 'undefined' || !isSupabaseConfigured) return;
+  authListenerInitialized = true;
+
+  try {
+    // 1. Check existing session on load
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        const u = session.user;
+        const meta = u.user_metadata || {};
+        const userName = meta.name || meta.full_name || u.email?.split('@')[0] || 'Atleta';
+        const userAvatar = meta.avatar_url || meta.picture || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop';
+        
+        state = {
+          ...state,
+          user: {
+            id: u.id,
+            name: userName,
+            email: u.email || 'atleta@treinohome.app',
+            avatar_url: userAvatar,
+            created_at: u.created_at || new Date().toISOString()
+          },
+          isLoggedIn: true
+        };
+        storeActions.loadFromSupabaseAsync(u.id);
+        notify();
+      }
+    }).catch(() => null);
+
+    // 2. Listen to ongoing auth state changes (OAuth redirect, sign in, sign out)
+    supabase.auth.onAuthStateChange(async (event, session) => {
+      if (session?.user && (event === 'SIGNED_IN' || event === 'USER_UPDATED' || event === 'INITIAL_SESSION')) {
+        const u = session.user;
+        const meta = u.user_metadata || {};
+        const userName = meta.name || meta.full_name || u.email?.split('@')[0] || 'Atleta';
+        const userAvatar = meta.avatar_url || meta.picture || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop';
+
+        state = {
+          ...state,
+          user: {
+            id: u.id,
+            name: userName,
+            email: u.email || 'atleta@treinohome.app',
+            avatar_url: userAvatar,
+            created_at: u.created_at || new Date().toISOString()
+          },
+          isLoggedIn: true
+        };
+        storeActions.loadFromSupabaseAsync(u.id);
+        notify();
+      } else if (event === 'SIGNED_OUT') {
+        state = {
+          ...state,
+          user: null,
+          isLoggedIn: false
+        };
+        notify();
+      }
+    });
+  } catch (err) {
+    console.warn('Could not initialize Supabase auth listener:', err);
+  }
+}
+
+// Auto-run if running in browser
+if (typeof window !== 'undefined') {
+  setTimeout(() => {
+    initSupabaseAuthListener();
+  }, 50);
+}
+
 function notify() {
   saveState();
   syncToSupabaseAsync();

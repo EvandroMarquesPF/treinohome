@@ -3,9 +3,14 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import {defineConfig} from 'vite';
 
-export default defineConfig(() => {
+export default defineConfig(({ mode }) => {
   return {
     plugins: [react(), tailwindcss()],
+    envPrefix: ['VITE_', 'NEXT_PUBLIC_', 'REACT_APP_', 'SUPABASE_'],
+    define: {
+      'process.env.VITE_SUPABASE_URL': JSON.stringify(process.env.VITE_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || ''),
+      'process.env.VITE_SUPABASE_ANON_KEY': JSON.stringify(process.env.VITE_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_KEY || ''),
+    },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

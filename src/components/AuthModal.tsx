@@ -14,7 +14,8 @@ import {
 import { useAppStore } from '../lib/store';
 import { 
   supabase, 
-  isSupabaseConfigured
+  isSupabaseConfigured,
+  translateSupabaseAuthError
 } from '../lib/supabase';
 import { BrandLogo } from './BrandLogo';
 
@@ -125,10 +126,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         }, 700);
       }
     } catch (err: unknown) {
-      const errorObj = err as { message?: string };
+      const errorText = translateSupabaseAuthError(err);
       setMessage({
         type: 'error',
-        text: errorObj.message || 'Não foi possível conectar com o Google no momento.'
+        text: errorText
       });
       setGoogleLoading(false);
     }
@@ -157,16 +158,23 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       }
 
       let authUserId: string | undefined = undefined;
+      let emailConfirmationNeeded = false;
 
       if (isSupabaseConfigured) {
         if (mode === 'signup') {
           const { data, error } = await supabase.auth.signUp({
             email,
             password,
-            options: { data: { name, avatar_url: avatarUrl } }
+            options: { 
+              data: { name: name || email.split('@')[0], avatar_url: avatarUrl },
+              emailRedirectTo: typeof window !== 'undefined' ? window.location.origin : undefined
+            }
           });
           if (error) throw error;
           authUserId = data.user?.id;
+          if (!data.session && data.user) {
+            emailConfirmationNeeded = true;
+          }
         } else {
           const { data, error } = await supabase.auth.signInWithPassword({
             email,
@@ -194,26 +202,27 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         }
       }
 
-      setMessage({
-        type: 'success',
-        text: mode === 'signup' 
-          ? 'Conta criada! Seus dados iniciais foram zerados para você começar do zero!' 
-          : 'Bem-vindo de volta ao Treino Home!'
-      });
+      if (emailConfirmationNeeded) {
+        setMessage({
+          type: 'success',
+          text: 'Conta criada com sucesso! Enviamos um link de confirmação para o seu e-mail.'
+        });
+      } else {
+        setMessage({
+          type: 'success',
+          text: mode === 'signup' 
+            ? 'Conta criada! Seus dados iniciais foram zerados para você começar do zero!' 
+            : 'Bem-vindo de volta ao Treino Home!'
+        });
+      }
 
       setTimeout(() => {
         setLoading(false);
         onClose();
-      }, 700);
+      }, 900);
 
     } catch (err: unknown) {
-      const errorObj = err as { message?: string };
-      let errorText = errorObj.message || 'Erro ao processar autenticação. Tente novamente.';
-      
-      if (errorText.toLowerCase().includes('secret api key') || errorText.toLowerCase().includes('forbidden')) {
-        errorText = 'Chave secreta detectada no navegador. Use a chave pública (anon key) do Supabase.';
-      }
-
+      const errorText = translateSupabaseAuthError(err);
       setMessage({
         type: 'error',
         text: errorText

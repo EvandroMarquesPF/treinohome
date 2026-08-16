@@ -2,7 +2,7 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 // Resolve environment variables from Vite, Vercel, Next.js or window objects
 function resolveEnvKey(names: string[]): string {
-  // 1. Check import.meta.env
+  // 1. Check import.meta.env (Vite)
   try {
     for (const name of names) {
       const val = (import.meta.env as Record<string, string | undefined>)?.[name];
@@ -14,10 +14,25 @@ function resolveEnvKey(names: string[]): string {
     // Ignore in non-Vite environments
   }
 
-  // 2. Check window.__ENV__ or global window definitions (often used in Vercel/Docker runtime injection)
+  // 2. Check process.env (Node / Vite define shims)
+  try {
+    if (typeof process !== 'undefined' && process.env) {
+      for (const name of names) {
+        const val = process.env[name];
+        if (val && typeof val === 'string' && val.trim() !== '') {
+          return val.trim();
+        }
+      }
+    }
+  } catch {
+    // Ignore
+  }
+
+  // 3. Check window.__ENV__ or global window definitions (often used in Vercel/Docker runtime injection)
   try {
     if (typeof window !== 'undefined') {
-      const winEnv = (window as unknown as { __ENV__?: Record<string, string> }).__ENV__;
+      const winEnv = (window as unknown as { __ENV__?: Record<string, string>; _env_?: Record<string, string> }).__ENV__ ||
+                     (window as unknown as { __ENV__?: Record<string, string>; _env_?: Record<string, string> })._env_;
       if (winEnv) {
         for (const name of names) {
           const val = winEnv[name];
@@ -56,15 +71,19 @@ const detectedEnvUrl = resolveEnvKey([
   'NEXT_PUBLIC_SUPABASE_URL',
   'SUPABASE_URL',
   'VITE_PUBLIC_SUPABASE_URL',
-  'REACT_APP_SUPABASE_URL'
+  'REACT_APP_SUPABASE_URL',
+  'PUBLIC_SUPABASE_URL'
 ]);
 
 const detectedEnvAnonKey = resolveEnvKey([
   'VITE_SUPABASE_ANON_KEY',
   'NEXT_PUBLIC_SUPABASE_ANON_KEY',
   'SUPABASE_ANON_KEY',
+  'SUPABASE_KEY',
+  'VITE_SUPABASE_KEY',
   'VITE_PUBLIC_SUPABASE_ANON_KEY',
-  'REACT_APP_SUPABASE_ANON_KEY'
+  'REACT_APP_SUPABASE_ANON_KEY',
+  'PUBLIC_SUPABASE_ANON_KEY'
 ]);
 
 export const supabaseUrl = storedConfig.url || detectedEnvUrl || '';
@@ -80,7 +99,7 @@ const isSecretKey = typeof supabaseAnonKey === 'string' && (
 export const isVercelEnvDetected = Boolean(
   detectedEnvUrl &&
   detectedEnvAnonKey &&
-  detectedEnvUrl.includes('.supabase.co')
+  (detectedEnvUrl.includes('.supabase.co') || detectedEnvUrl.startsWith('https://'))
 );
 
 export const isSupabaseConfigured = Boolean(
@@ -89,7 +108,7 @@ export const isSupabaseConfigured = Boolean(
   supabaseUrl !== 'https://your-supabase-project.supabase.co' &&
   supabaseAnonKey !== 'your-anon-key' &&
   supabaseAnonKey !== 'placeholder-key' &&
-  supabaseUrl.includes('supabase.co') &&
+  (supabaseUrl.includes('supabase.co') || supabaseUrl.startsWith('https://')) &&
   !isSecretKey
 );
 
@@ -116,6 +135,36 @@ export let supabase: SupabaseClient = createSupabaseInstance(
   isSupabaseConfigured ? supabaseUrl : 'https://placeholder.supabase.co',
   isSupabaseConfigured ? supabaseAnonKey : 'placeholder-anon-key'
 );
+
+export function translateSupabaseAuthError(err: unknown): string {
+  if (!err) return 'Ocorreu um erro inesperado.';
+  const errorObj = err as { message?: string; status?: number; error_description?: string };
+  const raw = (errorObj.message || errorObj.error_description || String(err)).toLowerCase();
+
+  if (raw.includes('invalid login credentials') || raw.includes('invalid_credentials')) {
+    return 'E-mail ou senha incorretos. Verifique suas credenciais e tente novamente.';
+  }
+  if (raw.includes('email not confirmed')) {
+    return 'Seu e-mail ainda não foi confirmado. Verifique sua caixa de entrada e clique no link de confirmação.';
+  }
+  if (raw.includes('user already registered') || raw.includes('already registered')) {
+    return 'Este e-mail já está cadastrado. Tente entrar com sua senha ou faça a recuperação.';
+  }
+  if (raw.includes('password should be at least') || raw.includes('weak password')) {
+    return 'A senha é muito curta. Use pelo menos 6 caracteres para sua segurança.';
+  }
+  if (raw.includes('rate limit') || raw.includes('too many requests')) {
+    return 'Muitas tentativas em pouco tempo. Aguarde alguns instantes antes de tentar novamente.';
+  }
+  if (raw.includes('secret api key') || raw.includes('forbidden')) {
+    return 'Chave secreta detectada. No frontend é necessário utilizar a chave pública (anon key) do Supabase.';
+  }
+  if (raw.includes('failed to fetch') || raw.includes('networkerror')) {
+    return 'Não foi possível conectar ao servidor do Supabase. Verifique sua conexão com a internet.';
+  }
+
+  return errorObj.message || 'Erro ao processar autenticação. Tente novamente.';
+}
 
 export function setCustomSupabaseConfig(url: string, key: string): { success: boolean; message: string } {
   try {
