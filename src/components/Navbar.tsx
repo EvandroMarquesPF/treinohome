@@ -16,6 +16,7 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { useAppStore } from '../lib/store';
+import { BrandLogo } from './BrandLogo';
 
 interface NavbarProps {
   currentTab: string;
@@ -57,9 +58,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             className="flex items-center space-x-3 cursor-pointer group"
             id="brand-logo-btn"
           >
-            <div className="w-10 h-10 rounded-xl bg-lime-400 p-0.5 shadow-lg shadow-lime-500/20 group-hover:scale-105 transition-transform flex items-center justify-center">
-              <Dumbbell className="w-5 h-5 text-zinc-950 stroke-[2.5] group-hover:rotate-12 transition-transform" />
-            </div>
+            <BrandLogo size="md" className="group-hover:scale-105 transition-transform" />
             <div>
               <span className="font-extrabold text-xl tracking-tight text-white">
                 Treino Home

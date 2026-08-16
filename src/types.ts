@@ -47,6 +47,7 @@ export interface Progress {
   series_concluidas: number;
   tempo_total_minutos: number;
   last_workout_date?: string; // YYYY-MM-DD
+  updated_at?: string;
 }
 
 export interface Achievement {

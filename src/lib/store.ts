@@ -38,8 +38,10 @@ export interface AppState {
   phaseCompleteModal: { show: boolean; title: string; xp: number } | null;
 }
 
+const DEFAULT_USER_ID = '00000000-0000-0000-0000-000000000000';
+
 const DEFAULT_USER: Profile = {
-  id: 'usr-evandro-123',
+  id: DEFAULT_USER_ID,
   name: 'Evandro',
   email: 'evandromarquespf@gmail.com',
   avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop',
@@ -47,8 +49,8 @@ const DEFAULT_USER: Profile = {
 };
 
 const DEFAULT_PROGRESS: Progress = {
-  id: 'prog-1',
-  user_id: 'usr-evandro-123',
+  id: '00000000-0000-0000-0000-000000000001',
+  user_id: DEFAULT_USER_ID,
   xp: 1420,
   level: 3,
   sequencia_dias: 7,
@@ -59,7 +61,7 @@ const DEFAULT_PROGRESS: Progress = {
 };
 
 const DEFAULT_SETTINGS: UserSettings = {
-  user_id: 'usr-evandro-123',
+  user_id: DEFAULT_USER_ID,
   descanso: 60,
   notificacoes: true,
   horario_notificacao: '08:00',
@@ -201,7 +203,7 @@ function syncToSupabaseAsync() {
 
       await supabase.from('progress').upsert({
         id: state.progress.id,
-        user_id: state.user?.id || 'usr-123',
+        user_id: state.user.id,
         xp: state.progress.xp,
         nivel: state.progress.level,
         sequencia_dias: state.progress.sequencia_dias,
@@ -211,7 +213,7 @@ function syncToSupabaseAsync() {
       });
 
       await supabase.from('settings').upsert({
-        user_id: state.user?.id || 'usr-123',
+        user_id: state.user.id,
         descanso: state.settings.descanso,
         notificacoes: state.settings.notificacoes,
         horario_notificacao: state.settings.horario_notificacao,
@@ -251,11 +253,65 @@ export function useAppStore(): [AppState, typeof storeActions] {
 export const storeActions = {
   getState: () => state,
 
-  login: (name: string, email: string, avatarUrl?: string) => {
+  loadFromSupabaseAsync: async (userId: string) => {
+    if (!isSupabaseConfigured) return;
+    try {
+      const [profileRes, progressRes, settingsRes] = await Promise.all([
+        supabase.from('profiles').select('*').eq('id', userId).single(),
+        supabase.from('progress').select('*').eq('user_id', userId).single(),
+        supabase.from('settings').select('*').eq('user_id', userId).single()
+      ]);
+
+      let newState = { ...state };
+
+      if (profileRes.data) {
+        newState.user = {
+          id: profileRes.data.id,
+          name: profileRes.data.nome,
+          email: profileRes.data.email,
+          avatar_url: profileRes.data.foto,
+          created_at: profileRes.data.data_criacao
+        };
+      }
+
+      if (progressRes.data) {
+        newState.progress = {
+          ...newState.progress,
+          id: progressRes.data.id,
+          user_id: progressRes.data.user_id,
+          xp: progressRes.data.xp,
+          level: progressRes.data.nivel,
+          sequencia_dias: progressRes.data.sequencia_dias,
+          treinos_concluidos: progressRes.data.treinos_concluidos,
+          series_concluidas: progressRes.data.series_concluidas,
+          updated_at: progressRes.data.updated_at
+        };
+      }
+
+      if (settingsRes.data) {
+        newState.settings = {
+          ...newState.settings,
+          descanso: settingsRes.data.descanso,
+          notificacoes: settingsRes.data.notificacoes,
+          horario_notificacao: settingsRes.data.horario_notificacao,
+          som: settingsRes.data.som,
+          vibracao: settingsRes.data.vibracao,
+          tema: settingsRes.data.tema
+        };
+      }
+
+      state = newState;
+      notify();
+    } catch (err) {
+      console.error('Error fetching Supabase data:', err);
+    }
+  },
+
+  login: (name: string, email: string, avatarUrl?: string, id?: string) => {
     state = {
       ...state,
       user: {
-        id: `usr-${Date.now()}`,
+        id: id || crypto.randomUUID(),
         name: name || 'Atleta',
         email: email || 'usuario@treinohome.app',
         avatar_url: avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop',
@@ -266,8 +322,8 @@ export const storeActions = {
     notify();
   },
 
-  registerCleanProfile: (params: { name: string; email: string; avatarUrl?: string }) => {
-    const userId = `usr-${Date.now()}`;
+  registerCleanProfile: (params: { name: string; email: string; avatarUrl?: string; id?: string }) => {
+    const userId = params.id || state.user?.id || crypto.randomUUID();
     const cleanUser: Profile = {
       id: userId,
       name: params.name || 'Novo Atleta',
@@ -277,7 +333,7 @@ export const storeActions = {
     };
 
     const zeroProgress: Progress = {
-      id: `prog-${Date.now()}`,
+      id: crypto.randomUUID(),
       user_id: userId,
       xp: 0,
       level: 1,
@@ -329,9 +385,9 @@ export const storeActions = {
   },
 
   resetToZeroProfile: () => {
-    const userId = state.user?.id || `usr-${Date.now()}`;
+    const userId = state.user?.id || crypto.randomUUID();
     const zeroProgress: Progress = {
-      id: `prog-${Date.now()}`,
+      id: crypto.randomUUID(),
       user_id: userId,
       xp: 0,
       level: 1,

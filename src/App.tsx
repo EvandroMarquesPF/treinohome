@@ -15,6 +15,7 @@ import { SmartTimerModal } from './components/SmartTimerModal';
 import { LevelUpModal } from './components/LevelUpModal';
 import { PhaseCompleteModal } from './components/PhaseCompleteModal';
 import { PWAPrompt } from './components/PWAPrompt';
+import { TermsAndPrivacyModal } from './components/TermsAndPrivacyModal';
 import { useAppStore } from './lib/store';
 
 export default function App() {
@@ -25,6 +26,10 @@ export default function App() {
   const [authModal, setAuthModal] = useState<{ isOpen: boolean; mode: 'login' | 'signup' | 'recovery' }>({
     isOpen: false,
     mode: 'login'
+  });
+  const [termsModal, setTermsModal] = useState<{ isOpen: boolean; defaultTab: 'terms' | 'privacy' }>({
+    isOpen: false,
+    defaultTab: 'terms'
   });
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [profileSetupOpen, setProfileSetupOpen] = useState(false);
@@ -50,8 +55,12 @@ export default function App() {
     setAuthModal({ isOpen: true, mode });
   };
 
+  const handleOpenTerms = (tab: 'terms' | 'privacy' = 'terms') => {
+    setTermsModal({ isOpen: true, defaultTab: tab });
+  };
+
   return (
-    <div className={`min-h-screen ${settings.tema === 'light' ? 'bg-zinc-100 text-zinc-900' : 'bg-zinc-950 text-zinc-100'} font-sans antialiased selection:bg-emerald-500 selection:text-zinc-950 transition-colors`}>
+    <div className={`min-h-screen ${settings.tema === 'light' ? 'bg-zinc-100 text-zinc-900' : 'bg-zinc-950 text-zinc-100'} font-sans antialiased selection:bg-lime-400 selection:text-black transition-colors`}>
       {/* Offline & PWA Banner */}
       <PWAPrompt />
 
@@ -64,9 +73,12 @@ export default function App() {
       />
 
       {/* Main Screen Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12">
         {!isLoggedIn && currentTab === 'landing' && (
-          <LandingPage onOpenAuth={handleOpenAuth} />
+          <LandingPage 
+            onOpenAuth={handleOpenAuth} 
+            onOpenTerms={handleOpenTerms}
+          />
         )}
 
         {isLoggedIn && currentTab === 'dashboard' && (
@@ -94,7 +106,10 @@ export default function App() {
         )}
 
         {isLoggedIn && currentTab === 'settings' && (
-          <SettingsView onOpenProfileSetup={() => setProfileSetupOpen(true)} />
+          <SettingsView 
+            onOpenProfileSetup={() => setProfileSetupOpen(true)} 
+            onOpenTerms={handleOpenTerms}
+          />
         )}
       </main>
 
@@ -103,6 +118,13 @@ export default function App() {
         isOpen={authModal.isOpen}
         initialMode={authModal.mode}
         onClose={() => setAuthModal({ ...authModal, isOpen: false })}
+        onOpenTerms={handleOpenTerms}
+      />
+
+      <TermsAndPrivacyModal
+        isOpen={termsModal.isOpen}
+        defaultTab={termsModal.defaultTab}
+        onClose={() => setTermsModal({ ...termsModal, isOpen: false })}
       />
 
       <ProfileSetupModal

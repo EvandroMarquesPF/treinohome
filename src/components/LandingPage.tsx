@@ -15,12 +15,14 @@ import {
   Calendar,
   Layers
 } from 'lucide-react';
+import { BrandLogo } from './BrandLogo';
 
 interface LandingPageProps {
   onOpenAuth: (mode: 'login' | 'signup') => void;
+  onOpenTerms?: (tab: 'terms' | 'privacy') => void;
 }
 
-export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
+export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerms }) => {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   const benefits = [
@@ -391,15 +393,29 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
       {/* Footer */}
       <footer className="py-8 bg-zinc-950 border-t border-zinc-900 text-xs text-zinc-500 text-center">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center space-x-2">
-            <Dumbbell className="w-4 h-4 text-emerald-400" />
+          <div className="flex items-center space-x-2.5">
+            <BrandLogo size="sm" />
             <span className="font-bold text-zinc-300">Treino Home Pro</span>
             <span>© {new Date().getFullYear()} - Todos os direitos reservados.</span>
           </div>
           <div className="flex space-x-6 text-zinc-400">
-            <span className="hover:text-emerald-400 cursor-pointer">Termos</span>
-            <span className="hover:text-emerald-400 cursor-pointer">Privacidade</span>
-            <span className="hover:text-emerald-400 cursor-pointer">Suporte Supabase</span>
+            <button 
+              type="button"
+              onClick={() => onOpenTerms?.('terms')}
+              className="hover:text-lime-400 cursor-pointer transition-colors"
+              id="footer-terms-link"
+            >
+              Termos de Uso
+            </button>
+            <button 
+              type="button"
+              onClick={() => onOpenTerms?.('privacy')}
+              className="hover:text-lime-400 cursor-pointer transition-colors"
+              id="footer-privacy-link"
+            >
+              Política de Privacidade
+            </button>
+            <span className="text-zinc-500">Supabase & Vercel Ready</span>
           </div>
         </div>
       </footer>

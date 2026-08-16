@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Smartphone, Download, CheckCircle2, WifiOff } from 'lucide-react';
+import { BrandLogo } from './BrandLogo';
 
 export const PWAPrompt: React.FC = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
@@ -49,11 +50,9 @@ export const PWAPrompt: React.FC = () => {
 
       {/* PWA Install Banner */}
       {showBanner && (
-        <div className="fixed bottom-20 sm:bottom-6 right-4 left-4 sm:left-auto sm:max-w-sm z-50 p-4 rounded-2xl bg-zinc-900 border border-emerald-500/40 text-zinc-100 shadow-2xl space-y-3 animate-fade-in">
+        <div className="fixed bottom-20 sm:bottom-6 right-4 left-4 sm:left-auto sm:max-w-sm z-50 p-4 rounded-2xl bg-zinc-900 border border-lime-500/40 text-zinc-100 shadow-2xl space-y-3 animate-fade-in">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20">
-              <Smartphone className="w-5 h-5" />
-            </div>
+            <BrandLogo size="md" />
             <div>
               <div className="text-sm font-bold text-white">Instalar o Treino Home</div>
               <div className="text-xs text-zinc-400">Instale o app na tela inicial para acesso rápido e offline!</div>
@@ -69,7 +68,7 @@ export const PWAPrompt: React.FC = () => {
             </button>
             <button
               onClick={handleInstall}
-              className="px-4 py-1.5 rounded-xl bg-emerald-500 text-zinc-950 text-xs font-bold flex items-center space-x-1"
+              className="px-4 py-1.5 rounded-xl bg-lime-400 text-black text-xs font-extrabold flex items-center space-x-1 hover:bg-lime-300 transition-colors shadow-md shadow-lime-500/20"
             >
               <Download className="w-3.5 h-3.5" />
               <span>Instalar PWA</span>

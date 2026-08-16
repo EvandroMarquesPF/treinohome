@@ -1,7 +1,74 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+// Resolve environment variables from Vite, Vercel, Next.js or window objects
+function resolveEnvKey(names: string[]): string {
+  // 1. Check import.meta.env
+  try {
+    for (const name of names) {
+      const val = (import.meta.env as Record<string, string | undefined>)?.[name];
+      if (val && typeof val === 'string' && val.trim() !== '') {
+        return val.trim();
+      }
+    }
+  } catch {
+    // Ignore in non-Vite environments
+  }
+
+  // 2. Check window.__ENV__ or global window definitions (often used in Vercel/Docker runtime injection)
+  try {
+    if (typeof window !== 'undefined') {
+      const winEnv = (window as unknown as { __ENV__?: Record<string, string> }).__ENV__;
+      if (winEnv) {
+        for (const name of names) {
+          const val = winEnv[name];
+          if (val && typeof val === 'string' && val.trim() !== '') {
+            return val.trim();
+          }
+        }
+      }
+    }
+  } catch {
+    // Ignore
+  }
+
+  return '';
+}
+
+// Check for user-stored local credentials in localStorage
+function getStoredCustomConfig(): { url: string; key: string } {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const url = window.localStorage.getItem('treino_home_custom_supabase_url') || '';
+      const key = window.localStorage.getItem('treino_home_custom_supabase_anon_key') || '';
+      return { url: url.trim(), key: key.trim() };
+    }
+  } catch {
+    // Ignore
+  }
+  return { url: '', key: '' };
+}
+
+const storedConfig = getStoredCustomConfig();
+
+// Detect Vercel / Vite env names
+const detectedEnvUrl = resolveEnvKey([
+  'VITE_SUPABASE_URL',
+  'NEXT_PUBLIC_SUPABASE_URL',
+  'SUPABASE_URL',
+  'VITE_PUBLIC_SUPABASE_URL',
+  'REACT_APP_SUPABASE_URL'
+]);
+
+const detectedEnvAnonKey = resolveEnvKey([
+  'VITE_SUPABASE_ANON_KEY',
+  'NEXT_PUBLIC_SUPABASE_ANON_KEY',
+  'SUPABASE_ANON_KEY',
+  'VITE_PUBLIC_SUPABASE_ANON_KEY',
+  'REACT_APP_SUPABASE_ANON_KEY'
+]);
+
+export const supabaseUrl = storedConfig.url || detectedEnvUrl || '';
+export const supabaseAnonKey = storedConfig.key || detectedEnvAnonKey || '';
 
 // Detect if key is a secret service_role key or invalid placeholder
 const isSecretKey = typeof supabaseAnonKey === 'string' && (
@@ -10,19 +77,79 @@ const isSecretKey = typeof supabaseAnonKey === 'string' && (
   supabaseAnonKey.includes('secret')
 );
 
+export const isVercelEnvDetected = Boolean(
+  detectedEnvUrl &&
+  detectedEnvAnonKey &&
+  detectedEnvUrl.includes('.supabase.co')
+);
+
 export const isSupabaseConfigured = Boolean(
   supabaseUrl && 
   supabaseAnonKey && 
   supabaseUrl !== 'https://your-supabase-project.supabase.co' &&
   supabaseAnonKey !== 'your-anon-key' &&
   supabaseAnonKey !== 'placeholder-key' &&
+  supabaseUrl.includes('supabase.co') &&
   !isSecretKey
 );
 
-export const supabase = createClient(
+export const configSource: 'env' | 'localStorage' | 'none' = storedConfig.url && storedConfig.key
+  ? 'localStorage'
+  : (isSupabaseConfigured ? 'env' : 'none');
+
+export let supabase: SupabaseClient = createClient(
   isSupabaseConfigured ? supabaseUrl : 'https://placeholder.supabase.co',
   isSupabaseConfigured ? supabaseAnonKey : 'placeholder-anon-key'
 );
+
+export function setCustomSupabaseConfig(url: string, key: string): { success: boolean; message: string } {
+  try {
+    const cleanUrl = url.trim();
+    const cleanKey = key.trim();
+
+    if (!cleanUrl || !cleanKey) {
+      window.localStorage.removeItem('treino_home_custom_supabase_url');
+      window.localStorage.removeItem('treino_home_custom_supabase_anon_key');
+      return { success: true, message: 'Configurações removidas. Usando padrões do ambiente.' };
+    }
+
+    if (!cleanUrl.startsWith('https://') || !cleanUrl.includes('.supabase.co')) {
+      return { success: false, message: 'URL inválida. Deve iniciar com https:// e conter .supabase.co' };
+    }
+
+    window.localStorage.setItem('treino_home_custom_supabase_url', cleanUrl);
+    window.localStorage.setItem('treino_home_custom_supabase_anon_key', cleanKey);
+
+    supabase = createClient(cleanUrl, cleanKey);
+    return { success: true, message: 'Chaves do Supabase salvas e conectadas com sucesso!' };
+  } catch (e: unknown) {
+    const err = e as Error;
+    return { success: false, message: err?.message || 'Erro ao salvar credenciais.' };
+  }
+}
+
+export async function testSupabaseConnection(url?: string, key?: string): Promise<{ success: boolean; message: string }> {
+  try {
+    const targetUrl = url || supabaseUrl;
+    const targetKey = key || supabaseAnonKey;
+
+    if (!targetUrl || !targetKey || !targetUrl.includes('supabase.co')) {
+      return { success: false, message: 'Credenciais ausentes ou formato inválido.' };
+    }
+
+    const testClient = createClient(targetUrl, targetKey);
+    const { error } = await testClient.auth.getSession();
+
+    if (error) {
+      return { success: false, message: `Erro ao autenticar: ${error.message}` };
+    }
+
+    return { success: true, message: 'Conexão com o Supabase estabelecida com sucesso!' };
+  } catch (err: unknown) {
+    const e = err as Error;
+    return { success: false, message: `Falha na conexão: ${e?.message || 'Erro desconhecido'}` };
+  }
+}
 
 export const SUPABASE_SQL_SCHEMA = `-- TREINO HOME - TABELAS E ROW LEVEL SECURITY (RLS)
 -- Execute este script no SQL Editor do seu projeto Supabase
