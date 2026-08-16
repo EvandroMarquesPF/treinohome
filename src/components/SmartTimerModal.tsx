@@ -34,15 +34,15 @@ export const SmartTimerModal: React.FC = () => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fade-in">
-      <div className="w-full max-w-sm bg-white dark:bg-zinc-900 border border-emerald-500/40 rounded-3xl p-6 sm:p-8 space-y-6 text-zinc-900 dark:text-zinc-100 shadow-2xl relative text-center transition-colors">
+      <div className="w-full max-w-sm bg-gradient-to-br from-white via-white to-emerald-50/80 border border-emerald-500/25 dark:bg-gradient-to-br dark:from-black dark:via-zinc-950 dark:to-emerald-950/80 dark:border-emerald-500/30 rounded-3xl p-6 sm:p-8 space-y-6 text-zinc-900 dark:text-zinc-100 shadow-2xl relative text-center transition-colors">
         
         {/* Header Title */}
         <div className="space-y-1">
-          <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-xs font-bold border border-emerald-500/20">
+          <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-800 dark:text-emerald-400 text-xs font-bold border border-emerald-500/20">
             <Clock className="w-3.5 h-3.5 animate-spin" />
             <span>Descanso Inteligente</span>
           </div>
-          <h3 className="text-sm font-semibold text-zinc-600 dark:text-zinc-400 mt-2 truncate max-w-xs mx-auto">
+          <h3 className="text-sm font-semibold text-zinc-700 dark:text-zinc-400 mt-2 truncate max-w-xs mx-auto">
             {exerciseName || 'Série Concluída'}
           </h3>
         </div>
@@ -92,8 +92,8 @@ export const SmartTimerModal: React.FC = () => {
                 }}
                 className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                   settings.descanso === sec 
-                    ? 'bg-emerald-500 text-zinc-950 font-black' 
-                    : 'bg-zinc-100 dark:bg-zinc-950 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white border border-zinc-200 dark:border-zinc-800'
+                    ? 'bg-lime-400 text-black font-black shadow-xs shadow-lime-500/20' 
+                    : 'bg-white/80 dark:bg-zinc-950 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white border border-emerald-500/20 dark:border-zinc-800'
                 }`}
               >
                 {sec}s
@@ -106,19 +106,19 @@ export const SmartTimerModal: React.FC = () => {
         <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             onClick={() => actions.addRestTimerTime(10)}
-            className="py-3 rounded-2xl bg-zinc-100 dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 font-bold text-xs hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors flex items-center justify-center space-x-1 cursor-pointer"
+            className="py-3 rounded-2xl bg-white/90 dark:bg-zinc-950 border border-emerald-500/25 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 font-bold text-xs hover:bg-emerald-50/70 dark:hover:bg-zinc-800 transition-colors flex items-center justify-center space-x-1 cursor-pointer shadow-xs"
           >
-            <Plus className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+            <Plus className="w-4 h-4 text-lime-600 dark:text-lime-400" />
             <span>+10 Segundos</span>
           </button>
 
           <button
             onClick={() => actions.skipRestTimer()}
             id="skip-rest-timer-btn"
-            className="py-3 rounded-2xl bg-gradient-to-r from-emerald-400 to-teal-400 text-zinc-950 font-extrabold text-xs hover:scale-105 active:scale-95 transition-all flex items-center justify-center space-x-1 shadow-lg shadow-emerald-500/20 cursor-pointer"
+            className="py-3 rounded-2xl bg-gradient-to-r from-lime-400 to-emerald-400 text-black font-extrabold text-xs hover:scale-105 active:scale-95 transition-all flex items-center justify-center space-x-1 shadow-md shadow-lime-500/20 cursor-pointer"
           >
             <span>Próxima Série</span>
-            <SkipForward className="w-4 h-4 fill-zinc-950" />
+            <SkipForward className="w-4 h-4 fill-black" />
           </button>
         </div>
 

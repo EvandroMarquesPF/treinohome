@@ -8,11 +8,11 @@ import {
   Info, 
   Sparkles, 
   Check, 
-  RotateCcw,
-  Trophy,
-  Flame,
-  Award,
-  Zap
+  RotateCcw, 
+  Trophy, 
+  Flame, 
+  Award, 
+  Zap 
 } from 'lucide-react';
 import { useAppStore } from '../lib/store';
 import { DayOfWeek, Exercise } from '../types';
@@ -83,12 +83,12 @@ export const WorkoutScreen: React.FC<WorkoutScreenProps> = () => {
                 actions.setActiveDay(day);
               }}
               id={`workout-tab-${day}`}
-              className={`px-4 py-3 rounded-2xl text-xs font-bold whitespace-nowrap transition-all flex items-center space-x-2 border ${
+              className={`px-4 py-3 rounded-2xl text-xs font-bold whitespace-nowrap transition-all flex items-center space-x-2 border cursor-pointer ${
                 isSelected 
                   ? 'bg-lime-400 text-black border-lime-300 font-extrabold shadow-md shadow-lime-500/20' 
                   : w.completed 
-                    ? 'bg-emerald-50 text-emerald-800 border-emerald-300 dark:bg-zinc-900 dark:text-lime-400 dark:border-lime-500/30' 
-                    : 'bg-zinc-100 text-zinc-600 border-zinc-200 hover:text-zinc-900 dark:bg-zinc-900/60 dark:text-zinc-400 dark:border-zinc-800 dark:hover:text-white'
+                    ? 'bg-emerald-50/70 text-emerald-800 border-emerald-400/40 dark:bg-zinc-950 dark:text-lime-400 dark:border-emerald-500/30' 
+                    : 'bg-white/80 text-zinc-600 border-emerald-500/20 hover:text-zinc-900 dark:bg-zinc-950/60 dark:text-zinc-400 dark:border-zinc-800 dark:hover:text-white'
               }`}
             >
               <span className="capitalize">{day}</span>
@@ -99,7 +99,7 @@ export const WorkoutScreen: React.FC<WorkoutScreenProps> = () => {
       </div>
 
       {/* Workout Overview Header */}
-      <div className="rounded-3xl bg-white border border-zinc-200/90 dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/95 dark:to-emerald-950/30 dark:border-emerald-500/20 p-6 sm:p-8 space-y-4 relative overflow-hidden shadow-md dark:shadow-xl text-center sm:text-left transition-colors">
+      <div className="rounded-3xl bg-gradient-to-br from-white via-white to-emerald-50/80 border border-emerald-500/25 dark:bg-gradient-to-br dark:from-black dark:via-zinc-950 dark:to-emerald-950/80 dark:border-emerald-500/30 p-6 sm:p-8 space-y-4 relative overflow-hidden shadow-md dark:shadow-xl text-center sm:text-left transition-colors">
         <div className="absolute top-0 right-0 w-64 h-64 bg-lime-400/10 dark:bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 relative z-10">
@@ -121,7 +121,7 @@ export const WorkoutScreen: React.FC<WorkoutScreenProps> = () => {
 
           {/* Session Timer & Finish Action */}
           <div className="flex flex-col items-center sm:items-end space-y-3">
-            <div className="flex items-center space-x-2 bg-zinc-100 dark:bg-zinc-950/80 border border-zinc-200 dark:border-zinc-800 px-4 py-2 rounded-2xl">
+            <div className="flex items-center space-x-2 bg-white/90 dark:bg-zinc-950/80 border border-emerald-500/20 dark:border-zinc-800 px-4 py-2 rounded-2xl">
               <Clock className="w-4 h-4 text-lime-600 dark:text-lime-400 animate-spin" />
               <span className="font-mono text-base font-bold text-zinc-900 dark:text-white">{formatTime(elapsedSeconds)}</span>
             </div>
@@ -129,7 +129,7 @@ export const WorkoutScreen: React.FC<WorkoutScreenProps> = () => {
             <button
               onClick={handleCompleteWorkout}
               id="finish-workout-btn"
-              className="px-6 py-3 rounded-2xl bg-gradient-to-r from-lime-400 to-emerald-400 text-black font-extrabold text-xs shadow-md shadow-lime-500/20 hover:scale-105 active:scale-95 transition-all flex items-center space-x-2"
+              className="px-6 py-3 rounded-2xl bg-gradient-to-r from-lime-400 to-emerald-400 text-black font-extrabold text-xs shadow-md shadow-lime-500/20 hover:scale-105 active:scale-95 transition-all flex items-center space-x-2 cursor-pointer"
             >
               <CheckCircle2 className="w-4 h-4" />
               <span>Concluir Treino (+100 XP)</span>
@@ -153,8 +153,8 @@ export const WorkoutScreen: React.FC<WorkoutScreenProps> = () => {
               key={exercise.id}
               className={`rounded-3xl border transition-all p-5 sm:p-6 space-y-4 shadow-sm dark:shadow-md ${
                 isFinished 
-                  ? 'bg-emerald-50/50 border-emerald-500/30 dark:bg-gradient-to-br dark:from-zinc-950 dark:via-zinc-950 dark:to-emerald-950/20 dark:border-emerald-500/30' 
-                  : 'bg-white border-zinc-200/90 hover:border-lime-500/40 dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/95 dark:to-emerald-950/15 dark:border-emerald-500/20 dark:hover:border-emerald-500/40'
+                  ? 'bg-gradient-to-br from-emerald-50/80 to-emerald-100/50 border-emerald-500/30 dark:bg-gradient-to-br dark:from-black dark:via-zinc-950 dark:to-emerald-950/60 dark:border-emerald-500/35' 
+                  : 'bg-gradient-to-br from-white via-white to-emerald-50/70 border-emerald-500/25 hover:border-lime-500/40 dark:bg-gradient-to-br dark:from-black dark:via-zinc-950 dark:to-emerald-950/70 dark:border-emerald-500/30 dark:hover:border-emerald-500/40'
               }`}
             >
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
@@ -193,7 +193,7 @@ export const WorkoutScreen: React.FC<WorkoutScreenProps> = () => {
                 {/* Info Button */}
                 <button
                   onClick={() => setSelectedExerciseModal(exercise)}
-                  className="p-2.5 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-700 hover:text-zinc-900 border border-zinc-200 dark:bg-zinc-950 dark:hover:bg-zinc-800 dark:text-zinc-400 dark:hover:text-white dark:border-zinc-800 transition-colors self-center text-xs flex items-center space-x-1 font-semibold"
+                  className="p-2.5 rounded-xl bg-white/80 hover:bg-emerald-50/80 text-zinc-700 hover:text-zinc-900 border border-emerald-500/20 dark:bg-zinc-950 dark:hover:bg-zinc-800 dark:text-zinc-400 dark:hover:text-white dark:border-zinc-800 transition-colors self-center text-xs flex items-center space-x-1 font-semibold shadow-xs cursor-pointer"
                   title="Ver Técnica"
                 >
                   <Info className="w-4 h-4 text-lime-600 dark:text-lime-400" />
@@ -202,7 +202,7 @@ export const WorkoutScreen: React.FC<WorkoutScreenProps> = () => {
               </div>
 
               {/* Set Checkboxes Bar */}
-              <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+              <div className="pt-4 border-t border-zinc-200/80 dark:border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
                 <span className="text-xs font-bold text-zinc-600 dark:text-zinc-400">
                   Séries Concluídas: {exercise.completed_series}/{exercise.series}
                 </span>
@@ -215,10 +215,10 @@ export const WorkoutScreen: React.FC<WorkoutScreenProps> = () => {
                         key={sIdx}
                         onClick={() => handleToggleSet(exercise.id)}
                         id={`set-check-${exercise.id}-${sIdx}`}
-                        className={`w-10 h-10 rounded-xl font-extrabold text-xs flex items-center justify-center border transition-all ${
+                        className={`w-10 h-10 rounded-xl font-extrabold text-xs flex items-center justify-center border transition-all cursor-pointer ${
                           isDone 
                             ? 'bg-lime-400 text-black border-lime-300 shadow-md shadow-lime-500/20 scale-105' 
-                            : 'bg-zinc-100 text-zinc-600 border-zinc-300 hover:border-lime-500 hover:text-zinc-900 dark:bg-zinc-950 dark:text-zinc-400 dark:border-zinc-800 dark:hover:border-lime-500/40 dark:hover:text-white'
+                            : 'bg-white/90 text-zinc-600 border-emerald-500/25 hover:border-lime-500 hover:text-zinc-900 dark:bg-zinc-950 dark:text-zinc-400 dark:border-zinc-800 dark:hover:border-lime-500/40 dark:hover:text-white'
                         }`}
                       >
                         {isDone ? <Check className="w-5 h-5 stroke-[3] text-black" /> : sIdx + 1}
@@ -235,10 +235,10 @@ export const WorkoutScreen: React.FC<WorkoutScreenProps> = () => {
       {/* Exercise Detail Modal */}
       {selectedExerciseModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md">
-          <div className="w-full max-w-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 space-y-5 text-zinc-900 dark:text-zinc-100 shadow-2xl relative transition-colors">
+          <div className="w-full max-w-lg bg-gradient-to-br from-white via-white to-emerald-50/80 border border-emerald-500/25 dark:bg-gradient-to-br dark:from-black dark:via-zinc-950 dark:to-emerald-950/80 dark:border-emerald-500/30 rounded-3xl p-6 space-y-5 text-zinc-900 dark:text-zinc-100 shadow-2xl relative transition-colors">
             <button
               onClick={() => setSelectedExerciseModal(null)}
-              className="absolute top-4 right-4 p-2 rounded-xl bg-zinc-100 dark:bg-zinc-950 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white border border-zinc-200 dark:border-zinc-800"
+              className="absolute top-4 right-4 p-2 rounded-xl bg-white/80 dark:bg-zinc-950 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white border border-emerald-500/20 dark:border-zinc-800 cursor-pointer"
             >
               ✕
             </button>
@@ -246,7 +246,7 @@ export const WorkoutScreen: React.FC<WorkoutScreenProps> = () => {
             <img 
               src={selectedExerciseModal.image_url} 
               alt={selectedExerciseModal.name} 
-              className="w-full h-52 object-cover rounded-2xl border border-zinc-200 dark:border-zinc-800"
+              className="w-full h-52 object-cover rounded-2xl border border-emerald-500/20 dark:border-zinc-800"
               referrerPolicy="no-referrer"
             />
 
@@ -258,7 +258,7 @@ export const WorkoutScreen: React.FC<WorkoutScreenProps> = () => {
               <p className="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed font-medium">{selectedExerciseModal.description}</p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-xs space-y-2">
+            <div className="p-4 rounded-2xl bg-white/90 dark:bg-zinc-950 border border-emerald-500/20 dark:border-zinc-800 text-xs space-y-2">
               <div className="font-bold text-zinc-800 dark:text-zinc-200 flex items-center space-x-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-lime-600 dark:text-lime-400" />
                 <span>Dica de Execução:</span>
@@ -270,7 +270,7 @@ export const WorkoutScreen: React.FC<WorkoutScreenProps> = () => {
 
             <button
               onClick={() => setSelectedExerciseModal(null)}
-              className="w-full py-3.5 rounded-2xl bg-lime-400 text-black font-extrabold text-xs shadow-md shadow-lime-500/20 hover:bg-lime-300 transition-all"
+              className="w-full py-3.5 rounded-2xl bg-lime-400 text-black font-extrabold text-xs shadow-md shadow-lime-500/20 hover:bg-lime-300 transition-all cursor-pointer"
             >
               Entendido! Voltar ao Treino
             </button>

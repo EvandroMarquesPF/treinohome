@@ -10,7 +10,7 @@ export const LevelUpModal: React.FC = () => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fade-in">
-      <div className="w-full max-w-sm bg-gradient-to-b from-white via-amber-50/50 to-amber-100/50 dark:from-zinc-900 dark:via-zinc-900 dark:to-amber-950/40 border-2 border-amber-400 rounded-3xl p-6 sm:p-8 space-y-6 text-center text-zinc-900 dark:text-zinc-100 shadow-2xl relative overflow-hidden transition-colors">
+      <div className="w-full max-w-sm bg-gradient-to-br from-white via-white to-amber-50/80 border border-amber-400/40 dark:bg-gradient-to-br dark:from-black dark:via-zinc-950 dark:to-amber-950/80 dark:border-amber-500/40 rounded-3xl p-6 sm:p-8 space-y-6 text-center text-zinc-900 dark:text-zinc-100 shadow-2xl relative overflow-hidden transition-colors">
         
         {/* Glow Effects */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 bg-amber-400/20 rounded-full blur-3xl pointer-events-none" />
@@ -38,7 +38,7 @@ export const LevelUpModal: React.FC = () => {
         <button
           onClick={() => actions.closeLevelUpModal()}
           id="close-level-up-modal-btn"
-          className="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-400 text-zinc-950 font-black text-sm shadow-xl shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all flex items-center justify-center space-x-2 cursor-pointer"
+          className="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-400 text-black font-extrabold text-sm shadow-xl shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all flex items-center justify-center space-x-2 cursor-pointer"
         >
           <span>Continuar Evoluindo</span>
           <ArrowRight className="w-4 h-4" />

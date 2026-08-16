@@ -31,18 +31,18 @@ export const TermsAndPrivacyModal: React.FC<TermsAndPrivacyModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/70 backdrop-blur-md animate-in fade-in duration-200">
       <div 
-        className="bg-white dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/95 dark:to-emerald-950/40 border border-zinc-200 dark:border-emerald-500/20 rounded-3xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden text-zinc-900 dark:text-zinc-100 transition-colors"
+        className="bg-gradient-to-br from-white via-white to-emerald-50/80 border border-emerald-500/25 dark:bg-gradient-to-br dark:from-black dark:via-zinc-950 dark:to-emerald-950/80 dark:border-emerald-500/30 rounded-3xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden text-zinc-900 dark:text-zinc-100 transition-colors"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="px-6 py-5 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between bg-zinc-50 dark:bg-zinc-950/60 shrink-0">
+        <div className="px-6 py-5 border-b border-emerald-500/20 dark:border-zinc-800 flex items-center justify-between bg-white/60 dark:bg-zinc-950/60 shrink-0">
           <div className="flex items-center space-x-3">
             <BrandLogo size="md" />
             <div>
               <h2 className="text-lg font-bold text-zinc-900 dark:text-white flex items-center gap-2">
                 Termos & Políticas de Privacidade
               </h2>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400">
+              <p className="text-xs text-zinc-600 dark:text-zinc-400">
                 Treino Home • Atualizado em Agosto de 2026
               </p>
             </div>
@@ -50,7 +50,7 @@ export const TermsAndPrivacyModal: React.FC<TermsAndPrivacyModalProps> = ({
 
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+            className="p-2 rounded-xl text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white hover:bg-emerald-50/80 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
             id="close-terms-modal-btn"
           >
             <X className="w-5 h-5" />
@@ -58,13 +58,13 @@ export const TermsAndPrivacyModal: React.FC<TermsAndPrivacyModalProps> = ({
         </div>
 
         {/* Tab Switcher */}
-        <div className="px-6 pt-4 border-b border-zinc-200 dark:border-zinc-800/80 bg-zinc-100/60 dark:bg-zinc-900/50 flex space-x-2 shrink-0">
+        <div className="px-6 pt-4 border-b border-emerald-500/20 dark:border-zinc-800/80 bg-emerald-50/30 dark:bg-zinc-900/50 flex space-x-2 shrink-0">
           <button
             onClick={() => setActiveTab('terms')}
             id="tab-terms-btn"
-            className={`pb-3 px-4 text-xs sm:text-sm font-bold flex items-center space-x-2 border-b-2 transition-all ${
+            className={`pb-3 px-4 text-xs sm:text-sm font-bold flex items-center space-x-2 border-b-2 transition-all cursor-pointer ${
               activeTab === 'terms'
-                ? 'border-lime-500 text-lime-700 dark:border-lime-400 dark:text-lime-400'
+                ? 'border-lime-500 text-lime-800 dark:border-lime-400 dark:text-lime-400'
                 : 'border-transparent text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200'
             }`}
           >
@@ -75,9 +75,9 @@ export const TermsAndPrivacyModal: React.FC<TermsAndPrivacyModalProps> = ({
           <button
             onClick={() => setActiveTab('privacy')}
             id="tab-privacy-btn"
-            className={`pb-3 px-4 text-xs sm:text-sm font-bold flex items-center space-x-2 border-b-2 transition-all ${
+            className={`pb-3 px-4 text-xs sm:text-sm font-bold flex items-center space-x-2 border-b-2 transition-all cursor-pointer ${
               activeTab === 'privacy'
-                ? 'border-lime-500 text-lime-700 dark:border-lime-400 dark:text-lime-400'
+                ? 'border-lime-500 text-lime-800 dark:border-lime-400 dark:text-lime-400'
                 : 'border-transparent text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200'
             }`}
           >
@@ -207,14 +207,14 @@ export const TermsAndPrivacyModal: React.FC<TermsAndPrivacyModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="px-6 py-4 bg-zinc-50 dark:bg-zinc-950/80 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between shrink-0">
+        <div className="px-6 py-4 bg-white/60 dark:bg-zinc-950/80 border-t border-emerald-500/20 dark:border-zinc-800 flex items-center justify-between shrink-0">
           <div className="text-[11px] text-zinc-500 hidden sm:block">
             Treino Home • Segurança e Privacidade Garantidas
           </div>
           <button
             onClick={onClose}
             id="accept-terms-close-btn"
-            className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-lime-400 to-emerald-400 hover:opacity-90 text-black font-extrabold text-xs transition-all shadow-md shadow-lime-500/20"
+            className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-lime-400 to-emerald-400 hover:opacity-90 text-black font-extrabold text-xs transition-all shadow-md shadow-lime-500/20 cursor-pointer"
           >
             Entendido e Concordo
           </button>

@@ -234,13 +234,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fade-in overflow-y-auto">
       <div 
-        className="relative w-full max-w-md bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 text-zinc-900 dark:text-zinc-100 my-8 transition-colors"
+        className="relative w-full max-w-md bg-gradient-to-br from-white via-white to-emerald-50/80 border border-emerald-500/25 dark:bg-gradient-to-br dark:from-black dark:via-zinc-950 dark:to-emerald-950/80 dark:border-emerald-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 text-zinc-900 dark:text-zinc-100 my-8 transition-colors"
         onClick={e => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-xl text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+          className="absolute top-5 right-5 p-2 rounded-xl text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white hover:bg-emerald-50/80 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
           id="close-auth-modal-btn"
         >
           <X className="w-5 h-5" />
@@ -269,7 +269,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               onClick={handleGoogleSignIn}
               disabled={googleLoading || loading}
               id="google-auth-btn"
-              className="w-full py-3 px-4 rounded-2xl bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-950 dark:hover:bg-zinc-800 border border-zinc-300 dark:border-zinc-700/80 text-zinc-800 dark:text-white text-xs sm:text-sm font-bold transition-all flex items-center justify-center space-x-3 shadow-sm hover:border-zinc-400 dark:hover:border-zinc-500 disabled:opacity-50 cursor-pointer"
+              className="w-full py-3 px-4 rounded-2xl bg-white/90 hover:bg-emerald-50/70 dark:bg-zinc-950 dark:hover:bg-zinc-800 border border-emerald-500/25 dark:border-zinc-700/80 text-zinc-800 dark:text-white text-xs sm:text-sm font-bold transition-all flex items-center justify-center space-x-3 shadow-sm hover:border-emerald-500/40 dark:hover:border-zinc-500 disabled:opacity-50 cursor-pointer"
             >
               <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
                 <path
@@ -293,11 +293,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             </button>
 
             <div className="relative flex items-center justify-center">
-              <div className="border-t border-zinc-200 dark:border-zinc-800 w-full" />
-              <span className="bg-white dark:bg-zinc-900 px-3 text-[11px] text-zinc-500 uppercase tracking-wider font-semibold">
+              <div className="border-t border-emerald-500/20 dark:border-zinc-800 w-full" />
+              <span className="bg-white/80 dark:bg-zinc-900 px-3 text-[11px] text-zinc-500 uppercase tracking-wider font-semibold">
                 ou continue com e-mail
               </span>
-              <div className="border-t border-zinc-200 dark:border-zinc-800 w-full" />
+              <div className="border-t border-emerald-500/20 dark:border-zinc-800 w-full" />
             </div>
           </div>
         )}
@@ -321,7 +321,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               {/* Photo Upload Box */}
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300">Foto do Perfil (Upload)</label>
-                <div className="flex items-center space-x-3 p-3 rounded-2xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
+                <div className="flex items-center space-x-3 p-3 rounded-2xl bg-white/80 dark:bg-zinc-950 border border-emerald-500/20 dark:border-zinc-800">
                   <div className="relative group shrink-0">
                     <img 
                       src={avatarUrl} 
@@ -349,7 +349,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
-                      className="px-3 py-1.5 rounded-lg bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-bold border border-zinc-300 dark:border-zinc-800 flex items-center space-x-1.5 cursor-pointer shadow-sm"
+                      className="px-3 py-1.5 rounded-lg bg-white dark:bg-zinc-900 hover:bg-emerald-50/80 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-bold border border-emerald-500/25 dark:border-zinc-800 flex items-center space-x-1.5 cursor-pointer shadow-sm"
                     >
                       <Upload className="w-3.5 h-3.5 text-lime-600 dark:text-lime-400" />
                       <span>Selecionar Imagem</span>
@@ -369,7 +369,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     placeholder="Seu nome ou apelido"
                     value={name}
                     onChange={e => setName(e.target.value)}
-                    className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:border-lime-500 transition-colors"
+                    className="w-full bg-white/90 dark:bg-zinc-950 border border-emerald-500/25 dark:border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:border-lime-500 transition-colors"
                   />
                 </div>
               </div>
@@ -386,7 +386,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 placeholder="seu.email@exemplo.com"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:border-lime-500 transition-colors"
+                className="w-full bg-white/90 dark:bg-zinc-950 border border-emerald-500/25 dark:border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:border-lime-500 transition-colors"
               />
             </div>
           </div>
@@ -413,7 +413,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   placeholder="••••••••"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:border-lime-500 transition-colors"
+                  className="w-full bg-white/90 dark:bg-zinc-950 border border-emerald-500/25 dark:border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:border-lime-500 transition-colors"
                 />
               </div>
             </div>
@@ -426,20 +426,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 id="rememberMe"
                 checked={rememberMe}
                 onChange={e => setRememberMe(e.target.checked)}
-                className="rounded bg-zinc-100 dark:bg-zinc-950 border-zinc-300 dark:border-zinc-800 text-lime-500 focus:ring-0 cursor-pointer"
+                className="rounded bg-white dark:bg-zinc-950 border-emerald-500/25 dark:border-zinc-800 text-lime-500 focus:ring-0 cursor-pointer"
               />
               <label htmlFor="rememberMe" className="cursor-pointer">Permanecer conectado</label>
             </div>
           )}
 
           {mode === 'signup' && (
-            <div className="flex items-center space-x-2 text-xs text-zinc-700 dark:text-zinc-300 p-3 rounded-xl bg-zinc-50 dark:bg-zinc-950 border border-lime-500/20">
+            <div className="flex items-center space-x-2 text-xs text-zinc-700 dark:text-zinc-300 p-3 rounded-xl bg-white/80 dark:bg-zinc-950 border border-emerald-500/20">
               <input
                 type="checkbox"
                 id="resetDataOnRegister"
                 checked={resetDataOnRegister}
                 onChange={e => setResetDataOnRegister(e.target.checked)}
-                className="w-4 h-4 rounded bg-zinc-100 dark:bg-zinc-900 border-zinc-300 dark:border-zinc-800 text-lime-500 focus:ring-0 cursor-pointer"
+                className="w-4 h-4 rounded bg-white dark:bg-zinc-900 border-emerald-500/25 dark:border-zinc-800 text-lime-500 focus:ring-0 cursor-pointer"
               />
               <label htmlFor="resetDataOnRegister" className="cursor-pointer font-semibold flex items-center space-x-1.5">
                 <RotateCcw className="w-3.5 h-3.5 text-lime-600 dark:text-lime-400 shrink-0" />
@@ -490,7 +490,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         </div>
 
         {/* Toggle Mode */}
-        <div className="text-center text-xs text-zinc-500 dark:text-zinc-400 pt-1 border-t border-zinc-200 dark:border-zinc-800">
+        <div className="text-center text-xs text-zinc-500 dark:text-zinc-400 pt-1 border-t border-emerald-500/20 dark:border-zinc-800">
           {mode === 'login' ? (
             <span>
               Ainda não tem conta?{' '}

@@ -50,7 +50,7 @@ export const PWAPrompt: React.FC = () => {
 
       {/* PWA Install Banner */}
       {showBanner && (
-        <div className="fixed bottom-20 sm:bottom-6 right-4 left-4 sm:left-auto sm:max-w-sm z-50 p-4 rounded-2xl bg-white dark:bg-zinc-900 border border-lime-500/40 text-zinc-900 dark:text-zinc-100 shadow-2xl space-y-3 animate-fade-in transition-colors">
+        <div className="fixed bottom-20 sm:bottom-6 right-4 left-4 sm:left-auto sm:max-w-sm z-50 p-4 rounded-2xl bg-gradient-to-br from-white via-white to-emerald-50/80 border border-emerald-500/25 dark:bg-gradient-to-br dark:from-black dark:via-zinc-950 dark:to-emerald-950/80 dark:border-emerald-500/30 text-zinc-900 dark:text-zinc-100 shadow-2xl space-y-3 animate-fade-in transition-colors">
           <div className="flex items-center space-x-3">
             <BrandLogo size="md" />
             <div>
@@ -62,7 +62,7 @@ export const PWAPrompt: React.FC = () => {
           <div className="flex justify-end space-x-2">
             <button
               onClick={() => setShowBanner(false)}
-              className="px-3 py-1.5 rounded-xl bg-zinc-100 dark:bg-zinc-950 text-xs font-semibold text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white cursor-pointer"
+              className="px-3 py-1.5 rounded-xl bg-white/80 hover:bg-emerald-50/70 dark:bg-zinc-950 dark:hover:bg-zinc-800 border border-emerald-500/20 dark:border-zinc-800 text-xs font-semibold text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white cursor-pointer shadow-xs"
             >
               Depois
             </button>
