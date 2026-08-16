@@ -25,10 +25,10 @@ export const GamificationPath: React.FC<GamificationPathProps> = ({ onSelectTab 
   return (
     <div className="max-w-3xl mx-auto space-y-8 animate-fade-in pb-16">
       {/* Header Banner */}
-      <div className="rounded-3xl bg-zinc-900 border border-zinc-800 p-6 sm:p-8 space-y-4 text-center relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-60 h-60 bg-lime-400/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/30 border border-emerald-500/20 p-6 sm:p-8 space-y-4 text-center relative overflow-hidden shadow-xl">
+        <div className="absolute top-0 right-0 w-60 h-60 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-lime-400/10 border border-lime-500/20 text-lime-400 text-xs font-bold">
+        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-lime-400 text-xs font-bold">
           <Sparkles className="w-4 h-4" />
           <span>Jornada de Evolução Gamificada</span>
         </div>
@@ -57,11 +57,11 @@ export const GamificationPath: React.FC<GamificationPathProps> = ({ onSelectTab 
         </div>
       </div>
 
-      {/* Duolingo Style Vertical Path */}
+      {/* Evolution Vertical Path */}
       <div className="relative py-8">
         
         {/* Connecting Vertical Line */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-10 bottom-10 w-2.5 bg-gradient-to-b from-lime-400 via-lime-500 to-zinc-800 rounded-full z-0" />
+        <div className="absolute left-1/2 -translate-x-1/2 top-10 bottom-10 w-2.5 bg-gradient-to-b from-lime-400 via-emerald-500 to-zinc-800 rounded-full z-0" />
 
         <div className="space-y-16 relative z-10">
           {phases.map((phase, idx) => {
@@ -69,7 +69,7 @@ export const GamificationPath: React.FC<GamificationPathProps> = ({ onSelectTab 
             const isCurrent = phase.is_current;
             const isLocked = !isDone && !isCurrent;
 
-            // Offset left/right for serpentine Duolingo effect
+            // Offset left/right for serpentine progression effect
             const offsetClass = idx % 2 === 0 ? 'sm:-translate-x-12' : 'sm:translate-x-12';
 
             return (
@@ -87,7 +87,7 @@ export const GamificationPath: React.FC<GamificationPathProps> = ({ onSelectTab 
 
                   <div className={`relative w-20 h-20 sm:w-24 sm:h-24 rounded-3xl border-4 flex items-center justify-center text-3xl shadow-2xl transition-all ${
                     isDone 
-                      ? 'bg-lime-400 border-lime-300 text-zinc-950 scale-105 font-extrabold shadow-lime-500/20' 
+                      ? 'bg-gradient-to-br from-lime-400 to-emerald-400 border-lime-300 text-zinc-950 scale-105 font-extrabold shadow-lime-500/20' 
                       : isCurrent
                         ? 'bg-lime-400 border-b-8 border-lime-600 text-black scale-110 shadow-[0_0_40px_rgba(163,230,53,0.3)]'
                         : 'bg-zinc-950 border-zinc-800 text-zinc-600'
@@ -108,11 +108,11 @@ export const GamificationPath: React.FC<GamificationPathProps> = ({ onSelectTab 
                 </div>
 
                 {/* Phase Info Card */}
-                <div className={`w-full max-w-sm rounded-3xl p-5 border transition-all ${
+                <div className={`w-full max-w-sm rounded-3xl p-5 border transition-all shadow-lg ${
                   isCurrent 
-                    ? 'bg-zinc-900 border-lime-400/60 shadow-xl shadow-lime-500/10' 
+                    ? 'bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/30 border-lime-400/60 shadow-xl shadow-lime-500/10' 
                     : isDone
-                      ? 'bg-zinc-950 border-lime-500/30'
+                      ? 'bg-gradient-to-br from-zinc-950 via-zinc-950 to-emerald-950/20 border-emerald-500/30'
                       : 'bg-zinc-950/60 border-zinc-800 opacity-60'
                 }`}>
                   <div className="flex items-center justify-between mb-2">

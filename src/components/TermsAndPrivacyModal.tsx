@@ -31,7 +31,7 @@ export const TermsAndPrivacyModal: React.FC<TermsAndPrivacyModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
       <div 
-        className="bg-zinc-900 border border-zinc-800 rounded-3xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl shadow-lime-500/10 overflow-hidden"
+        className="bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/40 border border-emerald-500/20 rounded-3xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl shadow-emerald-500/10 overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
@@ -43,7 +43,7 @@ export const TermsAndPrivacyModal: React.FC<TermsAndPrivacyModalProps> = ({
                 Termos & Políticas de Privacidade
               </h2>
               <p className="text-xs text-zinc-400">
-                Treino Home Pro • Atualizado em Agosto de 2026
+                Treino Home • Atualizado em Agosto de 2026
               </p>
             </div>
           </div>
@@ -96,7 +96,7 @@ export const TermsAndPrivacyModal: React.FC<TermsAndPrivacyModalProps> = ({
                 <div className="text-xs sm:text-sm space-y-1">
                   <span className="font-bold text-amber-300 block">Aviso Médico & Responsabilidade Física:</span>
                   <span>
-                    O <strong>Treino Home Pro</strong> disponibiliza rotinas de calistenia e exercícios com peso corporal com fins informativos e de condicionamento. Consulte um médico ou profissional de educação física antes de iniciar qualquer programa de exercícios, especialmente se possuir histórico de lesões ou condições cardíacas.
+                    O <strong>Treino Home</strong> disponibiliza rotinas de calistenia e exercícios com peso corporal com fins informativos e de condicionamento. Consulte um médico ou profissional de educação física antes de iniciar qualquer programa de exercícios, especialmente se possuir histórico de lesões ou condições cardíacas.
                   </span>
                 </div>
               </div>
@@ -106,7 +106,7 @@ export const TermsAndPrivacyModal: React.FC<TermsAndPrivacyModalProps> = ({
                   <span className="text-lime-400">1.</span> Aceitação dos Termos
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm">
-                  Ao criar uma conta ou utilizar o aplicativo web Treino Home Pro, você declara ter lido, compreendido e concordado integralmente com estes Termos de Uso e com nossa Política de Privacidade. Caso não concorde, interrompa o uso do serviço.
+                  Ao criar uma conta ou utilizar o aplicativo web Treino Home, você declara ter lido, compreendido e concordado integralmente com estes Termos de Uso e com nossa Política de Privacidade. Caso não concorde, interrompa o uso do serviço.
                 </p>
               </section>
 
@@ -136,14 +136,14 @@ export const TermsAndPrivacyModal: React.FC<TermsAndPrivacyModalProps> = ({
                   <span className="text-lime-400">4.</span> Propriedade Intelectual
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm">
-                  Todo o design, interface, identidade visual, logotipos, ilustrações técnicas de exercícios e código-fonte do Treino Home Pro são de titularidade de seus desenvolvedores, protegidos pela legislação de direitos autorais.
+                  Todo o design, interface, identidade visual, logotipos, ilustrações técnicas de exercícios e código-fonte do Treino Home são de titularidade de seus desenvolvedores, protegidos pela legislação de direitos autorais.
                 </p>
               </section>
             </div>
           ) : (
             <div className="space-y-6">
               {/* Privacy Summary Banner */}
-              <div className="p-4 rounded-2xl bg-lime-500/10 border border-lime-500/30 flex items-start space-x-3 text-lime-200">
+              <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-start space-x-3 text-emerald-200">
                 <Lock className="w-5 h-5 text-lime-400 shrink-0 mt-0.5" />
                 <div className="text-xs sm:text-sm space-y-1">
                   <span className="font-bold text-lime-300 block">Privacidade e Transparência (LGPD):</span>
@@ -174,7 +174,7 @@ export const TermsAndPrivacyModal: React.FC<TermsAndPrivacyModalProps> = ({
                   <span>2. Como os Dados são Armazenados</span>
                 </h3>
                 <p className="text-zinc-400 text-xs sm:text-sm">
-                  O Treino Home Pro utiliza arquitetura segura com <strong>Supabase</strong> (PostgreSQL com criptografia em repouso e trânsito via HTTPS/TLS) e <strong>Row Level Security (RLS)</strong>, garantindo que apenas você possa acessar e editar seus próprios registros de treino. No modo offline, os dados residem estritamente no armazenamento local (LocalStorage) do seu dispositivo.
+                  O Treino Home utiliza arquitetura segura com <strong>Supabase</strong> (PostgreSQL com criptografia em repouso e trânsito via HTTPS/TLS) e <strong>Row Level Security (RLS)</strong>, garantindo que apenas você possa acessar e editar seus próprios registros de treino. No modo offline, os dados residem estritamente no armazenamento local (LocalStorage) do seu dispositivo.
                 </p>
               </section>
 
@@ -209,12 +209,12 @@ export const TermsAndPrivacyModal: React.FC<TermsAndPrivacyModalProps> = ({
         {/* Modal Footer */}
         <div className="px-6 py-4 bg-zinc-950/80 border-t border-zinc-800 flex items-center justify-between shrink-0">
           <div className="text-[11px] text-zinc-500 hidden sm:block">
-            Treino Home Pro • Segurança e Privacidade Garantidas
+            Treino Home • Segurança e Privacidade Garantidas
           </div>
           <button
             onClick={onClose}
             id="accept-terms-close-btn"
-            className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-extrabold text-xs transition-all shadow-md shadow-lime-500/20"
+            className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-lime-400 to-emerald-400 hover:opacity-90 text-black font-extrabold text-xs transition-all shadow-md shadow-lime-500/20"
           >
             Entendido e Concordo
           </button>

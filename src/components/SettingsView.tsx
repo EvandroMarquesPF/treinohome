@@ -1,14 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import { 
   Settings as SettingsIcon, 
   User, 
-  Moon, 
-  Sun, 
   Volume2, 
   Vibrate, 
   Clock, 
-  Database, 
-  Copy, 
+  Cloud,
   Check, 
   Trash2, 
   LogOut,
@@ -16,17 +13,20 @@ import {
   ShieldCheck,
   Upload,
   Camera,
-  RotateCcw,
   FileText,
   Lock,
   Key,
-  ExternalLink,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  Scale,
+  Ruler,
+  Activity,
+  Target,
+  Dumbbell,
+  Calendar
 } from 'lucide-react';
 import { useAppStore } from '../lib/store';
 import { 
-  SUPABASE_SQL_SCHEMA, 
   isSupabaseConfigured,
   isVercelEnvDetected,
   supabaseUrl,
@@ -48,13 +48,26 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
 
   const [name, setName] = useState(user?.name || '');
   const [avatarUrl, setAvatarUrl] = useState(user?.avatar_url || '');
-  const [copiedSql, setCopiedSql] = useState(false);
   const [savedSuccess, setSavedSuccess] = useState(false);
+  const [showAdvancedSync, setShowAdvancedSync] = useState(false);
 
-  // Supabase / Vercel credentials editing
+  // Supabase credentials editing (discreet)
   const [customUrl, setCustomUrl] = useState(supabaseUrl || '');
   const [customKey, setCustomKey] = useState(supabaseAnonKey || '');
   const [testResult, setTestResult] = useState<{ loading: boolean; success?: boolean; message: string } | null>(null);
+
+  // Calculate user BMI for quick display
+  const bmiInfo = useMemo(() => {
+    const weight = user?.weight || 70;
+    const height = user?.height || 175;
+    if (!weight || !height || height <= 0) return { value: 22.8, label: 'Peso Saudável', color: 'text-emerald-400' };
+    const hMeters = height / 100;
+    const val = Number((weight / (hMeters * hMeters)).toFixed(1));
+    if (val < 18.5) return { value: val, label: 'Abaixo do Peso', color: 'text-sky-400' };
+    if (val <= 24.9) return { value: val, label: 'Peso Ideal / Saudável', color: 'text-emerald-400' };
+    if (val <= 29.9) return { value: val, label: 'Sobrepeso Leve', color: 'text-amber-400' };
+    return { value: val, label: 'Obesidade', color: 'text-rose-400' };
+  }, [user?.weight, user?.height]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -93,8 +106,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
           ctx.drawImage(img, 0, 0, width, height);
           const compressed = canvas.toDataURL('image/jpeg', 0.85);
           setAvatarUrl(compressed);
+          actions.updateProfile(name, compressed);
         } else {
           setAvatarUrl(event.target?.result as string);
+          actions.updateProfile(name, event.target?.result as string);
         }
       };
       img.src = event.target?.result as string;
@@ -120,60 +135,111 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
     }
   };
 
-  const handleCopySql = () => {
-    navigator.clipboard.writeText(SUPABASE_SQL_SCHEMA);
-    setCopiedSql(true);
-    setTimeout(() => setCopiedSql(false), 2500);
+  const goalLabels: Record<string, string> = {
+    hipertrofia: 'Hipertrofia Muscular',
+    definicao: 'Definição & Queima',
+    emagrecimento: 'Perda de Gordura',
+    forca: 'Força Calistênica',
+    resistencia: 'Resistência & Saúde',
+    saude: 'Saúde & Condicionamento'
+  };
+
+  const levelLabels: Record<string, string> = {
+    iniciante: 'Iniciante (Começando do zero)',
+    intermediario: 'Intermediário (Treino regular)',
+    avancado: 'Avançado (Calistenia pesada)'
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8 animate-fade-in pb-20">
+    <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8 animate-fade-in pb-20">
       
       {/* Settings Header */}
-      <div className="rounded-3xl bg-zinc-900 border border-zinc-800 p-6 sm:p-8 space-y-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="space-y-2">
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white flex items-center space-x-3">
+      <div className="rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/30 border border-emerald-500/20 p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xl">
+        <div className="space-y-1.5">
+          <h1 className="text-2xl sm:text-3xl font-black text-white flex items-center space-x-3">
             <SettingsIcon className="w-8 h-8 text-lime-400" />
             <span>Configurações & Perfil</span>
           </h1>
           <p className="text-xs sm:text-sm text-zinc-400">
-            Personalize sua imagem de perfil, descanso entre séries, preferências de áudio e integração Supabase / Vercel.
+            Gerencie sua ficha de atleta, preferências de treino, descanso entre séries e conta.
           </p>
         </div>
 
         <BrandLogo size="lg" className="hidden sm:flex" />
       </div>
 
-      {/* Edit Profile Form */}
-      <div className="rounded-3xl bg-zinc-900 border border-zinc-800 p-6 sm:p-8 space-y-6">
+      {/* Perfil & Ficha do Atleta */}
+      <div className="rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/30 border border-emerald-500/20 p-6 sm:p-8 space-y-6 shadow-xl">
         <div className="flex items-center justify-between flex-wrap gap-4">
-          <h2 className="text-lg font-bold text-white flex items-center space-x-2">
-            <User className="w-5 h-5 text-lime-400" />
-            <span>Perfil do Atleta & Foto</span>
-          </h2>
+          <div className="space-y-1">
+            <h2 className="text-lg font-bold text-white flex items-center space-x-2">
+              <User className="w-5 h-5 text-lime-400" />
+              <span>Perfil do Atleta</span>
+            </h2>
+            <p className="text-xs text-zinc-400">Identificação e dados biométricos para personalização dos treinos.</p>
+          </div>
 
           {onOpenProfileSetup && (
             <button
               onClick={onOpenProfileSetup}
-              className="px-4 py-2 rounded-xl bg-lime-400/10 border border-lime-500/30 text-lime-400 font-bold text-xs hover:bg-lime-400/20 transition-all flex items-center space-x-2"
+              id="reopen-athlete-onboarding-btn"
+              className="px-4 py-2 rounded-xl bg-gradient-to-r from-lime-400 to-emerald-400 text-black font-extrabold text-xs hover:opacity-90 transition-all flex items-center space-x-2 shadow-md shadow-lime-500/10"
             >
               <Sparkles className="w-4 h-4" />
-              <span>Novo Cadastro (Zerar Perfil)</span>
+              <span>Atualizar Ficha de Treino</span>
             </button>
           )}
         </div>
 
         {savedSuccess && (
-          <div className="p-3.5 rounded-2xl bg-lime-500/20 text-lime-400 border border-lime-500/30 text-xs font-bold flex items-center space-x-2">
+          <div className="p-3.5 rounded-2xl bg-emerald-500/20 text-lime-300 border border-emerald-500/30 text-xs font-bold flex items-center space-x-2">
             <Check className="w-4 h-4 text-lime-400" />
             <span>Perfil atualizado com sucesso!</span>
           </div>
         )}
 
-        <form onSubmit={handleSaveProfile} className="space-y-6 max-w-xl">
-          {/* Avatar File Upload Box */}
-          <div className="p-4 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-3">
-            <label className="text-xs font-bold text-zinc-300 block">Foto de Perfil (Upload do Dispositivo)</label>
+        {/* Athlete Overview Card */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-2xl bg-zinc-950/80 border border-zinc-800">
+          <div className="space-y-1">
+            <span className="text-[11px] text-zinc-500 flex items-center space-x-1">
+              <Scale className="w-3.5 h-3.5 text-lime-400" />
+              <span>Peso Atual</span>
+            </span>
+            <div className="text-sm font-black text-white">{user?.weight || 70} kg</div>
+          </div>
+
+          <div className="space-y-1">
+            <span className="text-[11px] text-zinc-500 flex items-center space-x-1">
+              <Ruler className="w-3.5 h-3.5 text-teal-400" />
+              <span>Altura</span>
+            </span>
+            <div className="text-sm font-black text-white">{user?.height || 175} cm</div>
+          </div>
+
+          <div className="space-y-1">
+            <span className="text-[11px] text-zinc-500 flex items-center space-x-1">
+              <Activity className="w-3.5 h-3.5 text-emerald-400" />
+              <span>IMC Calculado</span>
+            </span>
+            <div className={`text-sm font-black ${bmiInfo.color}`}>{bmiInfo.value} • {bmiInfo.label}</div>
+          </div>
+
+          <div className="space-y-1">
+            <span className="text-[11px] text-zinc-500 flex items-center space-x-1">
+              <Target className="w-3.5 h-3.5 text-amber-400" />
+              <span>Meta Principal</span>
+            </span>
+            <div className="text-xs font-black text-zinc-200 truncate">
+              {user?.fitness_goal ? goalLabels[user.fitness_goal] || user.fitness_goal : 'Hipertrofia'}
+            </div>
+          </div>
+        </div>
+
+        {/* Quick Edit Basic Fields */}
+        <form onSubmit={handleSaveProfile} className="space-y-5 max-w-xl">
+          {/* Avatar Upload */}
+          <div className="p-4 rounded-2xl bg-zinc-950/80 border border-zinc-800 space-y-3">
+            <label className="text-xs font-bold text-zinc-300 block">Foto de Perfil</label>
             <div className="flex items-center space-x-4">
               <div className="relative group shrink-0">
                 <img
@@ -202,7 +268,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="px-3 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 text-xs font-bold border border-zinc-800 flex items-center space-x-1.5"
+                  className="px-3.5 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 text-xs font-bold border border-zinc-700 flex items-center space-x-1.5"
                 >
                   <Upload className="w-3.5 h-3.5 text-lime-400" />
                   <span>Trocar Imagem</span>
@@ -212,7 +278,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
             </div>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             <label className="text-xs font-bold text-zinc-300">Nome do Atleta</label>
             <input
               type="text"
@@ -222,57 +288,47 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             <label className="text-xs font-bold text-zinc-300">E-mail Cadastrado</label>
             <input
               type="email"
               disabled
               value={user?.email || ''}
-              className="w-full bg-zinc-950/50 border border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-500 cursor-not-allowed"
+              className="w-full bg-zinc-950/50 border border-zinc-800/80 rounded-xl px-4 py-2.5 text-sm text-zinc-500 cursor-not-allowed"
             />
-            <p className="text-[10px] text-zinc-500">O e-mail é a chave principal da sua conta no Supabase.</p>
           </div>
 
-          <div className="flex items-center space-x-3">
-            <button
-              type="submit"
-              className="px-6 py-3 rounded-2xl bg-lime-400 text-black font-extrabold text-xs shadow-md shadow-lime-500/20 hover:bg-lime-300 transition-all"
-            >
-              Salvar Perfil
-            </button>
-
-            <button
-              type="button"
-              onClick={() => {
-                if (confirm('Deseja zerar todas as estatísticas para começar do zero (0 XP, Nível 1)?')) {
-                  actions.resetToZeroProfile();
-                }
-              }}
-              className="px-4 py-3 rounded-2xl bg-zinc-950 text-zinc-300 hover:text-white border border-zinc-800 text-xs font-bold transition-all flex items-center space-x-1.5"
-            >
-              <RotateCcw className="w-4 h-4 text-lime-400" />
-              <span>Zerar Dados Iniciais</span>
-            </button>
-          </div>
+          <button
+            type="submit"
+            className="px-6 py-2.5 rounded-xl bg-lime-400 text-black font-extrabold text-xs shadow-md shadow-lime-500/20 hover:bg-lime-300 transition-all"
+          >
+            Salvar Alterações
+          </button>
         </form>
       </div>
 
-      {/* Preferences Section */}
-      <div className="rounded-3xl bg-zinc-900 border border-zinc-800 p-6 sm:p-8 space-y-6">
-        <h2 className="text-lg font-bold text-white">Preferências de Treino & Áudio</h2>
+      {/* Preferências de Treino & Áudio */}
+      <div className="rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/30 border border-emerald-500/20 p-6 sm:p-8 space-y-6 shadow-xl">
+        <div className="space-y-1">
+          <h2 className="text-lg font-bold text-white flex items-center space-x-2">
+            <Clock className="w-5 h-5 text-lime-400" />
+            <span>Preferências de Treino & Áudio</span>
+          </h2>
+          <p className="text-xs text-zinc-400">Ajuste o cronômetro automático e feedback tátil.</p>
+        </div>
 
-        <div className="space-y-4 max-w-xl">
+        <div className="space-y-3.5 max-w-xl">
           {/* Default Rest Timer */}
-          <div className="p-4 rounded-2xl bg-zinc-950 border border-zinc-800 flex items-center justify-between">
+          <div className="p-4 rounded-2xl bg-zinc-950/80 border border-zinc-800 flex items-center justify-between">
             <div>
               <div className="text-sm font-bold text-zinc-200">Descanso Padrão entre Séries</div>
-              <div className="text-xs text-zinc-400">Iniciado automaticamente ao marcar uma série.</div>
+              <div className="text-xs text-zinc-400">Iniciado ao marcar uma série como concluída.</div>
             </div>
 
             <select
               value={settings.descanso}
               onChange={e => actions.updateSettings({ descanso: Number(e.target.value) })}
-              className="bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs font-bold text-lime-400 focus:outline-none"
+              className="bg-zinc-900 border border-zinc-700 rounded-xl px-3 py-2 text-xs font-bold text-lime-400 focus:outline-none cursor-pointer"
             >
               <option value={30}>30s</option>
               <option value={45}>45s</option>
@@ -283,12 +339,12 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
           </div>
 
           {/* Sound Toggle */}
-          <div className="p-4 rounded-2xl bg-zinc-950 border border-zinc-800 flex items-center justify-between">
+          <div className="p-4 rounded-2xl bg-zinc-950/80 border border-zinc-800 flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <Volume2 className="w-5 h-5 text-lime-400" />
               <div>
-                <div className="text-sm font-bold text-zinc-200">Sons & Chimes do Cronômetro</div>
-                <div className="text-xs text-zinc-400">Efeitos sonoros ao concluir descanso e subir nível.</div>
+                <div className="text-sm font-bold text-zinc-200">Efeitos Sonoros & Chimes</div>
+                <div className="text-xs text-zinc-400">Avisos sonoros no cronômetro e conquistas.</div>
               </div>
             </div>
 
@@ -301,12 +357,12 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
           </div>
 
           {/* Vibration Toggle */}
-          <div className="p-4 rounded-2xl bg-zinc-950 border border-zinc-800 flex items-center justify-between">
+          <div className="p-4 rounded-2xl bg-zinc-950/80 border border-zinc-800 flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <Vibrate className="w-5 h-5 text-teal-400" />
               <div>
                 <div className="text-sm font-bold text-zinc-200">Vibração Hática (Mobile)</div>
-                <div className="text-xs text-zinc-400">Feedback tátil ao marcar exercícios no celular.</div>
+                <div className="text-xs text-zinc-400">Feedback tátil ao tocar e completar séries.</div>
               </div>
             </div>
 
@@ -320,150 +376,134 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
         </div>
       </div>
 
-      {/* Vercel & Supabase Environment Configuration */}
-      <div className="rounded-3xl bg-zinc-900 border border-zinc-800 p-6 sm:p-8 space-y-6">
-        <div className="flex items-center justify-between flex-wrap gap-4">
+      {/* Sincronização em Nuvem (Discreet & Clean) */}
+      <div className="rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/30 border border-emerald-500/20 p-6 sm:p-8 space-y-4 shadow-xl">
+        <div className="flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center space-x-3">
-            <Key className="w-6 h-6 text-lime-400" />
+            <Cloud className="w-6 h-6 text-lime-400" />
             <div>
-              <h2 className="text-lg font-bold text-white">Integração Vercel & Supabase Cloud</h2>
+              <h2 className="text-lg font-bold text-white">Sincronização em Nuvem</h2>
               <p className="text-xs text-zinc-400">
                 Status: {isSupabaseConfigured 
-                  ? (isVercelEnvDetected ? '🟢 Conectado via Variáveis Vercel' : '🟢 Conectado ao Supabase') 
-                  : '🟡 Modo Local Offline'}
+                  ? (isVercelEnvDetected ? '🟢 Sincronizado via Vercel' : '🟢 Sincronizado com Supabase Cloud') 
+                  : '🟢 Armazenamento Local Seguro'}
               </p>
             </div>
           </div>
+
+          <button
+            onClick={() => setShowAdvancedSync(!showAdvancedSync)}
+            className="text-xs text-zinc-400 hover:text-lime-400 underline transition-colors"
+          >
+            {showAdvancedSync ? 'Ocultar Configuração Avançada' : 'Configurações Avançadas de API'}
+          </button>
         </div>
 
-        <p className="text-xs text-zinc-400 leading-relaxed max-w-2xl">
-          Na <strong>Vercel</strong>, basta configurar <code className="text-lime-300 font-mono bg-zinc-950 px-1.5 py-0.5 rounded">VITE_SUPABASE_URL</code> e <code className="text-lime-300 font-mono bg-zinc-950 px-1.5 py-0.5 rounded">VITE_SUPABASE_ANON_KEY</code> nas configurações de Environment Variables. O Treino Home detecta as chaves automaticamente!
-        </p>
+        {showAdvancedSync && (
+          <div className="space-y-4 pt-3 border-t border-zinc-800/80 animate-fade-in max-w-2xl">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="text-xs font-semibold text-zinc-300 block mb-1">Supabase URL</label>
+                <input
+                  type="text"
+                  placeholder="https://xxx.supabase.co"
+                  value={customUrl}
+                  onChange={e => setCustomUrl(e.target.value)}
+                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 focus:outline-none focus:border-lime-400"
+                />
+              </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
-          <div>
-            <label className="text-xs font-semibold text-zinc-300 block mb-1">Supabase URL</label>
-            <input
-              type="text"
-              placeholder="https://xxx.supabase.co"
-              value={customUrl}
-              onChange={e => setCustomUrl(e.target.value)}
-              className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 focus:outline-none focus:border-lime-400"
-            />
-          </div>
+              <div>
+                <label className="text-xs font-semibold text-zinc-300 block mb-1">Supabase Anon Key</label>
+                <input
+                  type="password"
+                  placeholder="eyJhbGciOi..."
+                  value={customKey}
+                  onChange={e => setCustomKey(e.target.value)}
+                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 focus:outline-none focus:border-lime-400"
+                />
+              </div>
+            </div>
 
-          <div>
-            <label className="text-xs font-semibold text-zinc-300 block mb-1">Supabase Anon Key</label>
-            <input
-              type="password"
-              placeholder="eyJhbGciOi..."
-              value={customKey}
-              onChange={e => setCustomKey(e.target.value)}
-              className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 focus:outline-none focus:border-lime-400"
-            />
-          </div>
-        </div>
+            {testResult && (
+              <div className={`p-3 rounded-2xl text-xs font-bold flex items-center space-x-2 ${
+                testResult.success 
+                  ? 'bg-emerald-500/10 text-lime-400 border border-emerald-500/30'
+                  : 'bg-rose-500/10 text-rose-400 border border-rose-500/30'
+              }`}>
+                {testResult.success ? <CheckCircle2 className="w-4 h-4 shrink-0" /> : <AlertCircle className="w-4 h-4 shrink-0" />}
+                <span>{testResult.message}</span>
+              </div>
+            )}
 
-        {testResult && (
-          <div className={`p-3 rounded-2xl text-xs font-bold flex items-center space-x-2 max-w-2xl ${
-            testResult.success 
-              ? 'bg-lime-500/10 text-lime-400 border border-lime-500/30'
-              : 'bg-rose-500/10 text-rose-400 border border-rose-500/30'
-          }`}>
-            {testResult.success ? <CheckCircle2 className="w-4 h-4 shrink-0" /> : <AlertCircle className="w-4 h-4 shrink-0" />}
-            <span>{testResult.message}</span>
+            <button
+              onClick={handleSaveKeys}
+              disabled={testResult?.loading}
+              className="px-4 py-2 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-extrabold text-xs transition-all shadow-md shadow-lime-500/10 disabled:opacity-50"
+            >
+              {testResult?.loading ? 'Testando Conexão...' : 'Testar & Salvar'}
+            </button>
           </div>
         )}
-
-        <div className="flex flex-wrap gap-3">
-          <button
-            onClick={handleSaveKeys}
-            disabled={testResult?.loading}
-            className="px-5 py-2.5 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-extrabold text-xs transition-all shadow-md shadow-lime-500/20 disabled:opacity-50"
-          >
-            {testResult?.loading ? 'Testando Conexão...' : 'Testar & Salvar Chaves'}
-          </button>
-        </div>
       </div>
 
-      {/* Supabase Schema & SQL Exporter */}
-      <div className="rounded-3xl bg-zinc-900 border border-zinc-800 p-6 sm:p-8 space-y-6">
-        <div className="flex items-center justify-between flex-wrap gap-4">
-          <div className="flex items-center space-x-3">
-            <Database className="w-6 h-6 text-lime-400" />
-            <div>
-              <h2 className="text-lg font-bold text-white">Estrutura de Tabelas & Políticas RLS</h2>
-              <p className="text-xs text-zinc-400">
-                Script SQL pronto para executar no SQL Editor do seu painel Supabase.
-              </p>
-            </div>
-          </div>
-
-          <button
-            onClick={handleCopySql}
-            className="px-4 py-2 rounded-xl bg-zinc-950 border border-zinc-800 text-xs font-bold text-lime-400 hover:bg-zinc-800 transition-colors flex items-center space-x-1.5"
-          >
-            {copiedSql ? <Check className="w-4 h-4 text-lime-400" /> : <Copy className="w-4 h-4" />}
-            <span>{copiedSql ? 'Copiado!' : 'Copiar Script SQL + RLS'}</span>
-          </button>
-        </div>
-
-        <div className="p-4 rounded-2xl bg-zinc-950 border border-zinc-800 font-mono text-xs text-zinc-400 max-h-48 overflow-y-auto">
-          <pre>{SUPABASE_SQL_SCHEMA}</pre>
-        </div>
-      </div>
-
-      {/* Legal and Terms Section */}
-      <div className="rounded-3xl bg-zinc-900 border border-zinc-800 p-6 sm:p-8 space-y-4">
+      {/* Termos de Uso e Privacidade LGPD */}
+      <div className="rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/30 border border-emerald-500/20 p-6 sm:p-8 space-y-4 shadow-xl">
         <div className="flex items-center space-x-3">
           <ShieldCheck className="w-6 h-6 text-lime-400" />
           <div>
-            <h2 className="text-lg font-bold text-white">Políticas, Termos & Privacidade</h2>
-            <p className="text-xs text-zinc-400">
-              Transparência total com seus dados pessoais e orientações de segurança física.
-            </p>
+            <h2 className="text-lg font-bold text-white">Privacidade & Termos</h2>
+            <p className="text-xs text-zinc-400">Proteção de dados pessoais e diretrizes de treino com segurança física.</p>
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-3 pt-2">
+        <div className="flex flex-wrap gap-3 pt-1">
           <button
             onClick={() => onOpenTerms?.('terms')}
-            className="px-4 py-2.5 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-zinc-200 border border-zinc-800 text-xs font-bold flex items-center space-x-2 transition-colors"
+            className="px-4 py-2 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-zinc-200 border border-zinc-800 text-xs font-bold flex items-center space-x-2 transition-colors"
           >
             <FileText className="w-4 h-4 text-lime-400" />
-            <span>Ver Termos de Uso</span>
+            <span>Termos de Uso</span>
           </button>
 
           <button
             onClick={() => onOpenTerms?.('privacy')}
-            className="px-4 py-2.5 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-zinc-200 border border-zinc-800 text-xs font-bold flex items-center space-x-2 transition-colors"
+            className="px-4 py-2 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-zinc-200 border border-zinc-800 text-xs font-bold flex items-center space-x-2 transition-colors"
           >
             <Lock className="w-4 h-4 text-lime-400" />
-            <span>Ver Política de Privacidade (LGPD)</span>
+            <span>Política de Privacidade (LGPD)</span>
           </button>
         </div>
       </div>
 
-      {/* Danger Zone */}
-      <div className="rounded-3xl bg-rose-950/20 border border-rose-500/30 p-6 sm:p-8 space-y-4">
-        <h2 className="text-lg font-bold text-rose-400">Zona de Perigo</h2>
-        <div className="flex flex-wrap gap-4">
+      {/* Conta & Zona de Segurança */}
+      <div className="rounded-3xl bg-rose-950/15 border border-rose-500/20 p-6 sm:p-8 space-y-4 shadow-xl">
+        <div className="space-y-1">
+          <h2 className="text-lg font-bold text-rose-400">Conta & Gerenciamento</h2>
+          <p className="text-xs text-zinc-400">Encerre a sessão atual ou limpe seus dados do dispositivo.</p>
+        </div>
+
+        <div className="flex flex-wrap gap-3 pt-1">
           <button
             onClick={() => actions.logout()}
-            className="px-5 py-2.5 rounded-xl bg-zinc-900 text-zinc-200 border border-zinc-800 text-xs font-bold hover:bg-zinc-800"
+            id="logout-btn"
+            className="px-5 py-2.5 rounded-xl bg-zinc-900 text-zinc-200 border border-zinc-800 text-xs font-bold hover:bg-zinc-800 flex items-center space-x-2 transition-colors"
           >
-            Sair da Conta (Logout)
+            <LogOut className="w-4 h-4 text-zinc-400" />
+            <span>Sair da Conta (Logout)</span>
           </button>
 
           <button
             onClick={() => {
-              if (confirm('Tem certeza que deseja resetar todo o seu progresso?')) {
+              if (confirm('Deseja realmente resetar todas as estatísticas e histórico de treinos?')) {
                 actions.resetAllData();
               }
             }}
-            className="px-5 py-2.5 rounded-xl bg-rose-500/20 text-rose-400 border border-rose-500/40 text-xs font-bold hover:bg-rose-500/30"
+            id="reset-all-data-btn"
+            className="px-5 py-2.5 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/40 text-xs font-bold hover:bg-rose-500/30 flex items-center space-x-2 transition-colors"
           >
-            Resetar Todos os Dados
+            <Trash2 className="w-4 h-4 text-rose-400" />
+            <span>Resetar Dados de Treino</span>
           </button>
         </div>
       </div>

@@ -99,8 +99,8 @@ export const WorkoutScreen: React.FC<WorkoutScreenProps> = () => {
       </div>
 
       {/* Workout Overview Header */}
-      <div className="rounded-3xl bg-zinc-900 border border-zinc-800 p-6 sm:p-8 space-y-4 relative overflow-hidden shadow-xl">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-lime-400/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/30 border border-emerald-500/20 p-6 sm:p-8 space-y-4 relative overflow-hidden shadow-xl">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
           <div>
@@ -109,7 +109,7 @@ export const WorkoutScreen: React.FC<WorkoutScreenProps> = () => {
                 Treino de {selectedDay}
               </span>
               {currentWorkout.completed && (
-                <span className="px-2.5 py-0.5 rounded-full bg-lime-500/20 text-lime-400 text-[10px] font-extrabold border border-lime-500/30">
+                <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-lime-400 text-[10px] font-extrabold border border-emerald-500/30">
                   Concluído 🎉
                 </span>
               )}
@@ -121,7 +121,7 @@ export const WorkoutScreen: React.FC<WorkoutScreenProps> = () => {
 
           {/* Session Timer & Finish Action */}
           <div className="flex flex-col sm:items-end space-y-3">
-            <div className="flex items-center space-x-2 bg-zinc-950 border border-zinc-800 px-4 py-2 rounded-2xl">
+            <div className="flex items-center space-x-2 bg-zinc-950/80 border border-zinc-800 px-4 py-2 rounded-2xl">
               <Clock className="w-4 h-4 text-lime-400 animate-spin" />
               <span className="font-mono text-base font-bold text-white">{formatTime(elapsedSeconds)}</span>
             </div>
@@ -129,7 +129,7 @@ export const WorkoutScreen: React.FC<WorkoutScreenProps> = () => {
             <button
               onClick={handleCompleteWorkout}
               id="finish-workout-btn"
-              className="px-6 py-3 rounded-2xl bg-lime-400 text-black font-extrabold text-xs shadow-lg shadow-lime-500/20 hover:bg-lime-300 hover:scale-105 active:scale-95 transition-all flex items-center space-x-2"
+              className="px-6 py-3 rounded-2xl bg-gradient-to-r from-lime-400 to-emerald-400 text-black font-extrabold text-xs shadow-lg shadow-lime-500/20 hover:scale-105 active:scale-95 transition-all flex items-center space-x-2"
             >
               <CheckCircle2 className="w-4 h-4" />
               <span>Concluir Treino (+100 XP)</span>
@@ -151,10 +151,10 @@ export const WorkoutScreen: React.FC<WorkoutScreenProps> = () => {
           return (
             <div 
               key={exercise.id}
-              className={`rounded-3xl border transition-all p-5 sm:p-6 space-y-4 ${
+              className={`rounded-3xl border transition-all p-5 sm:p-6 space-y-4 shadow-md ${
                 isFinished 
-                  ? 'bg-zinc-950/80 border-lime-500/30' 
-                  : 'bg-zinc-900 border-zinc-800 hover:border-zinc-700'
+                  ? 'bg-gradient-to-br from-zinc-950 via-zinc-950 to-emerald-950/20 border-emerald-500/30' 
+                  : 'bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/15 border-emerald-500/20 hover:border-emerald-500/40'
               }`}
             >
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">

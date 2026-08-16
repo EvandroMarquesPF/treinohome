@@ -93,9 +93,11 @@ function loadInitialState(): AppState {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
+      const hasCachedUser = Boolean(parsed.user && parsed.user.id);
       return {
         ...createFreshState(),
         ...parsed,
+        isLoggedIn: hasCachedUser ? (parsed.isLoggedIn !== false) : false,
         activeRestTimer: null,
         levelUpModal: null,
         phaseCompleteModal: null
@@ -365,14 +367,39 @@ export const storeActions = {
     notify();
   },
 
-  registerCleanProfile: (params: { name: string; email: string; avatarUrl?: string; id?: string }) => {
+  registerCleanProfile: (params: { 
+    name: string; 
+    email: string; 
+    avatarUrl?: string; 
+    id?: string;
+    gender?: 'masculino' | 'feminino' | 'outro' | 'nao_informado';
+    age?: number;
+    weight?: number;
+    height?: number;
+    fitness_goal?: 'hipertrofia' | 'emagrecimento' | 'definicao' | 'forca' | 'resistencia' | 'saude';
+    experience_level?: 'iniciante' | 'intermediario' | 'avancado';
+    weekly_days_target?: number;
+    session_duration_minutes?: number;
+    limitations?: string[];
+    onboarding_completed?: boolean;
+  }) => {
     const userId = params.id || state.user?.id || crypto.randomUUID();
     const cleanUser: Profile = {
       id: userId,
       name: params.name || 'Novo Atleta',
       email: params.email || 'atleta@treinohome.app',
       avatar_url: params.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop',
-      created_at: new Date().toISOString()
+      created_at: new Date().toISOString(),
+      gender: params.gender || 'nao_informado',
+      age: params.age || 25,
+      weight: params.weight || 70,
+      height: params.height || 175,
+      fitness_goal: params.fitness_goal || 'hipertrofia',
+      experience_level: params.experience_level || 'iniciante',
+      weekly_days_target: params.weekly_days_target || 5,
+      session_duration_minutes: params.session_duration_minutes || 30,
+      limitations: params.limitations || ['nenhuma'],
+      onboarding_completed: params.onboarding_completed !== undefined ? params.onboarding_completed : true
     };
 
     const zeroProgress: Progress = {
@@ -713,6 +740,18 @@ export const storeActions = {
         ...state.user,
         name,
         avatar_url: avatar_url || state.user.avatar_url
+      }
+    };
+    notify();
+  },
+
+  updateAthleteProfile: (updates: Partial<Profile>) => {
+    if (!state.user) return;
+    state = {
+      ...state,
+      user: {
+        ...state.user,
+        ...updates
       }
     };
     notify();

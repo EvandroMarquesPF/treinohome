@@ -14,7 +14,7 @@ export const PhaseCompleteModal: React.FC = () => {
         
         <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-black animate-bounce">
           <Sparkles className="w-4 h-4" />
-          <span>FATOR DUOLINGO: FASE CONCLUÍDA!</span>
+          <span>TRILHA DE EVOLUÇÃO: FASE CONCLUÍDA!</span>
         </div>
 
         <div className="text-6xl animate-pulse">🎉</div>

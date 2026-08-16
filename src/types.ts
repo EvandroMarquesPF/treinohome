@@ -6,6 +6,16 @@ export interface Profile {
   email: string;
   avatar_url?: string;
   created_at: string;
+  gender?: 'masculino' | 'feminino' | 'outro' | 'nao_informado';
+  age?: number;
+  weight?: number; // em kg (ex: 75.5)
+  height?: number; // em cm (ex: 178)
+  fitness_goal?: 'hipertrofia' | 'emagrecimento' | 'definicao' | 'forca' | 'resistencia' | 'saude';
+  experience_level?: 'iniciante' | 'intermediario' | 'avancado';
+  weekly_days_target?: number; // 3, 4, 5, 6
+  session_duration_minutes?: number; // 15, 30, 45
+  limitations?: string[]; // ['joelhos', 'ombros', 'coluna', 'nenhuma']
+  onboarding_completed?: boolean;
 }
 
 export interface Exercise {

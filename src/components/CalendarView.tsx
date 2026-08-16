@@ -64,11 +64,11 @@ export const CalendarView: React.FC = () => {
     <div className="max-w-4xl mx-auto space-y-8 animate-fade-in pb-16">
       
       {/* Calendar Header */}
-      <div className="rounded-3xl bg-zinc-900 border border-zinc-800 p-6 sm:p-8 space-y-6">
+      <div className="rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/30 border border-emerald-500/20 p-6 sm:p-8 space-y-6 shadow-xl">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-white flex items-center space-x-3">
-              <CalendarIcon className="w-8 h-8 text-emerald-400" />
+              <CalendarIcon className="w-8 h-8 text-lime-400" />
               <span>Calendário de Consistência</span>
             </h1>
             <p className="text-xs sm:text-sm text-zinc-400 mt-1">
@@ -79,7 +79,7 @@ export const CalendarView: React.FC = () => {
           <div className="flex items-center space-x-3">
             <button
               onClick={handlePrevMonth}
-              className="p-2.5 rounded-xl bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 transition-colors"
+              className="p-2.5 rounded-xl bg-zinc-950/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 transition-colors"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
@@ -88,7 +88,7 @@ export const CalendarView: React.FC = () => {
             </span>
             <button
               onClick={handleNextMonth}
-              className="p-2.5 rounded-xl bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 transition-colors"
+              className="p-2.5 rounded-xl bg-zinc-950/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 transition-colors"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -96,28 +96,28 @@ export const CalendarView: React.FC = () => {
         </div>
 
         {/* Status Legend Bar */}
-        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-xs font-semibold pt-4 border-t border-zinc-800">
+        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-xs font-semibold pt-4 border-t border-zinc-800/80">
           <div className="flex items-center space-x-2">
             <span className="w-3 h-3 rounded-full bg-emerald-500" />
-            <span className="text-zinc-300">🟢 Treino Feito</span>
+            <span className="text-zinc-300">Treino Feito</span>
           </div>
           <div className="flex items-center space-x-2">
             <span className="w-3 h-3 rounded-full bg-amber-400" />
-            <span className="text-zinc-300">🟡 Hoje</span>
+            <span className="text-zinc-300">Hoje</span>
           </div>
           <div className="flex items-center space-x-2">
             <span className="w-3 h-3 rounded-full bg-indigo-400" />
-            <span className="text-zinc-300">🔵 Descanso</span>
+            <span className="text-zinc-300">Descanso</span>
           </div>
           <div className="flex items-center space-x-2">
             <span className="w-3 h-3 rounded-full bg-rose-500" />
-            <span className="text-zinc-300">🔴 Faltou</span>
+            <span className="text-zinc-300">Faltou</span>
           </div>
         </div>
       </div>
 
       {/* Grid Calendar */}
-      <div className="rounded-3xl bg-zinc-900 border border-zinc-800 p-6 sm:p-8 space-y-4 shadow-xl">
+      <div className="rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/25 border border-emerald-500/20 p-6 sm:p-8 space-y-4 shadow-xl">
         <div className="grid grid-cols-7 gap-2 text-center font-bold text-xs text-zinc-400 pb-2 border-b border-zinc-800">
           {weekDays.map(wd => (
             <div key={wd}>{wd}</div>
@@ -146,7 +146,7 @@ export const CalendarView: React.FC = () => {
                   <span className="text-[10px] font-extrabold uppercase mt-0.5">✓</span>
                 )}
                 {dayInfo.status === 'today' && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-zinc-950 mt-0.5 animate-ping" />
+                  <span className="w-5 h-1 rounded-full bg-zinc-950 mt-1 animate-pulse" />
                 )}
               </button>
             );

@@ -63,110 +63,135 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="font-extrabold text-lg sm:text-xl tracking-tight text-white">
                 Treino Home
               </span>
-              <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-lime-400/15 text-lime-400 font-extrabold border border-lime-500/30 shadow-sm">
-                Pro
-              </span>
             </div>
           </div>
 
           {/* Logged In Stats Bar */}
           {isLoggedIn ? (
-            <div className="hidden md:flex items-center space-x-6">
-              {/* Level & XP */}
-              <div className="flex items-center space-x-3 bg-zinc-900/90 border border-zinc-800 rounded-full px-4 py-1.5">
-                <div className="flex items-center space-x-1.5 text-amber-400 font-bold text-xs">
-                  <Trophy className="w-4 h-4 fill-amber-400/20" />
-                  <span>Nível {currentLevel}</span>
+            <>
+              {/* Desktop Nav and Stats */}
+              <div className="hidden md:flex items-center space-x-6">
+                {/* Level & XP */}
+                <div className="flex items-center space-x-3 bg-zinc-900/90 border border-zinc-800 rounded-full px-4 py-1.5">
+                  <div className="flex items-center space-x-1.5 text-amber-400 font-bold text-xs">
+                    <Trophy className="w-4 h-4 fill-amber-400/20" />
+                    <span>Nível {currentLevel}</span>
+                  </div>
+                  <div className="w-24 bg-zinc-800 h-2 rounded-full overflow-hidden">
+                    <div 
+                      className="bg-lime-400 h-full transition-all duration-500 rounded-full"
+                      style={{ width: `${levelProgress}%` }}
+                    />
+                  </div>
+                  <span className="text-xs text-zinc-400 font-semibold">{currentXp} XP</span>
                 </div>
-                <div className="w-24 bg-zinc-800 h-2 rounded-full overflow-hidden">
+
+                {/* Streak */}
+                <div className="flex items-center space-x-1.5 bg-lime-500/10 border border-lime-500/20 px-3 py-1.5 rounded-full text-lime-400 font-bold text-xs">
+                  <Flame className="w-4 h-4 text-lime-400 fill-lime-400/20 animate-pulse" />
+                  <span>{progress.sequencia_dias} dias</span>
+                </div>
+
+                {/* Navigation Links */}
+                <nav className="flex items-center space-x-1">
+                  {[
+                    { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
+                    { id: 'workout', label: 'Treinos', icon: Dumbbell },
+                    { id: 'evolution', label: 'Evolução', icon: Zap },
+                    { id: 'calendar', label: 'Calendário', icon: Calendar },
+                    { id: 'achievements', label: 'Conquistas', icon: Award },
+                    { id: 'settings', label: 'Ajustes', icon: Settings }
+                  ].map(item => {
+                    const Icon = item.icon;
+                    const isActive = currentTab === item.id;
+                    return (
+                      <button
+                        key={item.id}
+                        onClick={() => onSelectTab(item.id)}
+                        id={`nav-link-${item.id}`}
+                        className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                          isActive 
+                            ? 'bg-zinc-900 text-lime-400 border border-lime-500/30 font-bold' 
+                            : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+                        }`}
+                      >
+                        <Icon className="w-3.5 h-3.5" />
+                        <span>{item.label}</span>
+                      </button>
+                    );
+                  })}
+                </nav>
+
+                {/* Action Buttons */}
+                <div className="flex items-center space-x-2 border-l border-zinc-800 pl-4">
+                  <button
+                    onClick={onOpenNotifications}
+                    id="notifications-btn"
+                    className="p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 transition-colors relative group"
+                    title="Notificações diárias"
+                  >
+                    <Bell className="w-4 h-4" />
+                    <div className="absolute -bottom-1 left-1.5 right-1.5 h-0.5 bg-gradient-to-r from-lime-400 to-emerald-400 rounded-full animate-pulse shadow-sm shadow-lime-400/40" />
+                  </button>
+
+                  <button
+                    onClick={toggleTheme}
+                    id="theme-toggle-btn"
+                    className="p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 transition-colors"
+                    title="Alternar tema"
+                  >
+                    {settings.tema === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-400" />}
+                  </button>
+
+                  {/* Profile Pill */}
                   <div 
-                    className="bg-lime-400 h-full transition-all duration-500 rounded-full"
-                    style={{ width: `${levelProgress}%` }}
-                  />
+                    onClick={() => onSelectTab('settings')}
+                    className="flex items-center space-x-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-full pl-1.5 pr-3 py-1 cursor-pointer transition-colors"
+                    id="profile-pill-btn"
+                  >
+                    {user?.avatar_url ? (
+                      <img 
+                        src={user.avatar_url} 
+                        alt={user.name} 
+                        className="w-6 h-6 rounded-full object-cover" 
+                        referrerPolicy="no-referrer"
+                      />
+                    ) : (
+                      <div className="w-6 h-6 rounded-full bg-lime-400 text-zinc-950 flex items-center justify-center font-bold text-xs">
+                        {user?.name?.[0] || 'A'}
+                      </div>
+                    )}
+                    <span className="text-xs font-medium text-zinc-200">{user?.name}</span>
+                  </div>
                 </div>
-                <span className="text-xs text-zinc-400 font-semibold">{currentXp} XP</span>
               </div>
 
-              {/* Streak */}
-              <div className="flex items-center space-x-1.5 bg-lime-500/10 border border-lime-500/20 px-3 py-1.5 rounded-full text-lime-400 font-bold text-xs">
-                <Flame className="w-4 h-4 text-lime-400 fill-lime-400/20 animate-pulse" />
-                <span>{progress.sequencia_dias} dias</span>
-              </div>
+              {/* Mobile Quick Action Buttons on top right */}
+              <div className="flex md:hidden items-center space-x-2">
+                <div className="flex items-center space-x-1 bg-lime-500/10 border border-lime-500/20 px-2 py-1 rounded-full text-lime-400 font-bold text-[11px]">
+                  <Flame className="w-3.5 h-3.5 text-lime-400 fill-lime-400/20" />
+                  <span>{progress.sequencia_dias}d</span>
+                </div>
 
-              {/* Navigation Links */}
-              <nav className="flex items-center space-x-1">
-                {[
-                  { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
-                  { id: 'workout', label: 'Treinos', icon: Dumbbell },
-                  { id: 'evolution', label: 'Evolução', icon: Zap },
-                  { id: 'calendar', label: 'Calendário', icon: Calendar },
-                  { id: 'achievements', label: 'Conquistas', icon: Award },
-                  { id: 'settings', label: 'Ajustes', icon: Settings }
-                ].map(item => {
-                  const Icon = item.icon;
-                  const isActive = currentTab === item.id;
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => onSelectTab(item.id)}
-                      id={`nav-link-${item.id}`}
-                      className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-                        isActive 
-                          ? 'bg-zinc-900 text-lime-400 border border-lime-500/30 font-bold' 
-                          : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
-                      }`}
-                    >
-                      <Icon className="w-3.5 h-3.5" />
-                      <span>{item.label}</span>
-                    </button>
-                  );
-                })}
-              </nav>
-
-              {/* Action Buttons */}
-              <div className="flex items-center space-x-2 border-l border-zinc-800 pl-4">
                 <button
                   onClick={onOpenNotifications}
-                  id="notifications-btn"
-                  className="p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 transition-colors relative"
-                  title="Notificações diárias"
+                  id="notifications-mobile-btn"
+                  className="p-2 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-300 relative group"
+                  title="Notificações"
                 >
                   <Bell className="w-4 h-4" />
-                  <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-lime-400 animate-ping" />
-                  <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-lime-400" />
+                  <div className="absolute -bottom-1 left-2 right-2 h-0.5 bg-gradient-to-r from-lime-400 to-emerald-400 rounded-full animate-pulse" />
                 </button>
 
                 <button
                   onClick={toggleTheme}
-                  id="theme-toggle-btn"
-                  className="p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 transition-colors"
-                  title="Alternar tema"
+                  id="theme-mobile-toggle-btn"
+                  className="p-2 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-300"
                 >
                   {settings.tema === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-400" />}
                 </button>
-
-                {/* Profile Pill */}
-                <div 
-                  onClick={() => onSelectTab('settings')}
-                  className="flex items-center space-x-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-full pl-1.5 pr-3 py-1 cursor-pointer transition-colors"
-                  id="profile-pill-btn"
-                >
-                  {user?.avatar_url ? (
-                    <img 
-                      src={user.avatar_url} 
-                      alt={user.name} 
-                      className="w-6 h-6 rounded-full object-cover" 
-                      referrerPolicy="no-referrer"
-                    />
-                  ) : (
-                    <div className="w-6 h-6 rounded-full bg-lime-400 text-zinc-950 flex items-center justify-center font-bold text-xs">
-                      {user?.name?.[0] || 'A'}
-                    </div>
-                  )}
-                  <span className="text-xs font-medium text-zinc-200">{user?.name}</span>
-                </div>
               </div>
-            </div>
+            </>
           ) : (
             <div className="flex items-center space-x-3">
               <button

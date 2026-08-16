@@ -38,8 +38,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectTab }) => {
   return (
     <div className="space-y-8 animate-fade-in pb-12">
       {/* Welcome Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-zinc-900 via-zinc-900 to-lime-950/20 border border-zinc-800 p-6 sm:p-8">
-        <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-lime-400/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/30 border border-emerald-500/20 p-6 sm:p-8 shadow-xl">
+        <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
           <div className="flex items-center space-x-4">
@@ -75,12 +75,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectTab }) => {
 
           {/* Quick Stats Pill Header */}
           <div className="flex flex-wrap items-center gap-3">
-            <div className="flex items-center space-x-2 px-4 py-2 rounded-2xl bg-zinc-950 border border-zinc-800 text-amber-400 font-bold text-sm">
+            <div className="flex items-center space-x-2 px-4 py-2 rounded-2xl bg-zinc-950/80 border border-emerald-500/20 text-amber-400 font-bold text-sm">
               <Trophy className="w-4 h-4 fill-amber-400/20" />
               <span>{currentXp} XP</span>
             </div>
 
-            <div className="flex items-center space-x-2 px-4 py-2 rounded-2xl bg-lime-500/10 border border-lime-500/20 text-lime-400 font-bold text-sm">
+            <div className="flex items-center space-x-2 px-4 py-2 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-lime-400 font-bold text-sm">
               <Flame className="w-4 h-4 text-lime-400 fill-lime-400/20 animate-pulse" />
               <span>{progress.sequencia_dias} Dias Seguidos</span>
             </div>
@@ -93,9 +93,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectTab }) => {
             <span>Progresso do Nível {currentLevel}</span>
             <span className="text-lime-400 font-bold">{xpPercentage}% ({currentXp - prevLevelXp}/500 XP)</span>
           </div>
-          <div className="w-full bg-zinc-800 h-3 rounded-full overflow-hidden p-0.5">
+          <div className="w-full bg-zinc-950 h-3 rounded-full overflow-hidden p-0.5 border border-zinc-800">
             <div 
-              className="bg-lime-400 h-full rounded-full transition-all duration-700 shadow-sm"
+              className="bg-gradient-to-r from-lime-400 to-emerald-400 h-full rounded-full transition-all duration-700 shadow-sm"
               style={{ width: `${xpPercentage}%` }}
             />
           </div>
@@ -106,13 +106,15 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectTab }) => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* Main Workout Card */}
-        <div className="lg:col-span-8 rounded-3xl bg-zinc-900 border border-zinc-800 p-6 sm:p-8 space-y-6 relative overflow-hidden shadow-xl">
+        <div className="lg:col-span-8 rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/30 border border-emerald-500/20 p-6 sm:p-8 space-y-6 relative overflow-hidden shadow-xl">
+          <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-lime-400 to-transparent opacity-80 animate-pulse" />
+
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-lime-400 animate-ping" />
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-1 bg-gradient-to-r from-lime-400 to-emerald-400 rounded-full animate-pulse shadow-sm shadow-lime-400/40" />
               <span className="text-xs font-bold text-lime-400 uppercase tracking-wider">Treino Recomendado Hoje</span>
             </div>
-            <span className="px-3 py-1 rounded-full bg-zinc-800 text-zinc-300 text-xs font-semibold capitalize">
+            <span className="px-3 py-1 rounded-full bg-zinc-950/80 border border-zinc-800 text-zinc-300 text-xs font-semibold capitalize">
               {todayWorkout.dia_semana}
             </span>
           </div>
@@ -127,7 +129,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectTab }) => {
             {todayWorkout.exercises.map((ex) => (
               <div 
                 key={ex.id}
-                className="p-3.5 rounded-2xl bg-zinc-950 border border-zinc-800/80 flex items-center space-x-3"
+                className="p-3.5 rounded-2xl bg-zinc-950/80 border border-zinc-800 flex items-center space-x-3 hover:border-emerald-500/30 transition-colors"
               >
                 <img 
                   src={ex.image_url} 
@@ -144,7 +146,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectTab }) => {
           </div>
 
           {/* Action Trigger */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 border-t border-zinc-800">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 border-t border-zinc-800/80">
             <div className="text-xs text-zinc-400 flex items-center space-x-4">
               <span className="flex items-center space-x-1">
                 <Clock className="w-4 h-4 text-zinc-500" />
@@ -162,7 +164,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectTab }) => {
                 onSelectTab('workout');
               }}
               id="dashboard-start-workout-btn"
-              className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-lime-400 text-black font-extrabold text-sm shadow-lg shadow-lime-500/20 hover:bg-lime-300 hover:scale-105 active:scale-95 transition-all flex items-center justify-center space-x-2"
+              className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-lime-400 to-emerald-400 text-black font-extrabold text-sm shadow-lg shadow-lime-500/20 hover:scale-105 active:scale-95 transition-all flex items-center justify-center space-x-2"
             >
               <Play className="w-4 h-4 fill-black" />
               <span>{todayWorkout.completed ? 'Treino Concluído (Ver Novamente)' : 'Iniciar Treino Agora'}</span>
@@ -171,19 +173,19 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectTab }) => {
         </div>
 
         {/* Gamification Path Preview Card */}
-        <div className="lg:col-span-4 rounded-3xl bg-zinc-900 border border-zinc-800 p-6 space-y-5 flex flex-col justify-between shadow-xl">
+        <div className="lg:col-span-4 rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/30 border border-emerald-500/20 p-6 space-y-5 flex flex-col justify-between shadow-xl">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-lime-400 uppercase tracking-wider flex items-center space-x-1">
                 <Sparkles className="w-4 h-4 text-lime-400" />
                 <span>Caminho de Evolução</span>
               </span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-lime-400/10 text-lime-400 font-bold border border-lime-500/20">
-                Duolingo Mode
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-lime-400 font-bold border border-emerald-500/20">
+                Trilha de Fases
               </span>
             </div>
 
-            <div className="p-4 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-3">
+            <div className="p-4 rounded-2xl bg-zinc-950/80 border border-zinc-800 space-y-3">
               <div className="flex items-center space-x-3">
                 <span className="text-3xl">{currentPhase.medal_icon}</span>
                 <div>
@@ -197,9 +199,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectTab }) => {
                   <span>Meta Semanal: {currentPhase.current_workouts}/{currentPhase.target_workouts} Treinos</span>
                   <span className="text-lime-400 font-bold">{currentPhase.percentage}%</span>
                 </div>
-                <div className="w-full bg-zinc-800 h-2 rounded-full overflow-hidden">
+                <div className="w-full bg-zinc-900 h-2 rounded-full overflow-hidden">
                   <div 
-                    className="bg-lime-400 h-full rounded-full transition-all duration-500" 
+                    className="bg-gradient-to-r from-lime-400 to-emerald-400 h-full rounded-full transition-all duration-500" 
                     style={{ width: `${currentPhase.percentage}%` }}
                   />
                 </div>
@@ -210,7 +212,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectTab }) => {
           <button
             onClick={() => onSelectTab('evolution')}
             id="dashboard-open-evolution-btn"
-            className="w-full py-3 rounded-2xl bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-zinc-200 hover:text-white font-bold text-xs transition-colors flex items-center justify-center space-x-2 group"
+            className="w-full py-3 rounded-2xl bg-zinc-950/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-200 hover:text-white font-bold text-xs transition-colors flex items-center justify-center space-x-2 group"
           >
             <span>Ver Mapa Completo de Fases</span>
             <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -227,7 +229,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectTab }) => {
             value: progress.treinos_concluidos,
             icon: CheckCircle2,
             color: 'text-lime-400',
-            bg: 'bg-lime-500/10 border-lime-500/20'
+            bg: 'bg-emerald-500/10 border-emerald-500/20'
           },
           {
             label: 'Séries Executadas',
@@ -255,7 +257,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectTab }) => {
           return (
             <div 
               key={idx}
-              className="p-5 rounded-2xl bg-zinc-900 border border-zinc-800 space-y-2"
+              className="p-5 rounded-2xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/20 border border-emerald-500/20 space-y-2 shadow-md"
             >
               <div className={`w-9 h-9 rounded-xl ${stat.bg} border flex items-center justify-center ${stat.color}`}>
                 <Icon className="w-5 h-5" />
@@ -268,7 +270,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectTab }) => {
       </div>
 
       {/* Weekly Visual Schedule Tracker */}
-      <div className="rounded-3xl bg-zinc-900 border border-zinc-800 p-6 space-y-4">
+      <div className="rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/25 border border-emerald-500/20 p-6 space-y-4 shadow-xl">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-bold text-white flex items-center space-x-2">
             <Calendar className="w-5 h-5 text-lime-400" />
@@ -297,8 +299,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectTab }) => {
                   isToday 
                     ? 'bg-zinc-950 border-lime-400 text-white ring-2 ring-lime-400/30' 
                     : w.completed 
-                      ? 'bg-zinc-950 border-lime-500/40 text-lime-400' 
-                      : 'bg-zinc-950/60 border-zinc-800 text-zinc-400 hover:border-zinc-700'
+                      ? 'bg-zinc-950 border-emerald-500/40 text-lime-400' 
+                      : 'bg-zinc-950/60 border-zinc-800 text-zinc-400 hover:border-emerald-500/30'
                 }`}
               >
                 <span className="text-[10px] uppercase font-extrabold tracking-wider">{day.slice(0, 3)}</span>
@@ -319,7 +321,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectTab }) => {
       </div>
 
       {/* Recent Activity Log */}
-      <div className="rounded-3xl bg-zinc-900 border border-zinc-800 p-6 space-y-4">
+      <div className="rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/25 border border-emerald-500/20 p-6 space-y-4 shadow-xl">
         <h3 className="text-lg font-bold text-white">Histórico Recente de Treinos</h3>
         {workoutLogs.length === 0 ? (
           <p className="text-xs text-zinc-500 py-4 text-center">Nenhum treino registrado ainda. Inicie o treino de hoje!</p>

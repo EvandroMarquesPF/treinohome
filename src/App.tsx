@@ -46,6 +46,13 @@ export default function App() {
     }
   }, [isLoggedIn]);
 
+  // Prompt onboarding / athlete assessment on first access if not completed
+  useEffect(() => {
+    if (isLoggedIn && state.user && state.user.onboarding_completed === false) {
+      setProfileSetupOpen(true);
+    }
+  }, [isLoggedIn, state.user?.onboarding_completed]);
+
   // Handle theme application
   useEffect(() => {
     if (settings.tema === 'light') {
@@ -77,7 +84,7 @@ export default function App() {
       />
 
       {/* Main Screen Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12">
+      <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-24 md:pb-12">
         {!isLoggedIn && currentTab === 'landing' && (
           <LandingPage 
             onOpenAuth={handleOpenAuth} 
