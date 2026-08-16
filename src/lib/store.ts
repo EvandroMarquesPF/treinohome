@@ -38,30 +38,22 @@ export interface AppState {
   phaseCompleteModal: { show: boolean; title: string; xp: number } | null;
 }
 
-const DEFAULT_USER_ID = '00000000-0000-0000-0000-000000000000';
-
-const DEFAULT_USER: Profile = {
-  id: DEFAULT_USER_ID,
-  name: 'Evandro',
-  email: 'evandromarquespf@gmail.com',
-  avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop',
-  created_at: new Date().toISOString()
-};
+const DEFAULT_USER_ID = '';
 
 const DEFAULT_PROGRESS: Progress = {
   id: '00000000-0000-0000-0000-000000000001',
-  user_id: DEFAULT_USER_ID,
-  xp: 1420,
-  level: 3,
-  sequencia_dias: 7,
-  treinos_concluidos: 12,
-  series_concluidas: 84,
-  tempo_total_minutos: 240,
-  last_workout_date: new Date().toISOString().split('T')[0]
+  user_id: '',
+  xp: 0,
+  level: 1,
+  sequencia_dias: 0,
+  treinos_concluidos: 0,
+  series_concluidas: 0,
+  tempo_total_minutos: 0,
+  last_workout_date: ''
 };
 
 const DEFAULT_SETTINGS: UserSettings = {
-  user_id: DEFAULT_USER_ID,
+  user_id: '',
   descanso: 60,
   notificacoes: true,
   horario_notificacao: '08:00',
@@ -79,7 +71,7 @@ function getInitialWorkouts(): Record<DayOfWeek, Workout> {
     result[day] = {
       ...preset,
       id: `w-${day}`,
-      user_id: 'usr-evandro-123',
+      user_id: '',
       created_at: new Date().toISOString(),
       exercises: preset.exercises.map(ex => ({ ...ex }))
     };
@@ -128,36 +120,13 @@ function createFreshState(): AppState {
     progress: DEFAULT_PROGRESS,
     achievements: INITIAL_ACHIEVEMENTS,
     settings: DEFAULT_SETTINGS,
-    workoutLogs: [
-      {
-        id: 'log-1',
-        user_id: 'usr-evandro-123',
-        date: new Date(Date.now() - 86400000 * 2).toISOString().split('T')[0],
-        workout_id: 'w-segunda',
-        workout_title: 'Peito e Tríceps',
-        dia_semana: 'segunda',
-        tempo_segundos: 1450,
-        xp_ganho: 180,
-        series_concluidas: 10,
-        exercicios_concluidos: 3
-      },
-      {
-        id: 'log-2',
-        user_id: 'usr-evandro-123',
-        date: new Date(Date.now() - 86400000).toISOString().split('T')[0],
-        workout_id: 'w-terca',
-        workout_title: 'Costas e Bíceps',
-        dia_semana: 'terca',
-        tempo_segundos: 1620,
-        xp_ganho: 210,
-        series_concluidas: 11,
-        exercicios_concluidos: 3
-      }
-    ],
+    workoutLogs: [],
     phases: INITIAL_PHASES.map((p, idx) => ({
       ...p,
-      current_workouts: idx === 0 ? 3 : 0,
-      percentage: idx === 0 ? 60 : 0
+      current_workouts: 0,
+      percentage: 0,
+      completed: false,
+      is_current: idx === 0
     })),
     activeWorkoutDay: todayDay,
     activeRestTimer: null,

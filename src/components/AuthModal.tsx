@@ -119,16 +119,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         });
         if (error) throw error;
       } else {
-        // Modo local/offline instantâneo com Google
-        actions.login('Atleta Google', 'atleta.google@treinohome.app', avatarUrl);
         setMessage({
-          type: 'success',
-          text: 'Conectado com sucesso com sua conta Google!'
+          type: 'error',
+          text: 'A conexão real com o Google requer as credenciais do Supabase (VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY) configuradas na Vercel ou nas Configurações.'
         });
-        setTimeout(() => {
-          setGoogleLoading(false);
-          onClose();
-        }, 700);
+        setGoogleLoading(false);
       }
     } catch (err: unknown) {
       const errorText = translateSupabaseAuthError(err);
