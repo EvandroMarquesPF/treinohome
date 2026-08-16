@@ -64,14 +64,14 @@ export const CalendarView: React.FC = () => {
     <div className="max-w-4xl mx-auto space-y-8 animate-fade-in pb-16">
       
       {/* Calendar Header */}
-      <div className="rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/30 border border-emerald-500/20 p-6 sm:p-8 space-y-6 shadow-xl">
+      <div className="rounded-3xl bg-white border border-zinc-200/90 dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/95 dark:to-emerald-950/30 dark:border-emerald-500/20 p-6 sm:p-8 space-y-6 shadow-md dark:shadow-xl text-center sm:text-left transition-colors">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white flex items-center space-x-3">
-              <CalendarIcon className="w-8 h-8 text-lime-400" />
+          <div className="flex flex-col items-center sm:items-start">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-white flex items-center space-x-3">
+              <CalendarIcon className="w-8 h-8 text-lime-600 dark:text-lime-400" />
               <span>Calendário de Consistência</span>
             </h1>
-            <p className="text-xs sm:text-sm text-zinc-400 mt-1">
+            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-1 font-medium">
               Acompanhe visualmente seus dias treinados e garanta sua frequência.
             </p>
           </div>
@@ -79,16 +79,16 @@ export const CalendarView: React.FC = () => {
           <div className="flex items-center space-x-3">
             <button
               onClick={handlePrevMonth}
-              className="p-2.5 rounded-xl bg-zinc-950/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 transition-colors"
+              className="p-2.5 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-700 dark:bg-zinc-950/80 dark:hover:bg-zinc-800 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 transition-colors"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
-            <span className="text-base font-extrabold text-white min-w-32 text-center">
+            <span className="text-base font-extrabold text-zinc-900 dark:text-white min-w-32 text-center">
               {monthNames[month]} {year}
             </span>
             <button
               onClick={handleNextMonth}
-              className="p-2.5 rounded-xl bg-zinc-950/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 transition-colors"
+              className="p-2.5 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-700 dark:bg-zinc-950/80 dark:hover:bg-zinc-800 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 transition-colors"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -96,29 +96,29 @@ export const CalendarView: React.FC = () => {
         </div>
 
         {/* Status Legend Bar */}
-        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-xs font-semibold pt-4 border-t border-zinc-800/80">
+        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-xs font-semibold pt-4 border-t border-zinc-200 dark:border-zinc-800/80">
           <div className="flex items-center space-x-2">
             <span className="w-3 h-3 rounded-full bg-emerald-500" />
-            <span className="text-zinc-300">Treino Feito</span>
+            <span className="text-zinc-700 dark:text-zinc-300 font-medium">Treino Feito</span>
           </div>
           <div className="flex items-center space-x-2">
             <span className="w-3 h-3 rounded-full bg-amber-400" />
-            <span className="text-zinc-300">Hoje</span>
+            <span className="text-zinc-700 dark:text-zinc-300 font-medium">Hoje</span>
           </div>
           <div className="flex items-center space-x-2">
-            <span className="w-3 h-3 rounded-full bg-indigo-400" />
-            <span className="text-zinc-300">Descanso</span>
+            <span className="w-3 h-3 rounded-full bg-indigo-500" />
+            <span className="text-zinc-700 dark:text-zinc-300 font-medium">Descanso</span>
           </div>
           <div className="flex items-center space-x-2">
             <span className="w-3 h-3 rounded-full bg-rose-500" />
-            <span className="text-zinc-300">Faltou</span>
+            <span className="text-zinc-700 dark:text-zinc-300 font-medium">Faltou</span>
           </div>
         </div>
       </div>
 
       {/* Grid Calendar */}
-      <div className="rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/25 border border-emerald-500/20 p-6 sm:p-8 space-y-4 shadow-xl">
-        <div className="grid grid-cols-7 gap-2 text-center font-bold text-xs text-zinc-400 pb-2 border-b border-zinc-800">
+      <div className="rounded-3xl bg-white border border-zinc-200/90 dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/95 dark:to-emerald-950/25 dark:border-emerald-500/20 p-6 sm:p-8 space-y-4 shadow-md dark:shadow-xl transition-colors">
+        <div className="grid grid-cols-7 gap-2 text-center font-bold text-xs text-zinc-500 dark:text-zinc-400 pb-2 border-b border-zinc-200 dark:border-zinc-800">
           {weekDays.map(wd => (
             <div key={wd}>{wd}</div>
           ))}
@@ -127,7 +127,7 @@ export const CalendarView: React.FC = () => {
         <div className="grid grid-cols-7 gap-2 sm:gap-3">
           {/* Empty pre-padding cells */}
           {[...Array(firstDayIndex)].map((_, idx) => (
-            <div key={`empty-${idx}`} className="h-12 sm:h-16 rounded-2xl bg-zinc-950/20" />
+            <div key={`empty-${idx}`} className="h-12 sm:h-16 rounded-2xl bg-zinc-50 dark:bg-zinc-950/20" />
           ))}
 
           {/* Month Day Cells */}
@@ -156,28 +156,28 @@ export const CalendarView: React.FC = () => {
 
       {/* Selected Day Log Modal */}
       {selectedDayLog && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/80 backdrop-blur-md">
-          <div className="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-3xl p-6 space-y-5 text-zinc-100 shadow-2xl relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md">
+          <div className="w-full max-w-md bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 space-y-5 text-zinc-900 dark:text-zinc-100 shadow-2xl relative transition-colors">
             <button
               onClick={() => setSelectedDayLog(null)}
-              className="absolute top-4 right-4 p-2 rounded-xl bg-zinc-950 text-zinc-400 hover:text-white"
+              className="absolute top-4 right-4 p-2 rounded-xl bg-zinc-100 dark:bg-zinc-950 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white border border-zinc-200 dark:border-zinc-800"
             >
               ✕
             </button>
 
-            <h3 className="text-lg font-black text-white">Detalhamento do Dia {selectedDayLog.date}</h3>
+            <h3 className="text-lg font-black text-zinc-900 dark:text-white">Detalhamento do Dia {selectedDayLog.date}</h3>
 
             {selectedDayLog.logs.length === 0 ? (
-              <p className="text-xs text-zinc-400 py-4 text-center">Nenhum treino registrado nesta data.</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 py-4 text-center">Nenhum treino registrado nesta data.</p>
             ) : (
               <div className="space-y-3">
                 {selectedDayLog.logs.map(log => (
-                  <div key={log.id} className="p-4 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-2">
-                    <div className="flex justify-between font-bold text-sm text-white">
+                  <div key={log.id} className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 space-y-2">
+                    <div className="flex justify-between font-bold text-sm text-zinc-900 dark:text-white">
                       <span>{log.workout_title}</span>
-                      <span className="text-amber-400">+{log.xp_ganho} XP</span>
+                      <span className="text-amber-600 dark:text-amber-400 font-extrabold">+{log.xp_ganho} XP</span>
                     </div>
-                    <div className="text-xs text-zinc-400 flex items-center space-x-4">
+                    <div className="text-xs text-zinc-600 dark:text-zinc-400 flex items-center space-x-4 font-medium">
                       <span>Duração: {Math.round(log.tempo_segundos / 60)} min</span>
                       <span>Séries: {log.series_concluidas}</span>
                     </div>
@@ -188,7 +188,7 @@ export const CalendarView: React.FC = () => {
 
             <button
               onClick={() => setSelectedDayLog(null)}
-              className="w-full py-2.5 rounded-xl bg-emerald-500 text-zinc-950 font-bold text-xs"
+              className="w-full py-3 rounded-2xl bg-lime-400 text-black font-extrabold text-xs shadow-md shadow-lime-500/20 hover:bg-lime-300 transition-all"
             >
               Fechar
             </button>

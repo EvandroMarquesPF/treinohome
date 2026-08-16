@@ -50,25 +50,25 @@ export const PWAPrompt: React.FC = () => {
 
       {/* PWA Install Banner */}
       {showBanner && (
-        <div className="fixed bottom-20 sm:bottom-6 right-4 left-4 sm:left-auto sm:max-w-sm z-50 p-4 rounded-2xl bg-zinc-900 border border-lime-500/40 text-zinc-100 shadow-2xl space-y-3 animate-fade-in">
+        <div className="fixed bottom-20 sm:bottom-6 right-4 left-4 sm:left-auto sm:max-w-sm z-50 p-4 rounded-2xl bg-white dark:bg-zinc-900 border border-lime-500/40 text-zinc-900 dark:text-zinc-100 shadow-2xl space-y-3 animate-fade-in transition-colors">
           <div className="flex items-center space-x-3">
             <BrandLogo size="md" />
             <div>
-              <div className="text-sm font-bold text-white">Instalar o Treino Home</div>
-              <div className="text-xs text-zinc-400">Instale o app na tela inicial para acesso rápido e offline!</div>
+              <div className="text-sm font-bold text-zinc-900 dark:text-white">Instalar o Treino Home</div>
+              <div className="text-xs text-zinc-600 dark:text-zinc-400">Instale o app na tela inicial para acesso rápido e offline!</div>
             </div>
           </div>
 
           <div className="flex justify-end space-x-2">
             <button
               onClick={() => setShowBanner(false)}
-              className="px-3 py-1.5 rounded-xl bg-zinc-950 text-xs font-semibold text-zinc-400 hover:text-white"
+              className="px-3 py-1.5 rounded-xl bg-zinc-100 dark:bg-zinc-950 text-xs font-semibold text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white cursor-pointer"
             >
               Depois
             </button>
             <button
               onClick={handleInstall}
-              className="px-4 py-1.5 rounded-xl bg-lime-400 text-black text-xs font-extrabold flex items-center space-x-1 hover:bg-lime-300 transition-colors shadow-md shadow-lime-500/20"
+              className="px-4 py-1.5 rounded-xl bg-lime-400 text-black text-xs font-extrabold flex items-center space-x-1 hover:bg-lime-300 transition-colors shadow-md shadow-lime-500/20 cursor-pointer"
             >
               <Download className="w-3.5 h-3.5" />
               <span>Instalar PWA</span>

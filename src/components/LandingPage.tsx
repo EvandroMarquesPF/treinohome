@@ -115,9 +115,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-zinc-950">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 flex flex-col font-sans selection:bg-lime-400 selection:text-zinc-950 transition-colors">
       {/* Hero Section */}
-      <section className="relative pt-16 pb-20 md:pt-24 md:pb-32 overflow-hidden">
+      <section className="relative pt-12 pb-16 md:pt-20 md:pb-28 overflow-hidden">
         {/* Glow Effects */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-lime-400/10 rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute top-1/3 right-10 w-72 h-72 bg-lime-500/10 rounded-full blur-[100px] pointer-events-none" />
@@ -126,29 +126,29 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             {/* Left Content */}
-            <div className="lg:col-span-7 space-y-8 text-center lg:text-left">
-              <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-lime-500/10 border border-lime-500/20 text-lime-400 text-xs font-semibold">
-                <Sparkles className="w-4 h-4 text-lime-400" />
+            <div className="lg:col-span-7 space-y-8 text-center lg:text-left flex flex-col items-center lg:items-start">
+              <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-lime-500/15 border border-lime-500/30 text-lime-700 dark:text-lime-400 text-xs font-semibold">
+                <Sparkles className="w-4 h-4 text-lime-600 dark:text-lime-400" />
                 <span>O Treinador Pessoal Inteligente para Casa</span>
               </div>
 
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1]">
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-zinc-900 dark:text-white leading-[1.1] text-center lg:text-left">
                 Treino Home
-                <span className="block mt-2 text-lime-400">
+                <span className="block mt-2 text-lime-600 dark:text-lime-400">
                   Transforme disciplina em resultado.
                 </span>
               </h1>
 
-              <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
+              <p className="text-lg sm:text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal text-center lg:text-left">
                 Treine em casa. Acompanhe sua evolução. Ganhe XP, conquiste medalhas e mantenha sua sequência de dias sem sair do conforto da sua sala.
               </p>
 
               {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2 w-full sm:w-auto">
                 <button
                   onClick={() => onOpenAuth('signup')}
                   id="hero-create-account-btn"
-                  className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-lime-400 text-black font-extrabold text-base shadow-xl shadow-lime-500/25 hover:bg-lime-300 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center space-x-3 group"
+                  className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-lime-400 text-black font-extrabold text-base shadow-xl shadow-lime-500/25 hover:bg-lime-300 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center space-x-3 group cursor-pointer"
                 >
                   <span>Criar Conta Grátis</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -157,63 +157,63 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
                 <button
                   onClick={() => onOpenAuth('login')}
                   id="hero-login-btn"
-                  className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-zinc-900 border border-zinc-800 text-zinc-200 font-bold text-base hover:bg-zinc-800 hover:text-white transition-all flex items-center justify-center space-x-2"
+                  className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 font-bold text-base hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white transition-all flex items-center justify-center space-x-2 cursor-pointer shadow-sm"
                 >
                   <span>Entrar no App</span>
                 </button>
               </div>
 
               {/* Social Proof Stats */}
-              <div className="pt-6 border-t border-zinc-900 flex flex-wrap items-center justify-center lg:justify-start gap-8 text-zinc-400 text-xs font-medium">
+              <div className="pt-6 border-t border-zinc-200 dark:border-zinc-900 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-zinc-600 dark:text-zinc-400 text-xs font-medium w-full">
                 <div className="flex items-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-lime-400" />
+                  <CheckCircle className="w-4 h-4 text-lime-600 dark:text-lime-400" />
                   <span>Calistenia & Peso Corporal</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-lime-400" />
+                  <CheckCircle className="w-4 h-4 text-lime-600 dark:text-lime-400" />
                   <span>Sincronizado Supabase</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-lime-400" />
+                  <CheckCircle className="w-4 h-4 text-lime-600 dark:text-lime-400" />
                   <span>PWA 100% Instalável</span>
                 </div>
               </div>
             </div>
 
             {/* Right Mockup Showcase */}
-            <div className="lg:col-span-5 relative">
-              <div className="relative mx-auto max-w-sm rounded-[3rem] p-4 bg-zinc-900 border border-zinc-800 shadow-2xl shadow-lime-500/10">
-                <div className="rounded-[2.5rem] bg-zinc-950 p-6 space-y-5 border border-zinc-800/80 overflow-hidden">
+            <div className="lg:col-span-5 relative flex justify-center">
+              <div className="relative mx-auto max-w-sm rounded-[3rem] p-4 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xl shadow-lime-500/10">
+                <div className="rounded-[2.5rem] bg-zinc-50 dark:bg-zinc-950 p-6 space-y-5 border border-zinc-200 dark:border-zinc-800/80 overflow-hidden">
                   
                   {/* Top Bar Mock */}
-                  <div className="flex items-center justify-between pb-3 border-b border-zinc-900">
+                  <div className="flex items-center justify-between pb-3 border-b border-zinc-200 dark:border-zinc-900">
                     <div className="flex items-center space-x-2">
                       <div className="w-8 h-8 rounded-full bg-lime-400 text-black flex items-center justify-center font-bold text-xs">
                         E
                       </div>
                       <div>
-                        <div className="text-xs font-bold text-zinc-100">Olá, Evandro 👋</div>
-                        <div className="text-[10px] text-zinc-400">Nível 3 • 1420 XP</div>
+                        <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">Olá, Evandro 👋</div>
+                        <div className="text-[10px] text-zinc-500 dark:text-zinc-400 font-medium">Nível 3 • 1420 XP</div>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-1 bg-lime-500/10 border border-lime-500/20 px-2.5 py-1 rounded-full text-lime-400 text-xs font-bold">
-                      <Flame className="w-3.5 h-3.5 text-lime-400 fill-lime-400/20" />
+                    <div className="flex items-center space-x-1 bg-lime-500/15 border border-lime-500/25 px-2.5 py-1 rounded-full text-lime-700 dark:text-lime-400 text-xs font-bold">
+                      <Flame className="w-3.5 h-3.5 text-orange-500" />
                       <span>7 Dias</span>
                     </div>
                   </div>
 
                   {/* Gamification Node Card Mock */}
-                  <div className="p-4 rounded-2xl bg-zinc-900 border border-lime-500/30 space-y-3 relative overflow-hidden">
+                  <div className="p-4 rounded-2xl bg-white dark:bg-zinc-900 border border-lime-500/30 space-y-3 relative overflow-hidden shadow-sm">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-lime-400 uppercase tracking-wider">Treino de Hoje</span>
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-lime-500/20 text-lime-300 font-semibold">Segunda-feira</span>
+                      <span className="text-xs font-bold text-lime-700 dark:text-lime-400 uppercase tracking-wider">Treino de Hoje</span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-lime-500/20 text-lime-800 dark:text-lime-300 font-semibold">Segunda-feira</span>
                     </div>
-                    <div className="font-extrabold text-lg text-white">Peito e Tríceps</div>
-                    <div className="flex items-center justify-between text-xs text-zinc-400">
+                    <div className="font-extrabold text-lg text-zinc-900 dark:text-white">Peito e Tríceps</div>
+                    <div className="flex items-center justify-between text-xs text-zinc-600 dark:text-zinc-400">
                       <span>3 Exercícios • 10 Séries</span>
-                      <span className="text-amber-400 font-bold">+100 XP</span>
+                      <span className="text-amber-500 font-bold">+100 XP</span>
                     </div>
-                    <div className="w-full bg-zinc-800 h-2 rounded-full overflow-hidden">
+                    <div className="w-full bg-zinc-200 dark:bg-zinc-800 h-2 rounded-full overflow-hidden">
                       <div className="bg-lime-400 h-full w-2/3 rounded-full" />
                     </div>
                   </div>
@@ -223,7 +223,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
                     <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-lime-400 to-emerald-400 border-2 border-lime-300 text-black flex items-center justify-center font-bold text-lg shadow-md shadow-lime-500/20">
                       🥉
                     </div>
-                    <div className="text-xs font-bold text-zinc-300">Semana 1: O Despertar</div>
+                    <div className="text-xs font-bold text-zinc-700 dark:text-zinc-300">Semana 1: O Despertar</div>
                   </div>
                 </div>
               </div>
@@ -234,30 +234,30 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20 bg-zinc-900/50 border-y border-zinc-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-              Por que escolher o <span className="text-lime-400">Treino Home</span>?
+      <section className="py-16 md:py-20 bg-zinc-100/70 dark:bg-zinc-900/50 border-y border-zinc-200 dark:border-zinc-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-4">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
+              Por que escolher o <span className="text-lime-600 dark:text-lime-400">Treino Home</span>?
             </h2>
-            <p className="text-zinc-400 text-base">
+            <p className="text-zinc-600 dark:text-zinc-400 text-base">
               Eliminamos a complexidade de academias e planilhas confusas. Tudo que você precisa está em um app gamificado e intuitivo.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {benefits.map((b, idx) => {
               const Icon = b.icon;
               return (
                 <div 
                   key={idx}
-                  className="p-6 rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/20 border border-emerald-500/20 hover:border-emerald-500/40 transition-all hover:-translate-y-1 space-y-4 shadow-md"
+                  className="p-6 rounded-3xl bg-white dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/95 dark:to-emerald-950/20 border border-zinc-200 dark:border-emerald-500/20 hover:border-lime-500/40 transition-all hover:-translate-y-1 space-y-4 shadow-sm dark:shadow-md flex flex-col items-center text-center"
                 >
-                  <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 text-lime-400 flex items-center justify-center border border-emerald-500/20">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 text-lime-600 dark:text-lime-400 flex items-center justify-center border border-emerald-500/20">
                     <Icon className="w-6 h-6" />
                   </div>
-                  <h3 className="text-lg font-bold text-white">{b.title}</h3>
-                  <p className="text-sm text-zinc-400 leading-relaxed">{b.desc}</p>
+                  <h3 className="text-lg font-bold text-zinc-900 dark:text-white">{b.title}</h3>
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">{b.desc}</p>
                 </div>
               );
             })}
@@ -266,23 +266,23 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
       </section>
 
       {/* How it works Section */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+      <section className="py-16 md:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-4">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
               Como funciona o aplicativo
             </h2>
-            <p className="text-zinc-400 text-base">
+            <p className="text-zinc-600 dark:text-zinc-400 text-base">
               Quatro passos simples para transformar sua saúde física sem sair de casa.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {steps.map((step, idx) => (
-              <div key={idx} className="relative p-6 rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/20 border border-emerald-500/20 space-y-3 shadow-md">
-                <span className="text-4xl font-black text-lime-400/40 block">{step.number}</span>
-                <h3 className="text-lg font-bold text-white">{step.title}</h3>
-                <p className="text-sm text-zinc-400 leading-relaxed">{step.desc}</p>
+              <div key={idx} className="relative p-6 rounded-3xl bg-white dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/95 dark:to-emerald-950/20 border border-zinc-200 dark:border-emerald-500/20 space-y-3 shadow-sm dark:shadow-md flex flex-col items-center text-center">
+                <span className="text-4xl font-black text-lime-500/40 dark:text-lime-400/40 block">{step.number}</span>
+                <h3 className="text-lg font-bold text-zinc-900 dark:text-white">{step.title}</h3>
+                <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">{step.desc}</p>
               </div>
             ))}
           </div>
@@ -290,39 +290,39 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-zinc-900/40 border-t border-zinc-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+      <section className="py-16 md:py-20 bg-zinc-100/70 dark:bg-zinc-900/40 border-t border-zinc-200 dark:border-zinc-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-4">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
               O que dizem os nossos atletas
             </h2>
-            <p className="text-zinc-400 text-base">
+            <p className="text-zinc-600 dark:text-zinc-400 text-base">
               Pessoas reais transformando sua disciplina em resultados comprovados.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {testimonials.map((t, idx) => (
-              <div key={idx} className="p-6 rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/20 border border-emerald-500/20 space-y-4 flex flex-col justify-between shadow-md">
-                <div className="space-y-3">
-                  <div className="flex text-amber-400 space-x-1">
+              <div key={idx} className="p-6 rounded-3xl bg-white dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/95 dark:to-emerald-950/20 border border-zinc-200 dark:border-emerald-500/20 space-y-4 flex flex-col justify-between shadow-sm dark:shadow-md text-center items-center">
+                <div className="space-y-3 flex flex-col items-center">
+                  <div className="flex text-amber-400 space-x-1 justify-center">
                     {[...Array(t.stars)].map((_, i) => (
                       <Star key={i} className="w-4 h-4 fill-amber-400" />
                     ))}
                   </div>
-                  <p className="text-sm text-zinc-300 italic leading-relaxed">"{t.text}"</p>
+                  <p className="text-sm text-zinc-700 dark:text-zinc-300 italic leading-relaxed">"{t.text}"</p>
                 </div>
 
-                <div className="flex items-center space-x-3 pt-4 border-t border-zinc-800">
+                <div className="flex items-center space-x-3 pt-4 border-t border-zinc-200 dark:border-zinc-800 w-full justify-center">
                   <img 
                     src={t.avatar} 
                     alt={t.name} 
                     className="w-10 h-10 rounded-full object-cover" 
                     referrerPolicy="no-referrer"
                   />
-                  <div>
-                    <div className="text-sm font-bold text-white">{t.name}</div>
-                    <div className="text-xs text-zinc-400">{t.role}</div>
+                  <div className="text-left">
+                    <div className="text-sm font-bold text-zinc-900 dark:text-white">{t.name}</div>
+                    <div className="text-xs text-zinc-500 dark:text-zinc-400">{t.role}</div>
                   </div>
                 </div>
               </div>
@@ -332,13 +332,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20">
+      <section className="py-16 md:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          <div className="text-center mb-12 sm:mb-16 space-y-4">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
               Perguntas Frequentes
             </h2>
-            <p className="text-zinc-400 text-base">
+            <p className="text-zinc-600 dark:text-zinc-400 text-base">
               Tudo o que você precisa saber sobre o Treino Home.
             </p>
           </div>
@@ -349,17 +349,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
               return (
                 <div 
                   key={idx} 
-                  className="rounded-2xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/20 border border-emerald-500/20 overflow-hidden transition-colors shadow-md"
+                  className="rounded-2xl bg-white dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/95 dark:to-emerald-950/20 border border-zinc-200 dark:border-emerald-500/20 overflow-hidden transition-colors shadow-sm dark:shadow-md"
                 >
                   <button
                     onClick={() => setOpenFaq(isOpen ? null : idx)}
-                    className="w-full px-6 py-5 text-left font-bold text-white flex items-center justify-between text-base focus:outline-none"
+                    className="w-full px-6 py-5 text-left font-bold text-zinc-900 dark:text-white flex items-center justify-between text-base focus:outline-none cursor-pointer"
                   >
                     <span>{faq.q}</span>
-                    <ChevronDown className={`w-5 h-5 text-zinc-400 transition-transform ${isOpen ? 'rotate-180 text-lime-400' : ''}`} />
+                    <ChevronDown className={`w-5 h-5 text-zinc-400 transition-transform ${isOpen ? 'rotate-180 text-lime-600 dark:text-lime-400' : ''}`} />
                   </button>
                   {isOpen && (
-                    <div className="px-6 pb-5 text-sm text-zinc-400 leading-relaxed border-t border-zinc-800/60 pt-4">
+                    <div className="px-6 pb-5 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed border-t border-zinc-100 dark:border-zinc-800/60 pt-4">
                       {faq.a}
                     </div>
                   )}
@@ -371,18 +371,18 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
       </section>
 
       {/* CTA Bottom Bar */}
-      <section className="py-16 bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/40 border-t border-emerald-500/20">
-        <div className="max-w-5xl mx-auto px-4 text-center space-y-6">
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+      <section className="py-16 bg-lime-500/10 dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/95 dark:to-emerald-950/40 border-t border-zinc-200 dark:border-emerald-500/20">
+        <div className="max-w-5xl mx-auto px-4 text-center space-y-6 flex flex-col items-center">
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
             Pronto para começar seu primeiro treino?
           </h2>
-          <p className="text-zinc-300 text-base max-w-xl mx-auto">
+          <p className="text-zinc-600 dark:text-zinc-300 text-base max-w-xl mx-auto">
             Crie sua conta em menos de 1 minuto e inicie sua jornada de treino em casa com gamificação completa.
           </p>
           <button
             onClick={() => onOpenAuth('signup')}
             id="bottom-cta-signup-btn"
-            className="px-8 py-4 rounded-2xl bg-gradient-to-r from-lime-400 to-emerald-400 text-black font-extrabold text-base shadow-xl shadow-lime-500/30 hover:scale-105 active:scale-95 transition-all inline-flex items-center space-x-2"
+            className="px-8 py-4 rounded-2xl bg-gradient-to-r from-lime-400 to-emerald-400 text-black font-extrabold text-base shadow-xl shadow-lime-500/30 hover:scale-105 active:scale-95 transition-all inline-flex items-center space-x-2 cursor-pointer"
           >
             <span>Começar Agora Gratuitamente</span>
             <ArrowRight className="w-5 h-5" />
@@ -391,18 +391,18 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
       </section>
 
       {/* Footer */}
-      <footer className="py-8 bg-zinc-950 border-t border-zinc-900 text-xs text-zinc-500 text-center">
+      <footer className="py-8 bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-900 text-xs text-zinc-500 text-center">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center space-x-2.5">
+          <div className="flex items-center space-x-2.5 justify-center">
             <BrandLogo size="sm" />
-            <span className="font-bold text-zinc-300">Treino Home</span>
+            <span className="font-bold text-zinc-800 dark:text-zinc-300">Treino Home</span>
             <span>© {new Date().getFullYear()} - Todos os direitos reservados.</span>
           </div>
-          <div className="flex space-x-6 text-zinc-400">
+          <div className="flex flex-wrap justify-center space-x-6 text-zinc-500 dark:text-zinc-400">
             <button 
               type="button"
               onClick={() => onOpenTerms?.('terms')}
-              className="hover:text-lime-400 cursor-pointer transition-colors"
+              className="hover:text-lime-600 dark:hover:text-lime-400 cursor-pointer transition-colors"
               id="footer-terms-link"
             >
               Termos de Uso
@@ -410,12 +410,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
             <button 
               type="button"
               onClick={() => onOpenTerms?.('privacy')}
-              className="hover:text-lime-400 cursor-pointer transition-colors"
+              className="hover:text-lime-600 dark:hover:text-lime-400 cursor-pointer transition-colors"
               id="footer-privacy-link"
             >
               Política de Privacidade
             </button>
-            <span className="text-zinc-500">Supabase & Vercel Ready</span>
+            <span className="text-zinc-400 dark:text-zinc-500">Supabase & Vercel Ready</span>
           </div>
         </div>
       </footer>

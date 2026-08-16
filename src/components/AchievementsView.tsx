@@ -37,19 +37,19 @@ export const AchievementsView: React.FC = () => {
     <div className="max-w-5xl mx-auto space-y-8 animate-fade-in pb-16">
       
       {/* Achievements Header */}
-      <div className="rounded-3xl bg-gradient-to-r from-amber-950/40 via-zinc-900 to-emerald-950/40 border border-zinc-800 p-6 sm:p-8 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white flex items-center space-x-3">
-              <Award className="w-8 h-8 text-amber-400" />
+      <div className="rounded-3xl bg-white border border-zinc-200/90 dark:bg-gradient-to-r dark:from-amber-950/40 dark:via-zinc-900 dark:to-emerald-950/40 dark:border-zinc-800 p-6 sm:p-8 space-y-4 text-center sm:text-left shadow-md dark:shadow-xl transition-colors">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col items-center sm:items-start">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-white flex items-center space-x-3">
+              <Award className="w-8 h-8 text-amber-500 dark:text-amber-400" />
               <span>Quadro de Conquistas & Medalhas</span>
             </h1>
-            <p className="text-xs sm:text-sm text-zinc-400 mt-1">
+            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-1 font-medium">
               Desbloqueie troféus exclusivos completando desafios e aumente seu XP!
             </p>
           </div>
 
-          <div className="flex items-center space-x-2 bg-zinc-950 border border-zinc-800 px-4 py-2 rounded-2xl text-amber-400 font-extrabold text-sm">
+          <div className="flex items-center space-x-2 bg-amber-50 dark:bg-zinc-950 border border-amber-200 dark:border-zinc-800 px-4 py-2 rounded-2xl text-amber-800 dark:text-amber-400 font-extrabold text-sm">
             <Trophy className="w-4 h-4" />
             <span>Desbloqueadas: {unlockedCount}/{achievements.length}</span>
           </div>
@@ -66,44 +66,44 @@ export const AchievementsView: React.FC = () => {
           return (
             <div 
               key={ach.id}
-              className={`rounded-3xl p-6 border transition-all space-y-4 relative overflow-hidden ${
+              className={`rounded-3xl p-6 border transition-all space-y-4 relative overflow-hidden text-center sm:text-left flex flex-col items-center sm:items-stretch ${
                 isUnlocked 
-                  ? 'bg-gradient-to-br from-zinc-900 via-zinc-900 to-amber-950/20 border-amber-500/40 shadow-lg shadow-amber-500/10' 
-                  : 'bg-zinc-950/80 border-zinc-800 opacity-70'
+                  ? 'bg-amber-50/40 border-amber-400/60 shadow-sm dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900 dark:to-amber-950/20 dark:border-amber-500/40 dark:shadow-lg dark:shadow-amber-500/10' 
+                  : 'bg-white border-zinc-200/90 dark:bg-zinc-950/80 dark:border-zinc-800 opacity-80 dark:opacity-70'
               }`}
             >
-              <div className="flex items-start justify-between">
+              <div className="flex items-center justify-between w-full">
                 <div className={`w-14 h-14 rounded-2xl flex items-center justify-center border ${
                   isUnlocked 
-                    ? 'bg-amber-400/10 text-amber-400 border-amber-400/30' 
-                    : 'bg-zinc-900 text-zinc-600 border-zinc-800'
+                    ? 'bg-amber-500/15 text-amber-600 border-amber-400/40 dark:bg-amber-400/10 dark:text-amber-400 dark:border-amber-400/30' 
+                    : 'bg-zinc-100 text-zinc-400 border-zinc-200 dark:bg-zinc-900 dark:text-zinc-600 dark:border-zinc-800'
                 }`}>
                   <IconComponent className="w-7 h-7" />
                 </div>
 
-                <div className="flex items-center space-x-1.5 text-xs font-bold text-amber-400 bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20">
+                <div className="flex items-center space-x-1.5 text-xs font-bold text-amber-800 bg-amber-500/15 dark:text-amber-400 dark:bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/30 dark:border-amber-400/20">
                   <Zap className="w-3.5 h-3.5 fill-amber-400/20" />
                   <span>+{ach.reward_xp} XP</span>
                 </div>
               </div>
 
-              <div>
-                <h3 className="text-lg font-black text-white flex items-center space-x-2">
+              <div className="w-full">
+                <h3 className="text-lg font-black text-zinc-900 dark:text-white flex items-center justify-center sm:justify-start space-x-2">
                   <span>{ach.title}</span>
-                  {isUnlocked && <CheckCircle2 className="w-4 h-4 text-emerald-400 inline" />}
+                  {isUnlocked && <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 inline" />}
                 </h3>
-                <p className="text-xs text-zinc-400 mt-1 leading-relaxed">{ach.description}</p>
+                <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-1 leading-relaxed font-medium">{ach.description}</p>
               </div>
 
               {/* Progress Indicator */}
-              <div className="space-y-1.5 pt-2 border-t border-zinc-800/80">
-                <div className="flex justify-between text-[11px] font-semibold text-zinc-400">
+              <div className="space-y-1.5 pt-2 border-t border-zinc-200 dark:border-zinc-800/80 w-full text-left">
+                <div className="flex justify-between text-[11px] font-semibold text-zinc-600 dark:text-zinc-400">
                   <span>Progresso</span>
-                  <span>{ach.progress_current}/{ach.progress_target}</span>
+                  <span className="font-bold text-zinc-800 dark:text-zinc-200">{ach.progress_current}/{ach.progress_target}</span>
                 </div>
-                <div className="w-full bg-zinc-800 h-2 rounded-full overflow-hidden">
+                <div className="w-full bg-zinc-200 dark:bg-zinc-800 h-2 rounded-full overflow-hidden">
                   <div 
-                    className={`h-full rounded-full transition-all duration-500 ${isUnlocked ? 'bg-amber-400' : 'bg-emerald-500/60'}`} 
+                    className={`h-full rounded-full transition-all duration-500 ${isUnlocked ? 'bg-amber-500 dark:bg-amber-400' : 'bg-emerald-500'}`} 
                     style={{ width: `${pct}%` }}
                   />
                 </div>

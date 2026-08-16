@@ -208,15 +208,15 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md animate-fade-in overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/70 backdrop-blur-md animate-fade-in overflow-y-auto">
       <div 
-        className="relative w-full max-w-2xl bg-gradient-to-br from-zinc-900 via-zinc-900/98 to-emerald-950/40 border border-emerald-500/20 rounded-3xl p-5 sm:p-8 shadow-2xl space-y-6 text-zinc-100 my-auto max-h-[92vh] overflow-y-auto"
+        className="relative w-full max-w-2xl bg-white dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/98 dark:to-emerald-950/40 border border-zinc-200 dark:border-emerald-500/20 rounded-3xl p-5 sm:p-8 shadow-2xl space-y-6 text-zinc-900 dark:text-zinc-100 my-auto max-h-[92vh] overflow-y-auto transition-colors"
         onClick={e => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
+          className="absolute top-5 right-5 p-2 rounded-xl text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
           id="close-profile-setup-modal-btn"
         >
           <X className="w-5 h-5" />
@@ -225,23 +225,23 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
         {/* Modal Header & Progress Indicator */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-lime-400 text-xs font-bold">
-              <Sparkles className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-lime-500/15 border border-lime-500/30 text-lime-700 dark:text-lime-400 text-xs font-bold">
+              <Sparkles className="w-3.5 h-3.5 text-lime-600 dark:text-lime-400" />
               <span>Avaliação do Atleta & Cadastro</span>
             </div>
-            <span className="text-xs font-bold text-zinc-400">
+            <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400">
               Passo {step} de 4
             </span>
           </div>
 
           <div>
-            <h2 className="text-xl sm:text-2xl font-black text-white">
+            <h2 className="text-xl sm:text-2xl font-black text-zinc-900 dark:text-white">
               {step === 1 && 'Identificação & Foto do Perfil'}
               {step === 2 && 'Dados Corporais & Biometria'}
               {step === 3 && 'Objetivo & Nível de Calistenia'}
               {step === 4 && 'Rotina Semanal & Confirmação'}
             </h2>
-            <p className="text-xs text-zinc-400 mt-0.5">
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
               {step === 1 && 'Personalize como seu nome e foto serão exibidos nas conquistas e treinos.'}
               {step === 2 && 'Informações físicas essenciais para calcular seu IMC e calibrar o ritmo dos treinos.'}
               {step === 3 && 'Escolha sua meta principal e sua experiência para personalizar a intensidade.'}
@@ -250,7 +250,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
           </div>
 
           {/* Stepper Progress Bar */}
-          <div className="w-full bg-zinc-950 h-2 rounded-full overflow-hidden border border-zinc-800">
+          <div className="w-full bg-zinc-100 dark:bg-zinc-950 h-2 rounded-full overflow-hidden border border-zinc-200 dark:border-zinc-800">
             <div 
               className="bg-gradient-to-r from-lime-400 to-emerald-400 h-full rounded-full transition-all duration-500 shadow-sm"
               style={{ width: `${(step / 4) * 100}%` }}
@@ -260,8 +260,8 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
 
         {/* Success Alert */}
         {successMsg && (
-          <div className="p-4 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-lime-300 text-xs font-bold flex items-center space-x-2 animate-bounce">
-            <Check className="w-5 h-5 text-lime-400" />
+          <div className="p-4 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-800 dark:text-lime-300 text-xs font-bold flex items-center space-x-2 animate-bounce">
+            <Check className="w-5 h-5 text-emerald-600 dark:text-lime-400" />
             <span>Perfil e ficha do atleta configurados com sucesso! Bons treinos!</span>
           </div>
         )}
@@ -271,20 +271,20 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
           {/* STEP 1: IDENTIFICAÇÃO & FOTO */}
           {step === 1 && (
             <div className="space-y-5 animate-fade-in">
-              <div className="p-4 rounded-2xl bg-zinc-950/80 border border-zinc-800 space-y-3">
-                <label className="text-xs font-bold text-zinc-300 block">Foto de Perfil</label>
+              <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-950/80 border border-zinc-200 dark:border-zinc-800 space-y-3">
+                <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300 block">Foto de Perfil</label>
                 <div className="flex flex-col sm:flex-row items-center gap-4">
                   <div className="relative group shrink-0">
                     <img
                       src={avatarUrl}
                       alt="Avatar Preview"
-                      className="w-20 h-20 rounded-2xl object-cover border-2 border-lime-400 shadow-lg shadow-lime-500/10"
+                      className="w-20 h-20 rounded-2xl object-cover border-2 border-lime-400 shadow-md shadow-lime-500/10"
                       referrerPolicy="no-referrer"
                     />
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
-                      className="absolute inset-0 bg-black/60 rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="absolute inset-0 bg-black/60 rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                     >
                       <Camera className="w-6 h-6 text-lime-400" />
                     </button>
@@ -303,7 +303,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
                       disabled={isUploading}
-                      className="px-4 py-2 rounded-xl bg-lime-400 text-black font-extrabold text-xs hover:opacity-90 transition-all inline-flex items-center space-x-2 shadow-md shadow-lime-500/10"
+                      className="px-4 py-2 rounded-xl bg-lime-400 text-black font-extrabold text-xs hover:opacity-90 transition-all inline-flex items-center space-x-2 shadow-md shadow-lime-500/10 cursor-pointer"
                     >
                       <Upload className="w-3.5 h-3.5" />
                       <span>{isUploading ? 'Processando...' : 'Enviar Foto do Dispositivo'}</span>
@@ -316,8 +316,8 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
                           key={idx}
                           type="button"
                           onClick={() => setAvatarUrl(url)}
-                          className={`w-7 h-7 rounded-lg overflow-hidden border transition-all ${
-                            avatarUrl === url ? 'border-lime-400 scale-110' : 'border-zinc-800 opacity-60 hover:opacity-100'
+                          className={`w-7 h-7 rounded-lg overflow-hidden border transition-all cursor-pointer ${
+                            avatarUrl === url ? 'border-lime-500 scale-110' : 'border-zinc-300 dark:border-zinc-800 opacity-60 hover:opacity-100'
                           }`}
                         >
                           <img src={url} alt={`Preset ${idx}`} className="w-full h-full object-cover" />
@@ -330,36 +330,36 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
 
               <div className="space-y-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-zinc-300">Nome do Atleta *</label>
+                  <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300">Nome do Atleta *</label>
                   <div className="relative">
-                    <User className="absolute left-3.5 top-3 w-4 h-4 text-zinc-500" />
+                    <User className="absolute left-3.5 top-3 w-4 h-4 text-zinc-400 dark:text-zinc-500" />
                     <input
                       type="text"
                       required
                       placeholder="Ex: Carlos Silva"
                       value={name}
                       onChange={e => setName(e.target.value)}
-                      className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-lime-400"
+                      className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none focus:border-lime-500"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-zinc-300">E-mail Principal</label>
+                  <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300">E-mail Principal</label>
                   <div className="relative">
-                    <Mail className="absolute left-3.5 top-3 w-4 h-4 text-zinc-500" />
+                    <Mail className="absolute left-3.5 top-3 w-4 h-4 text-zinc-400 dark:text-zinc-500" />
                     <input
                       type="email"
                       placeholder="seu.email@exemplo.com"
                       value={email}
                       onChange={e => setEmail(e.target.value)}
-                      className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-lime-400"
+                      className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none focus:border-lime-500"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-zinc-300">Gênero / Preferência</label>
+                  <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300">Gênero / Preferência</label>
                   <div className="grid grid-cols-3 gap-2">
                     {[
                       { id: 'masculino', label: 'Masculino' },
@@ -370,10 +370,10 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
                         key={g.id}
                         type="button"
                         onClick={() => setGender(g.id as any)}
-                        className={`py-2 px-3 rounded-xl text-xs font-bold border transition-all ${
+                        className={`py-2 px-3 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
                           gender === g.id
-                            ? 'bg-emerald-500/15 border-lime-400 text-lime-400'
-                            : 'bg-zinc-950/80 border-zinc-800 text-zinc-400 hover:text-white'
+                            ? 'bg-lime-500/15 border-lime-500 text-lime-700 dark:text-lime-400 dark:bg-emerald-500/15'
+                            : 'bg-zinc-50 dark:bg-zinc-950/80 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
                         }`}
                       >
                         {g.label}
@@ -391,9 +391,9 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 
                 {/* Idade */}
-                <div className="p-4 rounded-2xl bg-zinc-950/80 border border-zinc-800 space-y-2">
-                  <label className="text-xs font-bold text-zinc-300 flex items-center space-x-1.5">
-                    <HeartPulse className="w-4 h-4 text-rose-400" />
+                <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-950/80 border border-zinc-200 dark:border-zinc-800 space-y-2">
+                  <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300 flex items-center space-x-1.5">
+                    <HeartPulse className="w-4 h-4 text-rose-500" />
                     <span>Idade (anos)</span>
                   </label>
                   <input
@@ -402,7 +402,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
                     max={100}
                     value={age}
                     onChange={e => setAge(Number(e.target.value))}
-                    className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-3 py-2 text-base font-extrabold text-white text-center focus:outline-none focus:border-lime-400"
+                    className="w-full bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-xl px-3 py-2 text-base font-extrabold text-zinc-900 dark:text-white text-center focus:outline-none focus:border-lime-500"
                   />
                   <div className="flex justify-center gap-1 text-[11px] text-zinc-500">
                     <span>Anos completos</span>
@@ -410,9 +410,9 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
                 </div>
 
                 {/* Peso */}
-                <div className="p-4 rounded-2xl bg-zinc-950/80 border border-zinc-800 space-y-2">
-                  <label className="text-xs font-bold text-zinc-300 flex items-center space-x-1.5">
-                    <Scale className="w-4 h-4 text-lime-400" />
+                <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-950/80 border border-zinc-200 dark:border-zinc-800 space-y-2">
+                  <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300 flex items-center space-x-1.5">
+                    <Scale className="w-4 h-4 text-lime-600 dark:text-lime-400" />
                     <span>Peso Atual (kg)</span>
                   </label>
                   <input
@@ -422,7 +422,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
                     max={250}
                     value={weight}
                     onChange={e => setWeight(Number(e.target.value))}
-                    className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-3 py-2 text-base font-extrabold text-white text-center focus:outline-none focus:border-lime-400"
+                    className="w-full bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-xl px-3 py-2 text-base font-extrabold text-zinc-900 dark:text-white text-center focus:outline-none focus:border-lime-500"
                   />
                   <div className="flex justify-center gap-1 text-[11px] text-zinc-500">
                     <span>Ex: 75.5 kg</span>
@@ -430,9 +430,9 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
                 </div>
 
                 {/* Altura */}
-                <div className="p-4 rounded-2xl bg-zinc-950/80 border border-zinc-800 space-y-2">
-                  <label className="text-xs font-bold text-zinc-300 flex items-center space-x-1.5">
-                    <Ruler className="w-4 h-4 text-teal-400" />
+                <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-950/80 border border-zinc-200 dark:border-zinc-800 space-y-2">
+                  <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300 flex items-center space-x-1.5">
+                    <Ruler className="w-4 h-4 text-teal-600 dark:text-teal-400" />
                     <span>Altura (cm)</span>
                   </label>
                   <input
@@ -441,7 +441,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
                     max={230}
                     value={height}
                     onChange={e => setHeight(Number(e.target.value))}
-                    className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-3 py-2 text-base font-extrabold text-white text-center focus:outline-none focus:border-lime-400"
+                    className="w-full bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-xl px-3 py-2 text-base font-extrabold text-zinc-900 dark:text-white text-center focus:outline-none focus:border-lime-500"
                   />
                   <div className="flex justify-center gap-1 text-[11px] text-zinc-500">
                     <span>Ex: 178 cm</span>
@@ -455,13 +455,13 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
                 <div className="flex items-center space-x-3">
                   <Activity className={`w-6 h-6 ${bmiInfo.color}`} />
                   <div>
-                    <div className="text-xs text-zinc-400 font-semibold">Índice de Massa Corporal Calculado (IMC):</div>
+                    <div className="text-xs text-zinc-600 dark:text-zinc-400 font-semibold">Índice de Massa Corporal Calculado (IMC):</div>
                     <div className={`text-base font-extrabold ${bmiInfo.color}`}>
                       {bmiInfo.value} kg/m² • {bmiInfo.label}
                     </div>
                   </div>
                 </div>
-                <span className="text-[11px] text-zinc-400 font-mono hidden sm:inline">OMS Padrão</span>
+                <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-mono hidden sm:inline">OMS Padrão</span>
               </div>
             </div>
           )}
@@ -470,7 +470,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
           {step === 3 && (
             <div className="space-y-5 animate-fade-in">
               <div className="space-y-2">
-                <label className="text-xs font-bold text-zinc-300 block">Qual é o seu objetivo principal?</label>
+                <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300 block">Qual é o seu objetivo principal?</label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {[
                     { id: 'hipertrofia', title: 'Hipertrofia Muscular', desc: 'Ganho de massa magra e volume com peso corporal.' },
@@ -482,21 +482,21 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
                       key={item.id}
                       type="button"
                       onClick={() => setGoal(item.id as any)}
-                      className={`p-3.5 rounded-2xl border text-left transition-all ${
+                      className={`p-3.5 rounded-2xl border text-left transition-all cursor-pointer ${
                         goal === item.id 
-                          ? 'bg-emerald-500/15 border-lime-400 text-white ring-1 ring-lime-400/40 shadow-md' 
-                          : 'bg-zinc-950/80 border-zinc-800 text-zinc-400 hover:text-white'
+                          ? 'bg-lime-500/15 border-lime-500 text-zinc-900 dark:text-white ring-1 ring-lime-400/40 shadow-sm' 
+                          : 'bg-zinc-50 dark:bg-zinc-950/80 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
                       }`}
                     >
-                      <div className="text-xs font-black text-lime-400">{item.title}</div>
-                      <div className="text-[11px] text-zinc-400 mt-1 leading-snug">{item.desc}</div>
+                      <div className="text-xs font-black text-lime-700 dark:text-lime-400">{item.title}</div>
+                      <div className="text-[11px] text-zinc-600 dark:text-zinc-400 mt-1 leading-snug">{item.desc}</div>
                     </button>
                   ))}
                 </div>
               </div>
 
               <div className="space-y-2 pt-2">
-                <label className="text-xs font-bold text-zinc-300 block">Qual é o seu nível de experiência atual?</label>
+                <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300 block">Qual é o seu nível de experiência atual?</label>
                 <div className="grid grid-cols-3 gap-2">
                   {[
                     { id: 'iniciante', label: 'Iniciante', sub: 'Começando do zero' },
@@ -507,13 +507,13 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
                       key={lvl.id}
                       type="button"
                       onClick={() => setExperienceLevel(lvl.id as any)}
-                      className={`p-3 rounded-2xl border text-center transition-all ${
+                      className={`p-3 rounded-2xl border text-center transition-all cursor-pointer ${
                         experienceLevel === lvl.id
-                          ? 'bg-emerald-500/15 border-lime-400 text-white ring-1 ring-lime-400/40'
-                          : 'bg-zinc-950/80 border-zinc-800 text-zinc-400 hover:text-white'
+                          ? 'bg-lime-500/15 border-lime-500 text-zinc-900 dark:text-white ring-1 ring-lime-400/40 shadow-sm'
+                          : 'bg-zinc-50 dark:bg-zinc-950/80 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
                       }`}
                     >
-                      <div className="text-xs font-black text-lime-400">{lvl.label}</div>
+                      <div className="text-xs font-black text-lime-700 dark:text-lime-400">{lvl.label}</div>
                       <div className="text-[10px] text-zinc-500 mt-0.5">{lvl.sub}</div>
                     </button>
                   ))}
@@ -528,9 +528,9 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 
                 {/* Dias na Semana */}
-                <div className="p-4 rounded-2xl bg-zinc-950/80 border border-zinc-800 space-y-2">
-                  <label className="text-xs font-bold text-zinc-300 flex items-center space-x-1.5">
-                    <Calendar className="w-4 h-4 text-lime-400" />
+                <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-950/80 border border-zinc-200 dark:border-zinc-800 space-y-2">
+                  <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300 flex items-center space-x-1.5">
+                    <Calendar className="w-4 h-4 text-lime-600 dark:text-lime-400" />
                     <span>Meta de Treinos por Semana</span>
                   </label>
                   <div className="grid grid-cols-4 gap-1.5 pt-1">
@@ -539,10 +539,10 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
                         key={d}
                         type="button"
                         onClick={() => setWeeklyDays(d)}
-                        className={`py-2 rounded-xl text-xs font-black border transition-all ${
+                        className={`py-2 rounded-xl text-xs font-black border transition-all cursor-pointer ${
                           weeklyDays === d
-                            ? 'bg-lime-400 text-black border-lime-400'
-                            : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white'
+                            ? 'bg-lime-400 text-black border-lime-400 shadow-sm'
+                            : 'bg-white dark:bg-zinc-900 border-zinc-300 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
                         }`}
                       >
                         {d}x / sem
@@ -552,9 +552,9 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
                 </div>
 
                 {/* Tempo Disponível */}
-                <div className="p-4 rounded-2xl bg-zinc-950/80 border border-zinc-800 space-y-2">
-                  <label className="text-xs font-bold text-zinc-300 flex items-center space-x-1.5">
-                    <Clock className="w-4 h-4 text-emerald-400" />
+                <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-950/80 border border-zinc-200 dark:border-zinc-800 space-y-2">
+                  <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300 flex items-center space-x-1.5">
+                    <Clock className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                     <span>Tempo por Sessão</span>
                   </label>
                   <div className="grid grid-cols-3 gap-1.5 pt-1">
@@ -567,10 +567,10 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
                         key={t.min}
                         type="button"
                         onClick={() => setSessionDuration(t.min)}
-                        className={`py-2 rounded-xl text-xs font-black border transition-all ${
+                        className={`py-2 rounded-xl text-xs font-black border transition-all cursor-pointer ${
                           sessionDuration === t.min
-                            ? 'bg-lime-400 text-black border-lime-400'
-                            : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white'
+                            ? 'bg-lime-400 text-black border-lime-400 shadow-sm'
+                            : 'bg-white dark:bg-zinc-900 border-zinc-300 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
                         }`}
                       >
                         {t.label}
@@ -583,8 +583,8 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
 
               {/* Limitações Articulares */}
               <div className="space-y-2">
-                <label className="text-xs font-bold text-zinc-300 flex items-center space-x-1.5">
-                  <AlertTriangle className="w-4 h-4 text-amber-400" />
+                <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300 flex items-center space-x-1.5">
+                  <AlertTriangle className="w-4 h-4 text-amber-500" />
                   <span>Possui dores ou limitações articulares? (Opcional)</span>
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -600,10 +600,10 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
                         key={lim.id}
                         type="button"
                         onClick={() => toggleLimitation(lim.id)}
-                        className={`py-2 px-2.5 rounded-xl text-xs font-bold border text-center transition-all ${
+                        className={`py-2 px-2.5 rounded-xl text-xs font-bold border text-center transition-all cursor-pointer ${
                           isSelected
-                            ? 'bg-amber-500/15 border-amber-400 text-amber-300'
-                            : 'bg-zinc-950/80 border-zinc-800 text-zinc-400 hover:text-white'
+                            ? 'bg-amber-500/15 border-amber-500 text-amber-800 dark:text-amber-300'
+                            : 'bg-zinc-50 dark:bg-zinc-950/80 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
                         }`}
                       >
                         {lim.label}
@@ -614,16 +614,16 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
               </div>
 
               {/* Reset to Zero Checkbox */}
-              <div className="p-3.5 rounded-2xl bg-zinc-950/80 border border-emerald-500/20 flex items-center justify-between">
+              <div className="p-3.5 rounded-2xl bg-zinc-50 dark:bg-zinc-950/80 border border-zinc-200 dark:border-emerald-500/20 flex items-center justify-between">
                 <div>
-                  <div className="text-xs font-bold text-zinc-200">Começar do Zero (Nível 1 • 0 XP)</div>
+                  <div className="text-xs font-bold text-zinc-800 dark:text-zinc-200">Começar do Zero (Nível 1 • 0 XP)</div>
                   <div className="text-[11px] text-zinc-500">Inicia seu progresso com histórico limpo para seu novo ciclo de treinos.</div>
                 </div>
                 <input
                   type="checkbox"
                   checked={resetDataToZero}
                   onChange={e => setResetDataToZero(e.target.checked)}
-                  className="w-4 h-4 rounded bg-zinc-900 border-zinc-700 text-lime-400 focus:ring-0 cursor-pointer ml-3"
+                  className="w-4 h-4 rounded bg-zinc-100 dark:bg-zinc-900 border-zinc-300 dark:border-zinc-700 text-lime-500 focus:ring-0 cursor-pointer ml-3"
                 />
               </div>
 
@@ -631,12 +631,12 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
           )}
 
           {/* Stepper Bottom Controls */}
-          <div className="flex items-center justify-between gap-3 pt-2 border-t border-zinc-800/80">
+          <div className="flex items-center justify-between gap-3 pt-2 border-t border-zinc-200 dark:border-zinc-800/80">
             {step > 1 ? (
               <button
                 type="button"
                 onClick={() => setStep(step - 1)}
-                className="px-4 py-2.5 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-zinc-300 text-xs font-bold border border-zinc-800 flex items-center space-x-1.5 transition-colors"
+                className="px-4 py-2.5 rounded-xl bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-950 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 text-xs font-bold border border-zinc-200 dark:border-zinc-800 flex items-center space-x-1.5 transition-colors cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" />
                 <span>Voltar</span>
@@ -648,7 +648,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
             {step < 4 ? (
               <button
                 type="submit"
-                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-lime-400 to-emerald-400 text-black font-extrabold text-xs shadow-md shadow-lime-500/20 hover:opacity-90 flex items-center space-x-1.5 transition-all"
+                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-lime-400 to-emerald-400 text-black font-extrabold text-xs shadow-md shadow-lime-500/20 hover:opacity-90 flex items-center space-x-1.5 transition-all cursor-pointer"
               >
                 <span>Avançar</span>
                 <ChevronRight className="w-4 h-4" />
@@ -658,7 +658,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({ isOpen, on
                 type="button"
                 onClick={handleFinalSave}
                 id="finish-athlete-onboarding-btn"
-                className="px-6 py-3 rounded-2xl bg-gradient-to-r from-lime-400 to-emerald-400 text-black font-extrabold text-xs sm:text-sm shadow-xl shadow-lime-500/20 hover:opacity-95 flex items-center space-x-2 transition-all"
+                className="px-6 py-3 rounded-2xl bg-gradient-to-r from-lime-400 to-emerald-400 text-black font-extrabold text-xs sm:text-sm shadow-xl shadow-lime-500/20 hover:opacity-95 flex items-center space-x-2 transition-all cursor-pointer"
               >
                 <Award className="w-4 h-4" />
                 <span>Concluir Cadastro & Iniciar Treinos</span>

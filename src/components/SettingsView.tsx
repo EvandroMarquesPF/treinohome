@@ -154,13 +154,13 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
     <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8 animate-fade-in pb-20">
       
       {/* Settings Header */}
-      <div className="rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/30 border border-emerald-500/20 p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xl">
-        <div className="space-y-1.5">
-          <h1 className="text-2xl sm:text-3xl font-black text-white flex items-center space-x-3">
-            <SettingsIcon className="w-8 h-8 text-lime-400" />
+      <div className="rounded-3xl bg-white border border-zinc-200/90 dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/95 dark:to-emerald-950/30 dark:border-emerald-500/20 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-md dark:shadow-xl text-center sm:text-left transition-colors">
+        <div className="space-y-1.5 flex flex-col items-center sm:items-start">
+          <h1 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white flex items-center space-x-3">
+            <SettingsIcon className="w-8 h-8 text-lime-600 dark:text-lime-400" />
             <span>Configurações & Perfil</span>
           </h1>
-          <p className="text-xs sm:text-sm text-zinc-400">
+          <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 font-medium">
             Gerencie sua ficha de atleta, preferências de treino, descanso entre séries e conta.
           </p>
         </div>
@@ -169,14 +169,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
       </div>
 
       {/* Perfil & Ficha do Atleta */}
-      <div className="rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/30 border border-emerald-500/20 p-6 sm:p-8 space-y-6 shadow-xl">
-        <div className="flex items-center justify-between flex-wrap gap-4">
-          <div className="space-y-1">
-            <h2 className="text-lg font-bold text-white flex items-center space-x-2">
-              <User className="w-5 h-5 text-lime-400" />
+      <div className="rounded-3xl bg-white border border-zinc-200/90 dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/95 dark:to-emerald-950/30 dark:border-emerald-500/20 p-6 sm:p-8 space-y-6 shadow-md dark:shadow-xl text-center sm:text-left transition-colors">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="space-y-1 flex flex-col items-center sm:items-start">
+            <h2 className="text-lg font-bold text-zinc-900 dark:text-white flex items-center space-x-2">
+              <User className="w-5 h-5 text-lime-600 dark:text-lime-400" />
               <span>Perfil do Atleta</span>
             </h2>
-            <p className="text-xs text-zinc-400">Identificação e dados biométricos para personalização dos treinos.</p>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 font-medium">Identificação e dados biométricos para personalização dos treinos.</p>
           </div>
 
           {onOpenProfileSetup && (
@@ -192,55 +192,55 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
         </div>
 
         {savedSuccess && (
-          <div className="p-3.5 rounded-2xl bg-emerald-500/20 text-lime-300 border border-emerald-500/30 text-xs font-bold flex items-center space-x-2">
-            <Check className="w-4 h-4 text-lime-400" />
+          <div className="p-3.5 rounded-2xl bg-emerald-500/20 text-emerald-800 dark:text-lime-300 border border-emerald-500/30 text-xs font-bold flex items-center justify-center space-x-2">
+            <Check className="w-4 h-4 text-lime-600 dark:text-lime-400" />
             <span>Perfil atualizado com sucesso!</span>
           </div>
         )}
 
         {/* Athlete Overview Card */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-2xl bg-zinc-950/80 border border-zinc-800">
-          <div className="space-y-1">
-            <span className="text-[11px] text-zinc-500 flex items-center space-x-1">
-              <Scale className="w-3.5 h-3.5 text-lime-400" />
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-950/80 border border-zinc-200 dark:border-zinc-800">
+          <div className="space-y-1 flex flex-col items-center sm:items-start">
+            <span className="text-[11px] text-zinc-500 flex items-center space-x-1 font-medium">
+              <Scale className="w-3.5 h-3.5 text-lime-600 dark:text-lime-400" />
               <span>Peso Atual</span>
             </span>
-            <div className="text-sm font-black text-white">{user?.weight || 70} kg</div>
+            <div className="text-sm font-black text-zinc-900 dark:text-white">{user?.weight || 70} kg</div>
           </div>
 
-          <div className="space-y-1">
-            <span className="text-[11px] text-zinc-500 flex items-center space-x-1">
-              <Ruler className="w-3.5 h-3.5 text-teal-400" />
+          <div className="space-y-1 flex flex-col items-center sm:items-start">
+            <span className="text-[11px] text-zinc-500 flex items-center space-x-1 font-medium">
+              <Ruler className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
               <span>Altura</span>
             </span>
-            <div className="text-sm font-black text-white">{user?.height || 175} cm</div>
+            <div className="text-sm font-black text-zinc-900 dark:text-white">{user?.height || 175} cm</div>
           </div>
 
-          <div className="space-y-1">
-            <span className="text-[11px] text-zinc-500 flex items-center space-x-1">
-              <Activity className="w-3.5 h-3.5 text-emerald-400" />
+          <div className="space-y-1 flex flex-col items-center sm:items-start">
+            <span className="text-[11px] text-zinc-500 flex items-center space-x-1 font-medium">
+              <Activity className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
               <span>IMC Calculado</span>
             </span>
             <div className={`text-sm font-black ${bmiInfo.color}`}>{bmiInfo.value} • {bmiInfo.label}</div>
           </div>
 
-          <div className="space-y-1">
-            <span className="text-[11px] text-zinc-500 flex items-center space-x-1">
-              <Target className="w-3.5 h-3.5 text-amber-400" />
+          <div className="space-y-1 flex flex-col items-center sm:items-start">
+            <span className="text-[11px] text-zinc-500 flex items-center space-x-1 font-medium">
+              <Target className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
               <span>Meta Principal</span>
             </span>
-            <div className="text-xs font-black text-zinc-200 truncate">
+            <div className="text-xs font-black text-zinc-800 dark:text-zinc-200 truncate">
               {user?.fitness_goal ? goalLabels[user.fitness_goal] || user.fitness_goal : 'Hipertrofia'}
             </div>
           </div>
         </div>
 
         {/* Quick Edit Basic Fields */}
-        <form onSubmit={handleSaveProfile} className="space-y-5 max-w-xl">
+        <form onSubmit={handleSaveProfile} className="space-y-5 max-w-xl mx-auto sm:mx-0 text-left">
           {/* Avatar Upload */}
-          <div className="p-4 rounded-2xl bg-zinc-950/80 border border-zinc-800 space-y-3">
-            <label className="text-xs font-bold text-zinc-300 block">Foto de Perfil</label>
-            <div className="flex items-center space-x-4">
+          <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-950/80 border border-zinc-200 dark:border-zinc-800 space-y-3">
+            <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300 block text-center sm:text-left">Foto de Perfil</label>
+            <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4">
               <div className="relative group shrink-0">
                 <img
                   src={avatarUrl || user?.avatar_url}
@@ -257,7 +257,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
                 </button>
               </div>
 
-              <div className="space-y-1">
+              <div className="space-y-1 flex flex-col items-center sm:items-start">
                 <input
                   type="file"
                   ref={fileInputRef}
@@ -268,9 +268,9 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="px-3.5 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 text-xs font-bold border border-zinc-700 flex items-center space-x-1.5"
+                  className="px-3.5 py-1.5 rounded-xl bg-white hover:bg-zinc-100 text-zinc-700 dark:bg-zinc-900 dark:hover:bg-zinc-800 dark:text-zinc-200 text-xs font-bold border border-zinc-300 dark:border-zinc-700 flex items-center space-x-1.5 transition-colors"
                 >
-                  <Upload className="w-3.5 h-3.5 text-lime-400" />
+                  <Upload className="w-3.5 h-3.5 text-lime-600 dark:text-lime-400" />
                   <span>Trocar Imagem</span>
                 </button>
                 <p className="text-[10px] text-zinc-500">Formatos aceitos: JPG, PNG ou WebP</p>
@@ -279,28 +279,28 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-bold text-zinc-300">Nome do Atleta</label>
+            <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300">Nome do Atleta</label>
             <input
               type="text"
               value={name}
               onChange={e => setName(e.target.value)}
-              className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-100 focus:outline-none focus:border-lime-400"
+              className="w-full bg-white dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-lime-500 font-medium"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-bold text-zinc-300">E-mail Cadastrado</label>
+            <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300">E-mail Cadastrado</label>
             <input
               type="email"
               disabled
               value={user?.email || ''}
-              className="w-full bg-zinc-950/50 border border-zinc-800/80 rounded-xl px-4 py-2.5 text-sm text-zinc-500 cursor-not-allowed"
+              className="w-full bg-zinc-100 dark:bg-zinc-950/50 border border-zinc-200 dark:border-zinc-800/80 rounded-xl px-4 py-2.5 text-sm text-zinc-500 cursor-not-allowed font-medium"
             />
           </div>
 
           <button
             type="submit"
-            className="px-6 py-2.5 rounded-xl bg-lime-400 text-black font-extrabold text-xs shadow-md shadow-lime-500/20 hover:bg-lime-300 transition-all"
+            className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-lime-400 text-black font-extrabold text-xs shadow-md shadow-lime-500/20 hover:bg-lime-300 transition-all"
           >
             Salvar Alterações
           </button>
@@ -308,27 +308,27 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
       </div>
 
       {/* Preferências de Treino & Áudio */}
-      <div className="rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/30 border border-emerald-500/20 p-6 sm:p-8 space-y-6 shadow-xl">
-        <div className="space-y-1">
-          <h2 className="text-lg font-bold text-white flex items-center space-x-2">
-            <Clock className="w-5 h-5 text-lime-400" />
+      <div className="rounded-3xl bg-white border border-zinc-200/90 dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/95 dark:to-emerald-950/30 dark:border-emerald-500/20 p-6 sm:p-8 space-y-6 shadow-md dark:shadow-xl text-center sm:text-left transition-colors">
+        <div className="space-y-1 flex flex-col items-center sm:items-start">
+          <h2 className="text-lg font-bold text-zinc-900 dark:text-white flex items-center space-x-2">
+            <Clock className="w-5 h-5 text-lime-600 dark:text-lime-400" />
             <span>Preferências de Treino & Áudio</span>
           </h2>
-          <p className="text-xs text-zinc-400">Ajuste o cronômetro automático e feedback tátil.</p>
+          <p className="text-xs text-zinc-600 dark:text-zinc-400 font-medium">Ajuste o cronômetro automático e feedback tátil.</p>
         </div>
 
-        <div className="space-y-3.5 max-w-xl">
+        <div className="space-y-3.5 max-w-xl mx-auto sm:mx-0">
           {/* Default Rest Timer */}
-          <div className="p-4 rounded-2xl bg-zinc-950/80 border border-zinc-800 flex items-center justify-between">
-            <div>
-              <div className="text-sm font-bold text-zinc-200">Descanso Padrão entre Séries</div>
-              <div className="text-xs text-zinc-400">Iniciado ao marcar uma série como concluída.</div>
+          <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-950/80 border border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+            <div className="text-left">
+              <div className="text-sm font-bold text-zinc-800 dark:text-zinc-200">Descanso Padrão entre Séries</div>
+              <div className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Iniciado ao marcar uma série como concluída.</div>
             </div>
 
             <select
               value={settings.descanso}
               onChange={e => actions.updateSettings({ descanso: Number(e.target.value) })}
-              className="bg-zinc-900 border border-zinc-700 rounded-xl px-3 py-2 text-xs font-bold text-lime-400 focus:outline-none cursor-pointer"
+              className="bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-xl px-3 py-2 text-xs font-bold text-lime-700 dark:text-lime-400 focus:outline-none cursor-pointer"
             >
               <option value={30}>30s</option>
               <option value={45}>45s</option>
@@ -339,51 +339,51 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
           </div>
 
           {/* Sound Toggle */}
-          <div className="p-4 rounded-2xl bg-zinc-950/80 border border-zinc-800 flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Volume2 className="w-5 h-5 text-lime-400" />
+          <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-950/80 border border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+            <div className="flex items-center space-x-3 text-left">
+              <Volume2 className="w-5 h-5 text-lime-600 dark:text-lime-400" />
               <div>
-                <div className="text-sm font-bold text-zinc-200">Efeitos Sonoros & Chimes</div>
-                <div className="text-xs text-zinc-400">Avisos sonoros no cronômetro e conquistas.</div>
+                <div className="text-sm font-bold text-zinc-800 dark:text-zinc-200">Efeitos Sonoros & Chimes</div>
+                <div className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Avisos sonoros no cronômetro e conquistas.</div>
               </div>
             </div>
 
             <button
               onClick={() => actions.updateSettings({ som: !settings.som })}
-              className={`w-12 h-6 rounded-full transition-colors relative p-0.5 ${settings.som ? 'bg-lime-400' : 'bg-zinc-800'}`}
+              className={`w-12 h-6 rounded-full transition-colors relative p-0.5 shrink-0 ${settings.som ? 'bg-lime-400' : 'bg-zinc-300 dark:bg-zinc-800'}`}
             >
-              <div className={`w-5 h-5 rounded-full bg-zinc-950 transition-transform ${settings.som ? 'translate-x-6' : 'translate-x-0'}`} />
+              <div className={`w-5 h-5 rounded-full bg-white dark:bg-zinc-950 shadow transition-transform ${settings.som ? 'translate-x-6' : 'translate-x-0'}`} />
             </button>
           </div>
 
           {/* Vibration Toggle */}
-          <div className="p-4 rounded-2xl bg-zinc-950/80 border border-zinc-800 flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Vibrate className="w-5 h-5 text-teal-400" />
+          <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-950/80 border border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+            <div className="flex items-center space-x-3 text-left">
+              <Vibrate className="w-5 h-5 text-teal-600 dark:text-teal-400" />
               <div>
-                <div className="text-sm font-bold text-zinc-200">Vibração Hática (Mobile)</div>
-                <div className="text-xs text-zinc-400">Feedback tátil ao tocar e completar séries.</div>
+                <div className="text-sm font-bold text-zinc-800 dark:text-zinc-200">Vibração Hática (Mobile)</div>
+                <div className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Feedback tátil ao tocar e completar séries.</div>
               </div>
             </div>
 
             <button
               onClick={() => actions.updateSettings({ vibracao: !settings.vibracao })}
-              className={`w-12 h-6 rounded-full transition-colors relative p-0.5 ${settings.vibracao ? 'bg-lime-400' : 'bg-zinc-800'}`}
+              className={`w-12 h-6 rounded-full transition-colors relative p-0.5 shrink-0 ${settings.vibracao ? 'bg-lime-400' : 'bg-zinc-300 dark:bg-zinc-800'}`}
             >
-              <div className={`w-5 h-5 rounded-full bg-zinc-950 transition-transform ${settings.vibracao ? 'translate-x-6' : 'translate-x-0'}`} />
+              <div className={`w-5 h-5 rounded-full bg-white dark:bg-zinc-950 shadow transition-transform ${settings.vibracao ? 'translate-x-6' : 'translate-x-0'}`} />
             </button>
           </div>
         </div>
       </div>
 
       {/* Sincronização em Nuvem (Discreet & Clean) */}
-      <div className="rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/30 border border-emerald-500/20 p-6 sm:p-8 space-y-4 shadow-xl">
-        <div className="flex items-center justify-between flex-wrap gap-3">
-          <div className="flex items-center space-x-3">
-            <Cloud className="w-6 h-6 text-lime-400" />
+      <div className="rounded-3xl bg-white border border-zinc-200/90 dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/95 dark:to-emerald-950/30 dark:border-emerald-500/20 p-6 sm:p-8 space-y-4 shadow-md dark:shadow-xl text-center sm:text-left transition-colors">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-3">
+            <Cloud className="w-6 h-6 text-lime-600 dark:text-lime-400" />
             <div>
-              <h2 className="text-lg font-bold text-white">Sincronização em Nuvem</h2>
-              <p className="text-xs text-zinc-400">
+              <h2 className="text-lg font-bold text-zinc-900 dark:text-white">Sincronização em Nuvem</h2>
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 font-medium">
                 Status: {isSupabaseConfigured 
                   ? (isVercelEnvDetected ? '🟢 Sincronizado via Vercel' : '🟢 Sincronizado com Supabase Cloud') 
                   : '🟢 Armazenamento Local Seguro'}
@@ -393,34 +393,34 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
 
           <button
             onClick={() => setShowAdvancedSync(!showAdvancedSync)}
-            className="text-xs text-zinc-400 hover:text-lime-400 underline transition-colors"
+            className="text-xs text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-lime-400 underline transition-colors font-medium"
           >
             {showAdvancedSync ? 'Ocultar Configuração Avançada' : 'Configurações Avançadas de API'}
           </button>
         </div>
 
         {showAdvancedSync && (
-          <div className="space-y-4 pt-3 border-t border-zinc-800/80 animate-fade-in max-w-2xl">
+          <div className="space-y-4 pt-3 border-t border-zinc-200 dark:border-zinc-800/80 animate-fade-in max-w-2xl mx-auto sm:mx-0 text-left">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="text-xs font-semibold text-zinc-300 block mb-1">Supabase URL</label>
+                <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 block mb-1">Supabase URL</label>
                 <input
                   type="text"
                   placeholder="https://xxx.supabase.co"
                   value={customUrl}
                   onChange={e => setCustomUrl(e.target.value)}
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 focus:outline-none focus:border-lime-400"
+                  className="w-full bg-white dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-lime-500"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-zinc-300 block mb-1">Supabase Anon Key</label>
+                <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 block mb-1">Supabase Anon Key</label>
                 <input
                   type="password"
                   placeholder="eyJhbGciOi..."
                   value={customKey}
                   onChange={e => setCustomKey(e.target.value)}
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-100 focus:outline-none focus:border-lime-400"
+                  className="w-full bg-white dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-lime-500"
                 />
               </div>
             </div>
@@ -428,8 +428,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
             {testResult && (
               <div className={`p-3 rounded-2xl text-xs font-bold flex items-center space-x-2 ${
                 testResult.success 
-                  ? 'bg-emerald-500/10 text-lime-400 border border-emerald-500/30'
-                  : 'bg-rose-500/10 text-rose-400 border border-rose-500/30'
+                  ? 'bg-emerald-500/10 text-emerald-800 dark:text-lime-400 border border-emerald-500/30'
+                  : 'bg-rose-500/10 text-rose-700 dark:text-rose-400 border border-rose-500/30'
               }`}>
                 {testResult.success ? <CheckCircle2 className="w-4 h-4 shrink-0" /> : <AlertCircle className="w-4 h-4 shrink-0" />}
                 <span>{testResult.message}</span>
@@ -448,48 +448,48 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
       </div>
 
       {/* Termos de Uso e Privacidade LGPD */}
-      <div className="rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900/95 to-emerald-950/30 border border-emerald-500/20 p-6 sm:p-8 space-y-4 shadow-xl">
-        <div className="flex items-center space-x-3">
-          <ShieldCheck className="w-6 h-6 text-lime-400" />
+      <div className="rounded-3xl bg-white border border-zinc-200/90 dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/95 dark:to-emerald-950/30 dark:border-emerald-500/20 p-6 sm:p-8 space-y-4 shadow-md dark:shadow-xl text-center sm:text-left transition-colors">
+        <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-3">
+          <ShieldCheck className="w-6 h-6 text-lime-600 dark:text-lime-400" />
           <div>
-            <h2 className="text-lg font-bold text-white">Privacidade & Termos</h2>
-            <p className="text-xs text-zinc-400">Proteção de dados pessoais e diretrizes de treino com segurança física.</p>
+            <h2 className="text-lg font-bold text-zinc-900 dark:text-white">Privacidade & Termos</h2>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 font-medium">Proteção de dados pessoais e diretrizes de treino com segurança física.</p>
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-3 pt-1">
+        <div className="flex flex-wrap justify-center sm:justify-start gap-3 pt-1">
           <button
             onClick={() => onOpenTerms?.('terms')}
-            className="px-4 py-2 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-zinc-200 border border-zinc-800 text-xs font-bold flex items-center space-x-2 transition-colors"
+            className="px-4 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-800 dark:bg-zinc-950 dark:hover:bg-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 text-xs font-bold flex items-center space-x-2 transition-colors"
           >
-            <FileText className="w-4 h-4 text-lime-400" />
+            <FileText className="w-4 h-4 text-lime-600 dark:text-lime-400" />
             <span>Termos de Uso</span>
           </button>
 
           <button
             onClick={() => onOpenTerms?.('privacy')}
-            className="px-4 py-2 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-zinc-200 border border-zinc-800 text-xs font-bold flex items-center space-x-2 transition-colors"
+            className="px-4 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-800 dark:bg-zinc-950 dark:hover:bg-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 text-xs font-bold flex items-center space-x-2 transition-colors"
           >
-            <Lock className="w-4 h-4 text-lime-400" />
+            <Lock className="w-4 h-4 text-lime-600 dark:text-lime-400" />
             <span>Política de Privacidade (LGPD)</span>
           </button>
         </div>
       </div>
 
       {/* Conta & Zona de Segurança */}
-      <div className="rounded-3xl bg-rose-950/15 border border-rose-500/20 p-6 sm:p-8 space-y-4 shadow-xl">
+      <div className="rounded-3xl bg-rose-50 border border-rose-200 dark:bg-rose-950/15 dark:border-rose-500/20 p-6 sm:p-8 space-y-4 shadow-md dark:shadow-xl text-center sm:text-left transition-colors">
         <div className="space-y-1">
-          <h2 className="text-lg font-bold text-rose-400">Conta & Gerenciamento</h2>
-          <p className="text-xs text-zinc-400">Encerre a sessão atual ou limpe seus dados do dispositivo.</p>
+          <h2 className="text-lg font-bold text-rose-700 dark:text-rose-400">Conta & Gerenciamento</h2>
+          <p className="text-xs text-zinc-600 dark:text-zinc-400 font-medium">Encerre a sessão atual ou limpe seus dados do dispositivo.</p>
         </div>
 
-        <div className="flex flex-wrap gap-3 pt-1">
+        <div className="flex flex-wrap justify-center sm:justify-start gap-3 pt-1">
           <button
             onClick={() => actions.logout()}
             id="logout-btn"
-            className="px-5 py-2.5 rounded-xl bg-zinc-900 text-zinc-200 border border-zinc-800 text-xs font-bold hover:bg-zinc-800 flex items-center space-x-2 transition-colors"
+            className="px-5 py-2.5 rounded-xl bg-white text-zinc-800 border border-zinc-300 dark:bg-zinc-900 dark:text-zinc-200 dark:border-zinc-800 text-xs font-bold hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center space-x-2 transition-colors shadow-sm"
           >
-            <LogOut className="w-4 h-4 text-zinc-400" />
+            <LogOut className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
             <span>Sair da Conta (Logout)</span>
           </button>
 
@@ -500,9 +500,9 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
               }
             }}
             id="reset-all-data-btn"
-            className="px-5 py-2.5 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/40 text-xs font-bold hover:bg-rose-500/30 flex items-center space-x-2 transition-colors"
+            className="px-5 py-2.5 rounded-xl bg-rose-500/15 text-rose-800 dark:bg-rose-500/20 dark:text-rose-300 border border-rose-300 dark:border-rose-500/40 text-xs font-bold hover:bg-rose-500/25 dark:hover:bg-rose-500/30 flex items-center space-x-2 transition-colors"
           >
-            <Trash2 className="w-4 h-4 text-rose-400" />
+            <Trash2 className="w-4 h-4 text-rose-600 dark:text-rose-400" />
             <span>Resetar Dados de Treino</span>
           </button>
         </div>
