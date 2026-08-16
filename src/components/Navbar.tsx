@@ -58,12 +58,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             className="flex items-center space-x-3 cursor-pointer group"
             id="brand-logo-btn"
           >
-            <BrandLogo size="md" className="group-hover:scale-105 transition-transform" />
-            <div>
-              <span className="font-extrabold text-xl tracking-tight text-white">
+            <BrandLogo size="md" className="group-hover:scale-105 transition-transform shrink-0" />
+            <div className="flex items-center space-x-2">
+              <span className="font-extrabold text-lg sm:text-xl tracking-tight text-white">
                 Treino Home
               </span>
-              <span className="hidden sm:inline-block ml-2 text-xs px-2 py-0.5 rounded-full bg-lime-400/10 text-lime-400 font-bold border border-lime-500/20">
+              <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-lime-400/15 text-lime-400 font-extrabold border border-lime-500/30 shadow-sm">
                 Pro
               </span>
             </div>

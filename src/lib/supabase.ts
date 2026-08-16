@@ -97,7 +97,22 @@ export const configSource: 'env' | 'localStorage' | 'none' = storedConfig.url &&
   ? 'localStorage'
   : (isSupabaseConfigured ? 'env' : 'none');
 
-export let supabase: SupabaseClient = createClient(
+export function createSupabaseInstance(url: string, key: string): SupabaseClient {
+  return createClient(url, key, {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+    },
+    global: {
+      fetch: (input: RequestInfo | URL, init?: RequestInit) => {
+        return fetch(input, init);
+      },
+    },
+  });
+}
+
+export let supabase: SupabaseClient = createSupabaseInstance(
   isSupabaseConfigured ? supabaseUrl : 'https://placeholder.supabase.co',
   isSupabaseConfigured ? supabaseAnonKey : 'placeholder-anon-key'
 );
@@ -120,7 +135,7 @@ export function setCustomSupabaseConfig(url: string, key: string): { success: bo
     window.localStorage.setItem('treino_home_custom_supabase_url', cleanUrl);
     window.localStorage.setItem('treino_home_custom_supabase_anon_key', cleanKey);
 
-    supabase = createClient(cleanUrl, cleanKey);
+    supabase = createSupabaseInstance(cleanUrl, cleanKey);
     return { success: true, message: 'Chaves do Supabase salvas e conectadas com sucesso!' };
   } catch (e: unknown) {
     const err = e as Error;
@@ -137,7 +152,7 @@ export async function testSupabaseConnection(url?: string, key?: string): Promis
       return { success: false, message: 'Credenciais ausentes ou formato inválido.' };
     }
 
-    const testClient = createClient(targetUrl, targetKey);
+    const testClient = createSupabaseInstance(targetUrl, targetKey);
     const { error } = await testClient.auth.getSession();
 
     if (error) {

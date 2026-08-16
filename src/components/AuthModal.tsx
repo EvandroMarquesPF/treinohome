@@ -5,29 +5,16 @@ import {
   Lock, 
   User, 
   ArrowRight, 
-  Sparkles, 
   CheckCircle2, 
   AlertCircle,
-  Database,
   Camera,
   Upload,
-  RotateCcw,
-  Settings,
-  ChevronDown,
-  ChevronUp,
-  Link,
-  ShieldCheck
+  RotateCcw
 } from 'lucide-react';
 import { useAppStore } from '../lib/store';
 import { 
   supabase, 
-  isSupabaseConfigured, 
-  isVercelEnvDetected,
-  configSource,
-  supabaseUrl,
-  supabaseAnonKey,
-  setCustomSupabaseConfig,
-  testSupabaseConnection 
+  isSupabaseConfigured
 } from '../lib/supabase';
 import { BrandLogo } from './BrandLogo';
 
@@ -55,13 +42,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const [rememberMe, setRememberMe] = useState(true);
   const [resetDataOnRegister, setResetDataOnRegister] = useState(true);
 
-  // Vercel / Custom Supabase config drawer
-  const [showConfigDrawer, setShowConfigDrawer] = useState(false);
-  const [customUrl, setCustomUrl] = useState(supabaseUrl || '');
-  const [customKey, setCustomKey] = useState(supabaseAnonKey || '');
-  const [testStatus, setTestStatus] = useState<{ loading: boolean; message: string; success?: boolean } | null>(null);
-
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   useEffect(() => {
@@ -116,16 +98,39 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     reader.readAsDataURL(file);
   };
 
-  const handleSaveCustomKeys = async () => {
-    setTestStatus({ loading: true, message: 'Testando conexão com Supabase...' });
-    const result = await testSupabaseConnection(customUrl, customKey);
-    
-    if (result.success) {
-      setCustomSupabaseConfig(customUrl, customKey);
-      setTestStatus({ loading: false, success: true, message: 'Conexão validada e salva com sucesso!' });
-      setTimeout(() => setShowConfigDrawer(false), 1200);
-    } else {
-      setTestStatus({ loading: false, success: false, message: result.message });
+  const handleGoogleSignIn = async () => {
+    setGoogleLoading(true);
+    setMessage(null);
+
+    try {
+      if (isSupabaseConfigured) {
+        const redirectToUrl = typeof window !== 'undefined' ? window.location.origin : undefined;
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: redirectToUrl
+          }
+        });
+        if (error) throw error;
+      } else {
+        // Modo local/offline instantâneo com Google
+        actions.login('Atleta Google', 'atleta.google@treinohome.app', avatarUrl);
+        setMessage({
+          type: 'success',
+          text: 'Conectado com sucesso com sua conta Google!'
+        });
+        setTimeout(() => {
+          setGoogleLoading(false);
+          onClose();
+        }, 700);
+      }
+    } catch (err: unknown) {
+      const errorObj = err as { message?: string };
+      setMessage({
+        type: 'error',
+        text: errorObj.message || 'Não foi possível conectar com o Google no momento.'
+      });
+      setGoogleLoading(false);
     }
   };
 
@@ -236,7 +241,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         <div className="flex flex-col items-center text-center space-y-2 pt-1">
           <BrandLogo size="lg" />
           <h2 className="text-2xl font-extrabold text-white tracking-tight">
-            {mode === 'login' && 'Entrar no Treino Home'}
+            {mode === 'login' && 'Entrar no Treino Home Pro'}
             {mode === 'signup' && 'Criar Conta de Atleta'}
             {mode === 'recovery' && 'Recuperar Senha'}
           </h2>
@@ -247,87 +252,46 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           </p>
         </div>
 
-        {/* Vercel & Supabase Environment Detection Indicator */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between px-3.5 py-2 rounded-2xl bg-zinc-950 border border-zinc-800 text-[11px]">
-            <div className="flex items-center space-x-2">
-              <Database className={`w-3.5 h-3.5 ${isSupabaseConfigured ? 'text-lime-400' : 'text-amber-400'}`} />
-              <span className="font-semibold text-zinc-300">
-                {isSupabaseConfigured 
-                  ? (isVercelEnvDetected ? '⚡ Supabase Conectado (Vercel Env)' : '⚡ Supabase Conectado')
-                  : 'Modo Local Instantâneo (Offline)'}
-              </span>
-            </div>
-
+        {/* Google OAuth Login Button */}
+        {mode !== 'recovery' && (
+          <div className="space-y-3">
             <button
               type="button"
-              onClick={() => setShowConfigDrawer(!showConfigDrawer)}
-              className="text-[10px] text-lime-400 font-bold hover:underline flex items-center space-x-1"
-              id="toggle-supabase-config-btn"
+              onClick={handleGoogleSignIn}
+              disabled={googleLoading || loading}
+              id="google-auth-btn"
+              className="w-full py-3 px-4 rounded-2xl bg-zinc-950 hover:bg-zinc-800 border border-zinc-700/80 text-white text-xs sm:text-sm font-bold transition-all flex items-center justify-center space-x-3 shadow-md hover:border-zinc-500 disabled:opacity-50"
             >
-              <span>{showConfigDrawer ? 'Ocultar' : 'Configurar'}</span>
-              {showConfigDrawer ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+              <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+                <path
+                  fill="#4285F4"
+                  d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"
+                />
+                <path
+                  fill="#34A853"
+                  d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"
+                />
+                <path
+                  fill="#FBBC05"
+                  d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.16 0 9.94 0 12s.45 3.84 1.25 5.42l4.03-3.15z"
+                />
+                <path
+                  fill="#EA4335"
+                  d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"
+                />
+              </svg>
+              <span>{googleLoading ? 'Conectando...' : mode === 'login' ? 'Entrar com o Google' : 'Cadastrar com o Google'}</span>
             </button>
-          </div>
 
-          {/* Expandable Vercel / Custom Supabase Config */}
-          {showConfigDrawer && (
-            <div className="p-4 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-3 animate-in fade-in duration-150">
-              <div className="text-[11px] text-zinc-300 font-bold flex items-center gap-1.5">
-                <Settings className="w-3.5 h-3.5 text-lime-400" />
-                <span>Variáveis de Ambiente / Vercel:</span>
-              </div>
-              <p className="text-[10px] text-zinc-400 leading-relaxed">
-                Ao implantar na <strong>Vercel</strong>, as variáveis <code className="text-lime-300 font-mono bg-zinc-900 px-1 py-0.5 rounded">VITE_SUPABASE_URL</code> e <code className="text-lime-300 font-mono bg-zinc-900 px-1 py-0.5 rounded">VITE_SUPABASE_ANON_KEY</code> são detectadas automaticamente. Você também pode inserir suas chaves abaixo para sincronização instantânea:
-              </p>
-
-              <div className="space-y-2">
-                <div>
-                  <label className="text-[10px] text-zinc-400 block font-semibold mb-1">Supabase URL</label>
-                  <input
-                    type="text"
-                    placeholder="https://seu-projeto.supabase.co"
-                    value={customUrl}
-                    onChange={e => setCustomUrl(e.target.value)}
-                    className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-lime-400"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-[10px] text-zinc-400 block font-semibold mb-1">Supabase Anon Key (Chave Pública)</label>
-                  <input
-                    type="password"
-                    placeholder="eyJhbGciOi..."
-                    value={customKey}
-                    onChange={e => setCustomKey(e.target.value)}
-                    className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-lime-400"
-                  />
-                </div>
-
-                {testStatus && (
-                  <div className={`p-2 rounded-lg text-[10px] font-semibold flex items-center space-x-1.5 ${
-                    testStatus.success 
-                      ? 'bg-lime-500/10 text-lime-400 border border-lime-500/20'
-                      : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
-                  }`}>
-                    {testStatus.success ? <CheckCircle2 className="w-3.5 h-3.5" /> : <AlertCircle className="w-3.5 h-3.5" />}
-                    <span>{testStatus.message}</span>
-                  </div>
-                )}
-
-                <button
-                  type="button"
-                  onClick={handleSaveCustomKeys}
-                  disabled={testStatus?.loading}
-                  className="w-full py-2 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-extrabold text-xs transition-all flex items-center justify-center space-x-1.5 disabled:opacity-50"
-                >
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>{testStatus?.loading ? 'Testando...' : 'Salvar e Conectar Chaves'}</span>
-                </button>
-              </div>
+            <div className="relative flex items-center justify-center">
+              <div className="border-t border-zinc-800 w-full" />
+              <span className="bg-zinc-900 px-3 text-[11px] text-zinc-500 uppercase tracking-wider font-semibold">
+                ou continue com e-mail
+              </span>
+              <div className="border-t border-zinc-800 w-full" />
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Form Alert */}
         {message && (

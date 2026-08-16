@@ -6,6 +6,37 @@
     <title>Treino Home Pro - Treinador Pessoal Inteligente</title>
     <meta name="description" content="Seu treinador pessoal para treinos em casa com controle de progresso, gamificação e calistenia." />
     <meta name="theme-color" content="#7ab81e" />
+    <script>
+      (function() {
+        try {
+          if (typeof window !== 'undefined') {
+            var origFetch = window.fetch;
+            if (typeof origFetch === 'function') {
+              var customFetch = function(input, init) {
+                return origFetch.call(window, input, init);
+              };
+              try {
+                Object.defineProperty(window, 'fetch', {
+                  configurable: true,
+                  enumerable: true,
+                  writable: true,
+                  value: customFetch
+                });
+              } catch (err1) {
+                try {
+                  Object.defineProperty(window, 'fetch', {
+                    configurable: true,
+                    enumerable: true,
+                    get: function() { return customFetch; },
+                    set: function(newFetch) { customFetch = newFetch; }
+                  });
+                } catch (err2) {}
+              }
+            }
+          }
+        } catch (e) {}
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
