@@ -136,6 +136,13 @@ export let supabase: SupabaseClient = createSupabaseInstance(
   isSupabaseConfigured ? supabaseAnonKey : 'placeholder-anon-key'
 );
 
+export function getOAuthRedirectUrl(): string {
+  if (typeof window === 'undefined') return '';
+  // Se estiver na Vercel ou produção, garanta a URL exata com origin
+  const origin = window.location.origin;
+  return origin.endsWith('/') ? origin : `${origin}/`;
+}
+
 export function translateSupabaseAuthError(err: unknown): string {
   if (!err) return 'Ocorreu um erro inesperado.';
   const errorObj = err as { message?: string; status?: number; error_description?: string };

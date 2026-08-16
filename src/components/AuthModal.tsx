@@ -15,6 +15,7 @@ import { useAppStore } from '../lib/store';
 import { 
   supabase, 
   isSupabaseConfigured,
+  getOAuthRedirectUrl,
   translateSupabaseAuthError
 } from '../lib/supabase';
 import { BrandLogo } from './BrandLogo';
@@ -105,11 +106,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
     try {
       if (isSupabaseConfigured) {
-        const redirectToUrl = typeof window !== 'undefined' ? window.location.origin : undefined;
+        const redirectToUrl = getOAuthRedirectUrl();
         const { error } = await supabase.auth.signInWithOAuth({
           provider: 'google',
           options: {
-            redirectTo: redirectToUrl
+            redirectTo: redirectToUrl,
+            queryParams: {
+              access_type: 'offline',
+              prompt: 'consent',
+            }
           }
         });
         if (error) throw error;

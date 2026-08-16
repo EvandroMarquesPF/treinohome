@@ -37,6 +37,10 @@ export default function App() {
   useEffect(() => {
     if (isLoggedIn && currentTab === 'landing') {
       setCurrentTab('dashboard');
+      // Clean auth hash or code from URL if present
+      if (typeof window !== 'undefined' && (window.location.hash.includes('access_token') || window.location.search.includes('code='))) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
     } else if (!isLoggedIn && currentTab !== 'landing') {
       setCurrentTab('landing');
     }
