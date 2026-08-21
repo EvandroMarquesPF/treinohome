@@ -19,10 +19,11 @@ import { BrandLogo } from './BrandLogo';
 
 interface LandingPageProps {
   onOpenAuth: (mode: 'login' | 'signup') => void;
-  onOpenTerms?: (tab: 'terms' | 'privacy') => void;
+  onOpenTerms?: () => void;
+  onOpenPrivacy?: () => void;
 }
 
-export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerms }) => {
+export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerms, onOpenPrivacy }) => {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   const benefits = [
@@ -182,8 +183,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
 
             {/* Right Mockup Showcase */}
             <div className="lg:col-span-5 relative flex justify-center">
-              <div className="relative mx-auto max-w-sm rounded-[3rem] p-4 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xl shadow-lime-500/10">
-                <div className="rounded-[2.5rem] bg-zinc-50 dark:bg-zinc-950 p-6 space-y-5 border border-zinc-200 dark:border-zinc-800/80 overflow-hidden">
+              <div className="relative mx-auto max-w-sm rounded-[3rem] p-4 bg-gradient-to-br from-zinc-100 via-zinc-50 to-emerald-50/70 border border-zinc-200/80 dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-950 dark:to-emerald-950/80 dark:border-emerald-500/30 shadow-2xl shadow-lime-500/10">
+                <div className="rounded-[2.5rem] bg-gradient-to-br from-zinc-50 via-zinc-100/80 to-emerald-50/50 dark:bg-gradient-to-br dark:from-zinc-950 dark:via-zinc-950 dark:to-emerald-950/40 p-6 space-y-5 border border-zinc-200 dark:border-zinc-800/80 overflow-hidden">
                   
                   {/* Top Bar Mock */}
                   <div className="flex items-center justify-between pb-3 border-b border-zinc-200 dark:border-zinc-900">
@@ -203,7 +204,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
                   </div>
 
                   {/* Gamification Node Card Mock */}
-                  <div className="p-4 rounded-2xl bg-white dark:bg-zinc-900 border border-lime-500/30 space-y-3 relative overflow-hidden shadow-sm">
+                  <div className="p-4 rounded-2xl bg-gradient-to-br from-white via-zinc-50 to-emerald-50/60 dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-950 dark:to-emerald-950/70 border border-lime-500/30 space-y-3 relative overflow-hidden shadow-sm">
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-bold text-lime-700 dark:text-lime-400 uppercase tracking-wider">Treino de Hoje</span>
                       <span className="text-[10px] px-2 py-0.5 rounded-full bg-lime-500/20 text-lime-800 dark:text-lime-300 font-semibold">Segunda-feira</span>
@@ -234,7 +235,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
       </section>
 
       {/* Benefits Section */}
-      <section className="py-16 md:py-20 bg-zinc-100/70 dark:bg-zinc-900/50 border-y border-zinc-200 dark:border-zinc-900">
+      <section className="py-16 md:py-20 bg-zinc-100/50 dark:bg-zinc-900/30 border-y border-zinc-200 dark:border-zinc-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-4">
             <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
@@ -251,9 +252,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
               return (
                 <div 
                   key={idx}
-                  className="p-6 rounded-3xl bg-white dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/95 dark:to-emerald-950/20 border border-zinc-200 dark:border-emerald-500/20 hover:border-lime-500/40 transition-all hover:-translate-y-1 space-y-4 shadow-sm dark:shadow-md flex flex-col items-center text-center"
+                  className="p-6 rounded-3xl bg-gradient-to-br from-zinc-100 via-zinc-50 to-emerald-50/70 border border-zinc-200/80 dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-950 dark:to-emerald-950/80 dark:border-emerald-500/30 hover:border-lime-500/40 transition-all hover:-translate-y-1 space-y-4 shadow-sm dark:shadow-md flex flex-col items-center text-center"
                 >
-                  <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 text-lime-600 dark:text-lime-400 flex items-center justify-center border border-emerald-500/20">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 dark:bg-emerald-500/20 text-lime-600 dark:text-lime-400 flex items-center justify-center border border-emerald-500/20 shadow-sm">
                     <Icon className="w-6 h-6" />
                   </div>
                   <h3 className="text-lg font-bold text-zinc-900 dark:text-white">{b.title}</h3>
@@ -279,7 +280,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {steps.map((step, idx) => (
-              <div key={idx} className="relative p-6 rounded-3xl bg-white dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/95 dark:to-emerald-950/20 border border-zinc-200 dark:border-emerald-500/20 space-y-3 shadow-sm dark:shadow-md flex flex-col items-center text-center">
+              <div key={idx} className="relative p-6 rounded-3xl bg-gradient-to-br from-zinc-100 via-zinc-50 to-emerald-50/70 border border-zinc-200/80 dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-950 dark:to-emerald-950/80 dark:border-emerald-500/30 space-y-3 shadow-sm dark:shadow-md flex flex-col items-center text-center">
                 <span className="text-4xl font-black text-lime-500/40 dark:text-lime-400/40 block">{step.number}</span>
                 <h3 className="text-lg font-bold text-zinc-900 dark:text-white">{step.title}</h3>
                 <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">{step.desc}</p>
@@ -290,7 +291,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
       </section>
 
       {/* Testimonials */}
-      <section className="py-16 md:py-20 bg-zinc-100/70 dark:bg-zinc-900/40 border-t border-zinc-200 dark:border-zinc-900">
+      <section className="py-16 md:py-20 bg-zinc-100/50 dark:bg-zinc-900/30 border-t border-zinc-200 dark:border-zinc-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-4">
             <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
@@ -303,7 +304,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {testimonials.map((t, idx) => (
-              <div key={idx} className="p-6 rounded-3xl bg-white dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/95 dark:to-emerald-950/20 border border-zinc-200 dark:border-emerald-500/20 space-y-4 flex flex-col justify-between shadow-sm dark:shadow-md text-center items-center">
+              <div key={idx} className="p-6 rounded-3xl bg-gradient-to-br from-zinc-100 via-zinc-50 to-emerald-50/70 border border-zinc-200/80 dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-950 dark:to-emerald-950/80 dark:border-emerald-500/30 space-y-4 flex flex-col justify-between shadow-sm dark:shadow-md text-center items-center">
                 <div className="space-y-3 flex flex-col items-center">
                   <div className="flex text-amber-400 space-x-1 justify-center">
                     {[...Array(t.stars)].map((_, i) => (
@@ -349,7 +350,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
               return (
                 <div 
                   key={idx} 
-                  className="rounded-2xl bg-white dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/95 dark:to-emerald-950/20 border border-zinc-200 dark:border-emerald-500/20 overflow-hidden transition-colors shadow-sm dark:shadow-md"
+                  className="rounded-2xl bg-gradient-to-br from-zinc-100 via-zinc-50 to-emerald-50/70 border border-zinc-200/80 dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-950 dark:to-emerald-950/80 dark:border-emerald-500/30 overflow-hidden transition-colors shadow-sm dark:shadow-md"
                 >
                   <button
                     onClick={() => setOpenFaq(isOpen ? null : idx)}
@@ -359,7 +360,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
                     <ChevronDown className={`w-5 h-5 text-zinc-400 transition-transform ${isOpen ? 'rotate-180 text-lime-600 dark:text-lime-400' : ''}`} />
                   </button>
                   {isOpen && (
-                    <div className="px-6 pb-5 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed border-t border-zinc-100 dark:border-zinc-800/60 pt-4">
+                    <div className="px-6 pb-5 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed border-t border-zinc-200/60 dark:border-zinc-800/60 pt-4">
                       {faq.a}
                     </div>
                   )}
@@ -371,7 +372,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
       </section>
 
       {/* CTA Bottom Bar */}
-      <section className="py-16 bg-lime-500/10 dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/95 dark:to-emerald-950/40 border-t border-zinc-200 dark:border-emerald-500/20">
+      <section className="py-16 bg-gradient-to-br from-zinc-100 via-zinc-50 to-emerald-50/70 border-t border-zinc-200/80 dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-950 dark:to-emerald-950/80 dark:border-emerald-500/30">
         <div className="max-w-5xl mx-auto px-4 text-center space-y-6 flex flex-col items-center">
           <h2 className="text-3xl sm:text-5xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
             Pronto para começar seu primeiro treino?
@@ -401,7 +402,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
           <div className="flex flex-wrap justify-center space-x-6 text-zinc-500 dark:text-zinc-400">
             <button 
               type="button"
-              onClick={() => onOpenTerms?.('terms')}
+              onClick={() => onOpenTerms?.()}
               className="hover:text-lime-600 dark:hover:text-lime-400 cursor-pointer transition-colors"
               id="footer-terms-link"
             >
@@ -409,7 +410,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
             </button>
             <button 
               type="button"
-              onClick={() => onOpenTerms?.('privacy')}
+              onClick={() => onOpenPrivacy?.()}
               className="hover:text-lime-600 dark:hover:text-lime-400 cursor-pointer transition-colors"
               id="footer-privacy-link"
             >

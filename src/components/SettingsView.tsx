@@ -38,10 +38,11 @@ import { BrandLogo } from './BrandLogo';
 
 interface SettingsViewProps {
   onOpenProfileSetup?: () => void;
-  onOpenTerms?: (tab: 'terms' | 'privacy') => void;
+  onOpenTerms?: () => void;
+  onOpenPrivacy?: () => void;
 }
 
-export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, onOpenTerms }) => {
+export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, onOpenTerms, onOpenPrivacy }) => {
   const [state, actions] = useAppStore();
   const { user, settings } = state;
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -448,7 +449,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
       </div>
 
       {/* Termos de Uso e Privacidade LGPD */}
-      <div className="rounded-3xl bg-white border border-zinc-200/90 dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900/95 dark:to-emerald-950/30 dark:border-emerald-500/20 p-6 sm:p-8 space-y-4 shadow-md dark:shadow-xl text-center sm:text-left transition-colors">
+      <div className="rounded-3xl bg-gradient-to-br from-zinc-100 via-zinc-50 to-emerald-50/70 border border-zinc-200/80 dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-950 dark:to-emerald-950/80 dark:border-emerald-500/30 p-6 sm:p-8 space-y-4 shadow-md dark:shadow-xl text-center sm:text-left transition-colors">
         <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-3">
           <ShieldCheck className="w-6 h-6 text-lime-600 dark:text-lime-400" />
           <div>
@@ -459,16 +460,16 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
 
         <div className="flex flex-wrap justify-center sm:justify-start gap-3 pt-1">
           <button
-            onClick={() => onOpenTerms?.('terms')}
-            className="px-4 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-800 dark:bg-zinc-950 dark:hover:bg-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 text-xs font-bold flex items-center space-x-2 transition-colors"
+            onClick={() => onOpenTerms?.()}
+            className="px-4 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-800 dark:bg-zinc-950 dark:hover:bg-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 text-xs font-bold flex items-center space-x-2 transition-colors cursor-pointer"
           >
             <FileText className="w-4 h-4 text-lime-600 dark:text-lime-400" />
             <span>Termos de Uso</span>
           </button>
 
           <button
-            onClick={() => onOpenTerms?.('privacy')}
-            className="px-4 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-800 dark:bg-zinc-950 dark:hover:bg-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 text-xs font-bold flex items-center space-x-2 transition-colors"
+            onClick={() => onOpenPrivacy?.()}
+            className="px-4 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-800 dark:bg-zinc-950 dark:hover:bg-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 text-xs font-bold flex items-center space-x-2 transition-colors cursor-pointer"
           >
             <Lock className="w-4 h-4 text-lime-600 dark:text-lime-400" />
             <span>Política de Privacidade (LGPD)</span>

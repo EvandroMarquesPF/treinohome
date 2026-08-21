@@ -16,6 +16,8 @@ import { LevelUpModal } from './components/LevelUpModal';
 import { PhaseCompleteModal } from './components/PhaseCompleteModal';
 import { PWAPrompt } from './components/PWAPrompt';
 import { TermsAndPrivacyModal } from './components/TermsAndPrivacyModal';
+import { TermsPage } from './components/TermsPage';
+import { PrivacyPage } from './components/PrivacyPage';
 import { useAppStore } from './lib/store';
 
 export default function App() {
@@ -27,10 +29,12 @@ export default function App() {
     isOpen: false,
     mode: 'login'
   });
+  
   const [termsModal, setTermsModal] = useState<{ isOpen: boolean; defaultTab: 'terms' | 'privacy' }>({
     isOpen: false,
     defaultTab: 'terms'
   });
+  
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [profileSetupOpen, setProfileSetupOpen] = useState(false);
 
@@ -41,7 +45,7 @@ export default function App() {
       if (typeof window !== 'undefined' && (window.location.hash.includes('access_token') || window.location.search.includes('code='))) {
         window.history.replaceState({}, document.title, window.location.pathname);
       }
-    } else if (!isLoggedIn && currentTab !== 'landing') {
+    } else if (!isLoggedIn && currentTab !== 'landing' && currentTab !== 'terms' && currentTab !== 'privacy') {
       setCurrentTab('landing');
     }
   }, [isLoggedIn]);
@@ -66,8 +70,24 @@ export default function App() {
     setAuthModal({ isOpen: true, mode });
   };
 
-  const handleOpenTerms = (tab: 'terms' | 'privacy' = 'terms') => {
-    setTermsModal({ isOpen: true, defaultTab: tab });
+  const handleOpenTerms = () => {
+    if (authModal.isOpen) {
+      setTermsModal({ isOpen: true, defaultTab: 'terms' });
+    } else {
+      setCurrentTab('terms');
+    }
+  };
+
+  const handleOpenPrivacy = () => {
+    if (authModal.isOpen) {
+      setTermsModal({ isOpen: true, defaultTab: 'privacy' });
+    } else {
+      setCurrentTab('privacy');
+    }
+  };
+
+  const handleLegalBack = () => {
+    setCurrentTab(isLoggedIn ? 'settings' : 'landing');
   };
 
   return (
@@ -88,6 +108,21 @@ export default function App() {
         {!isLoggedIn && currentTab === 'landing' && (
           <LandingPage 
             onOpenAuth={handleOpenAuth} 
+            onOpenTerms={handleOpenTerms}
+            onOpenPrivacy={handleOpenPrivacy}
+          />
+        )}
+
+        {currentTab === 'terms' && (
+          <TermsPage 
+            onBack={handleLegalBack}
+            onOpenPrivacy={handleOpenPrivacy}
+          />
+        )}
+
+        {currentTab === 'privacy' && (
+          <PrivacyPage 
+            onBack={handleLegalBack}
             onOpenTerms={handleOpenTerms}
           />
         )}
@@ -120,6 +155,7 @@ export default function App() {
           <SettingsView 
             onOpenProfileSetup={() => setProfileSetupOpen(true)} 
             onOpenTerms={handleOpenTerms}
+            onOpenPrivacy={handleOpenPrivacy}
           />
         )}
       </main>
@@ -129,7 +165,10 @@ export default function App() {
         isOpen={authModal.isOpen}
         initialMode={authModal.mode}
         onClose={() => setAuthModal({ ...authModal, isOpen: false })}
-        onOpenTerms={handleOpenTerms}
+        onOpenTerms={(tab) => {
+          if (tab === 'terms') handleOpenTerms();
+          else handleOpenPrivacy();
+        }}
       />
 
       <TermsAndPrivacyModal
