@@ -400,22 +400,28 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth, onOpenTerm
             <span>© {new Date().getFullYear()} - Todos os direitos reservados.</span>
           </div>
           <div className="flex flex-wrap justify-center space-x-6 text-zinc-500 dark:text-zinc-400">
-            <button 
-              type="button"
-              onClick={() => onOpenTerms?.()}
+            <a 
+              href="/termos"
+              onClick={(e) => {
+                e.preventDefault();
+                onOpenTerms?.();
+              }}
               className="hover:text-lime-600 dark:hover:text-lime-400 cursor-pointer transition-colors"
               id="footer-terms-link"
             >
-              Termos de Uso
-            </button>
-            <button 
-              type="button"
-              onClick={() => onOpenPrivacy?.()}
+              Termos de Uso (/termos)
+            </a>
+            <a 
+              href="/politicas"
+              onClick={(e) => {
+                e.preventDefault();
+                onOpenPrivacy?.();
+              }}
               className="hover:text-lime-600 dark:hover:text-lime-400 cursor-pointer transition-colors"
               id="footer-privacy-link"
             >
-              Política de Privacidade
-            </button>
+              Política de Privacidade (/politicas)
+            </a>
             <span className="text-zinc-400 dark:text-zinc-500">Supabase & Vercel Ready</span>
           </div>
         </div>

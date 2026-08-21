@@ -459,21 +459,29 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onOpenProfileSetup, 
         </div>
 
         <div className="flex flex-wrap justify-center sm:justify-start gap-3 pt-1">
-          <button
-            onClick={() => onOpenTerms?.()}
+          <a
+            href="/termos"
+            onClick={(e) => {
+              e.preventDefault();
+              onOpenTerms?.();
+            }}
             className="px-4 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-800 dark:bg-zinc-950 dark:hover:bg-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 text-xs font-bold flex items-center space-x-2 transition-colors cursor-pointer"
           >
             <FileText className="w-4 h-4 text-lime-600 dark:text-lime-400" />
-            <span>Termos de Uso</span>
-          </button>
+            <span>Termos de Uso (/termos)</span>
+          </a>
 
-          <button
-            onClick={() => onOpenPrivacy?.()}
+          <a
+            href="/politicas"
+            onClick={(e) => {
+              e.preventDefault();
+              onOpenPrivacy?.();
+            }}
             className="px-4 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-800 dark:bg-zinc-950 dark:hover:bg-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 text-xs font-bold flex items-center space-x-2 transition-colors cursor-pointer"
           >
             <Lock className="w-4 h-4 text-lime-600 dark:text-lime-400" />
-            <span>Política de Privacidade (LGPD)</span>
-          </button>
+            <span>Política de Privacidade (/politicas)</span>
+          </a>
         </div>
       </div>
 

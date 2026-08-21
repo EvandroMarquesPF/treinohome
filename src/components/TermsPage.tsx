@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   FileText, 
   HeartPulse, 
@@ -10,7 +10,9 @@ import {
   HelpCircle,
   Scale,
   RefreshCw,
-  AlertTriangle
+  AlertTriangle,
+  Link as LinkIcon,
+  Check
 } from 'lucide-react';
 import { BrandLogo } from './BrandLogo';
 
@@ -23,6 +25,15 @@ export const TermsPage: React.FC<TermsPageProps> = ({
   onBack,
   onOpenPrivacy
 }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyLink = () => {
+    const url = typeof window !== 'undefined' ? `${window.location.origin}/termos` : '/termos';
+    navigator.clipboard.writeText(url);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  };
+
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8 animate-fade-in pb-16">
       {/* Top Banner / Header */}
@@ -36,6 +47,9 @@ export const TermsPage: React.FC<TermsPageProps> = ({
               <div className="flex items-center space-x-2">
                 <BrandLogo size="sm" />
                 <span className="text-xs font-bold uppercase tracking-wider text-lime-600 dark:text-lime-400">Treino Home</span>
+                <span className="px-2 py-0.5 rounded-full bg-lime-500/20 text-lime-800 dark:text-lime-300 font-mono text-[10px] font-bold">
+                  /termos
+                </span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white tracking-tight">
                 Termos de Uso
@@ -46,7 +60,26 @@ export const TermsPage: React.FC<TermsPageProps> = ({
             </div>
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              onClick={handleCopyLink}
+              id="terms-copy-link-btn"
+              title="Copiar link direto para os Termos (/termos)"
+              className="px-3.5 py-2 rounded-xl bg-zinc-200/70 dark:bg-zinc-800/90 hover:bg-zinc-300 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 font-bold text-xs transition-colors flex items-center space-x-1.5 cursor-pointer"
+            >
+              {copied ? (
+                <>
+                  <Check className="w-3.5 h-3.5 text-lime-500" />
+                  <span className="text-lime-600 dark:text-lime-400">Link Copiado!</span>
+                </>
+              ) : (
+                <>
+                  <LinkIcon className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
+                  <span>Copiar Link</span>
+                </>
+              )}
+            </button>
+
             {onOpenPrivacy && (
               <button
                 onClick={onOpenPrivacy}

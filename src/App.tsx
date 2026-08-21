@@ -24,7 +24,22 @@ export default function App() {
   const [state] = useAppStore();
   const { isLoggedIn, settings } = state;
 
-  const [currentTab, setCurrentTab] = useState<string>(isLoggedIn ? 'dashboard' : 'landing');
+  // Detect initial route from URL path or hash
+  const getInitialTab = (): string => {
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname.toLowerCase().replace(/\/$/, '');
+      const hash = window.location.hash.toLowerCase();
+      if (path === '/termos' || path === '/termos-de-uso' || hash === '#termos' || hash === '#/termos') {
+        return 'terms';
+      }
+      if (path === '/politicas' || path === '/politica' || path === '/privacidade' || path === '/politica-de-privacidade' || hash === '#politicas' || hash === '#privacidade' || hash === '#/politicas') {
+        return 'privacy';
+      }
+    }
+    return isLoggedIn ? 'dashboard' : 'landing';
+  };
+
+  const [currentTab, setCurrentTab] = useState<string>(getInitialTab);
   const [authModal, setAuthModal] = useState<{ isOpen: boolean; mode: 'login' | 'signup' | 'recovery' }>({
     isOpen: false,
     mode: 'login'
@@ -37,6 +52,27 @@ export default function App() {
   
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [profileSetupOpen, setProfileSetupOpen] = useState(false);
+
+  // Sync browser URL history on popstate (Back/Forward navigation)
+  useEffect(() => {
+    const handlePopState = () => {
+      if (typeof window === 'undefined') return;
+      const path = window.location.pathname.toLowerCase().replace(/\/$/, '');
+      const hash = window.location.hash.toLowerCase();
+      if (path === '/termos' || path === '/termos-de-uso' || hash === '#termos' || hash === '#/termos') {
+        setCurrentTab('terms');
+      } else if (path === '/politicas' || path === '/politica' || path === '/privacidade' || path === '/politica-de-privacidade' || hash === '#politicas' || hash === '#privacidade' || hash === '#/politicas') {
+        setCurrentTab('privacy');
+      } else if (isLoggedIn) {
+        setCurrentTab('dashboard');
+      } else {
+        setCurrentTab('landing');
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     if (isLoggedIn && currentTab === 'landing') {
@@ -74,7 +110,11 @@ export default function App() {
     if (authModal.isOpen) {
       setTermsModal({ isOpen: true, defaultTab: 'terms' });
     } else {
+      if (typeof window !== 'undefined' && window.location.pathname !== '/termos') {
+        window.history.pushState({ tab: 'terms' }, '', '/termos');
+      }
       setCurrentTab('terms');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -82,12 +122,27 @@ export default function App() {
     if (authModal.isOpen) {
       setTermsModal({ isOpen: true, defaultTab: 'privacy' });
     } else {
+      if (typeof window !== 'undefined' && window.location.pathname !== '/politicas') {
+        window.history.pushState({ tab: 'privacy' }, '', '/politicas');
+      }
       setCurrentTab('privacy');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
+  const handleSelectTab = (tab: string) => {
+    if (typeof window !== 'undefined' && (window.location.pathname === '/termos' || window.location.pathname === '/politicas' || window.location.pathname === '/privacidade')) {
+      window.history.pushState({}, '', '/');
+    }
+    setCurrentTab(tab);
+  };
+
   const handleLegalBack = () => {
+    if (typeof window !== 'undefined' && (window.location.pathname === '/termos' || window.location.pathname === '/politicas' || window.location.pathname === '/privacidade')) {
+      window.history.pushState({}, '', '/');
+    }
     setCurrentTab(isLoggedIn ? 'settings' : 'landing');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -98,7 +153,7 @@ export default function App() {
       {/* Navigation Header */}
       <Navbar
         currentTab={currentTab}
-        onSelectTab={setCurrentTab}
+        onSelectTab={handleSelectTab}
         onOpenAuth={handleOpenAuth}
         onOpenNotifications={() => setNotificationsOpen(true)}
       />
@@ -128,15 +183,15 @@ export default function App() {
         )}
 
         {isLoggedIn && currentTab === 'dashboard' && (
-          <Dashboard onSelectTab={setCurrentTab} />
+          <Dashboard onSelectTab={handleSelectTab} />
         )}
 
         {isLoggedIn && currentTab === 'workout' && (
-          <WorkoutScreen onSelectTab={setCurrentTab} />
+          <WorkoutScreen onSelectTab={handleSelectTab} />
         )}
 
         {isLoggedIn && currentTab === 'evolution' && (
-          <GamificationPath onSelectTab={setCurrentTab} />
+          <GamificationPath onSelectTab={handleSelectTab} />
         )}
 
         {isLoggedIn && currentTab === 'calendar' && (
